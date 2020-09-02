@@ -2,24 +2,8 @@ import React, { useState, useEffect } from 'react'
 import ProductCard from '../ProductCard'
 
 export default function Catalogo(props) {
-    const [ products, setProducts ] = useState([]);
-    const { categories, setCategories } = props
-    const getProducts = async ()=>{
-        try {
-            const response = await fetch(`http://localhost:3001/products`);
-            const jsonData = await response.json();
-            setProducts(jsonData);
-            console.log(jsonData)
-        } catch (error) {
-            console.error(error.message)
-        }        
-    }
-
-    useEffect(()=>{
-        getProducts();    
-        //getCategories();  
-    },[])
-    console.log(categories)
+    const { categories, products, categoryFilter } = props
+    console.log(categoryFilter)
     const style={
         categoria: {
             width: '250px',
@@ -34,11 +18,7 @@ export default function Catalogo(props) {
         }
 
     }
-    const categoryFilter = (id)=>{
-        const filter = products.filter( prod =>  prod.id===id-1)
-        //setProducts(filter)
-        console.log(filter)
-    }
+
     return (
         <div className='container-fluid'>        
            <h1>Catalog</h1>

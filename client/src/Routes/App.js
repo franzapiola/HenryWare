@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {BrowserRouter,Route,Switch} from 'react-router-dom'
 
 import Catalog from '../components/products/Catalog';
@@ -23,7 +23,26 @@ const App = () => {
         console.error(error.message)
     }
 }
-
+const [ products, setProducts ] = useState([]);
+const getProducts = async ()=>{
+    try {
+        const response = await fetch(`http://localhost:3001/products`);
+        const jsonData = await response.json();
+        setProducts(jsonData);
+        console.log(jsonData)
+    } catch (error) {
+        console.error(error.message)
+    }        
+}
+const categoryFilter = (id)=>{
+  const filter = products.filter( prod =>  prod.id===id-1)
+  //setProducts(filter)
+  console.log(filter)
+}
+useEffect(()=>{
+    getProducts();    
+    //getCategories();  
+},[])
   return(
     <BrowserRouter>
       <Switch>
@@ -31,7 +50,8 @@ const App = () => {
         <Route>
           <Catalog 
             categories={categories}
-            setCategories={setCategories}
+            products={products}
+            categoryFilter={categoryFilter}
           />
         </Route>
       </Switch>
