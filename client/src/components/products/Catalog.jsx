@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Prueba from './Prueba'
+import ProductCard from '../ProductCard'
 //import Card from './Card'
 
 export default function Catalogo() {
@@ -8,7 +8,7 @@ export default function Catalogo() {
     console.log(products);
     const getProducts = async ()=>{
         try {
-            const response = await fetch(`http://www.omdbapi.com/?apikey=276eac7&s=batman`);
+            const response = await fetch(`http://localhost:3001/products`);
             const jsonData = await response.json();
             setProducts(jsonData.Search)
         } catch (error) {
@@ -17,7 +17,7 @@ export default function Catalogo() {
     }
     const renderProducts = ()=>{
         const result = products.map( product =>(
-            <Prueba data={product}/>
+            <ProductCard data={product} />
         ))
         return result;
     }
