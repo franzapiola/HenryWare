@@ -41,6 +41,40 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Product, User, Categories} = sequelize.models;
 
 
+//Comentado por JX.
+//Pruebas de back
+//Descomentar desde aca:
+
+/*
+Product.create({  
+      name : "pendrive",
+      price : 23,
+      description : "req.query.desc",
+      rating : 2,
+      warranty : 1,
+      stock : 22,
+      image : "req.query.img"
+    }).then((res) =>{
+      console.log({res});
+    }).catch(error => {
+      console.log({error})
+    })
+
+Product.create({  
+      name : "cdvirgen",
+      price : 0,
+      description : "para los que jugamos al lol",
+      rating : 5,
+      warranty :999,
+      stock : 5,
+      image : "req.query.img"
+    }).then((res) =>{
+      console.log({res});
+    }).catch(error => {
+      console.log({error})
+    })
+*/
+
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 

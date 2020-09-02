@@ -49,5 +49,27 @@ server.get('/search', (req, res, next) => {
     .catch(next);
 })
 
+server.get('/search', (req, res, next) => {
+
+	// para buscar productos : /products/search?producto={nombredeproducto} Jx
+    const product = req.query.product 
+        
+    //esta linea es para mostrar lo que buscamos en la consola del server, se puede comentar. JX
+    console.log("Searching ->",product)
+
+    Product.findAll({
+        where: {
+            name: product,
+        },
+        include: [
+            {all:true}
+        ]
+
+    })
+    .then( products => {
+        res.status(200).send(products);
+    })
+    .catch(next);
+})
 
 module.exports = server;
