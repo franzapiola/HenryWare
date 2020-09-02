@@ -3,7 +3,6 @@ import ProductCard from '../ProductCard'
 
 export default function Catalogo() {
     const [ products, setProducts ] = useState([]);
-    console.log(products);
     const getProducts = async ()=>{
         try {
             const response = await fetch(`http://localhost:3001/products`);
