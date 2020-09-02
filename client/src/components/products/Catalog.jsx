@@ -3,6 +3,7 @@ import ProductCard from '../ProductCard'
 
 export default function Catalogo(props) {
     const { categories, products, categoryFilter } = props
+
     const style={
         categoria: {
             width: '250px',
