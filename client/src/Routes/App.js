@@ -34,10 +34,10 @@ const getProducts = async ()=>{
         console.error(error.message)
     }        
 }
-const categoryFilter = (id)=>{
-  const filter = products.filter( prod =>  prod.id===id-1)
-  //setProducts(filter)
-  console.log(filter)
+const categoryFilter = async (id) => {
+  const response = await fetch(`http://localhost:3001/products/categorias/${id}`);
+  const jsonData = await response.json();
+  setProducts(jsonData)
 }
 useEffect(()=>{
     getProducts();    
