@@ -9,4 +9,12 @@ server.get('/', (req, res, next) => {
 		.catch(next);
 });
 
+
+//Ruta todos los productos según categoría
+server.get('/categorias/:categoria',function(req,res,next){
+
+
+
+})
+
 module.exports = server;

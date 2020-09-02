@@ -4,6 +4,14 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('user', {
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+          isEmail: true
+      },
+      primaryKey: true,
+      allowNull: false
+  },
     first_name: {
       type: DataTypes.STRING,
       allowNull: false
@@ -11,13 +19,6 @@ module.exports = (sequelize) => {
     last_name: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    email: {
-        type: DataTypes.STRING,
-        validate: {
-            isEmail: true
-        },
-        allowNull: false
     },
     address: {
         type: DataTypes.STRING,
@@ -28,36 +29,8 @@ module.exports = (sequelize) => {
         allowNull: false
     },
     role: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.ENUM('user', 'admin'),
+        defaultValue: 'user'
     }
-
-
   });
 };
-
-
-
-
-
-// const User = sequelize.define('user', {
-//     firstName: {
-//         type: Sequelize.STRING,
-//         allowNull: false
-//     },
-//     lastName: {
-//         type: Sequelize.STRING,
-//         get(){
-//             return this.getDataValue('lastName') + '!';
-//         }
-//     },
-//     fulName: {
-//         type: Sequelize.VIRTUAL,
-//         get(){
-//             return this.getDataValue('lastName') + ' ' + this.getDataValue('firstName')
-//         }
-//     }
-
-// }, {
-//     //option
-// });
