@@ -4,6 +4,14 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('user', {
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+          isEmail: true
+      },
+      primaryKey: true,
+      allowNull: false
+  },
     first_name: {
       type: DataTypes.STRING,
       allowNull: false
@@ -11,14 +19,6 @@ module.exports = (sequelize) => {
     last_name: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    email: {
-        type: DataTypes.STRING,
-        validate: {
-            isEmail: true
-        },
-        primaryKey: true,
-        allowNull: false
     },
     address: {
         type: DataTypes.STRING,
@@ -32,7 +32,5 @@ module.exports = (sequelize) => {
         type: DataTypes.ENUM('user', 'admin'),
         defaultValue: 'user'
     }
-
-
   });
 };
