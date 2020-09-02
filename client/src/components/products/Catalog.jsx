@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import ProductCard from '../ProductCard'
-//import Card from './Card'
 
 export default function Catalogo() {
-    const API_KEY = "276eac7"
     const [ products, setProducts ] = useState([]);
     console.log(products);
     const getProducts = async ()=>{
         try {
             const response = await fetch(`http://localhost:3001/products`);
             const jsonData = await response.json();
-            setProducts(jsonData.Search)
+            setProducts(jsonData)
+            console.log(jsonData)
         } catch (error) {
             console.error(error.message)
         }        

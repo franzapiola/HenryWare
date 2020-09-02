@@ -32,6 +32,13 @@ module.exports = (sequelize) => {
     stock:{
       type:DataTypes.INTEGER,
       allowNull:false,
+    },
+    image:{
+      type:DataTypes.TEXT,
+      allowNull:false,
+      validate:{
+        isUrl:true,
+      }
     }
   });
 };
