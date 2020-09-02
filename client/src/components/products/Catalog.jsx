@@ -1,42 +1,37 @@
 import React, { useState, useEffect } from 'react'
 import ProductCard from '../ProductCard'
 
-export default function Catalogo() {
-    const [ products, setProducts ] = useState([]);
-    const getProducts = async ()=>{
-        try {
-            const response = await fetch(`http://localhost:3001/products`);
-            const jsonData = await response.json();
-            setProducts(jsonData)
-            console.log(jsonData)
-        } catch (error) {
-            console.error(error.message)
-        }        
-    }
-    const renderProducts = ()=>{
-        const result = products.map( product =>(
-            <ProductCard data={product} />
-        ))
-        return result;
-    }
-    useEffect(()=>{
-        getProducts();      
-    },[])
-    console.log(products)
+export default function Catalogo(props) {
+    const { categories, products, categoryFilter } = props
+    console.log(categoryFilter)
     const style={
         categoria: {
             width: '250px',
             height: '90vh',
-            backgroundColor: 'grey'
+            backgroundColor: '#fbfafa',
+        },
+        main: {
+            backgroundColor: '#fbfafa',
+        },
+        category: {
+            cursor: 'pointer',
         }
 
     }
+
     return (
         <div className='container-fluid'>        
            <h1>Catalog</h1>
            <div className='d-flex'>
-               <div className="categoria" style={style.categoria}>
-                {renderProducts()}
+               <div className="categorias col-md-3" style={style.categoria}>
+                <ul className="list-group">                    
+                { categories.map( cat => <li key={cat.id} onClick={()=>categoryFilter(cat.id)} className='list-group-item' style={style.category}>{cat.name}</li>)}
+                </ul>
+               </div>
+               <div className="main d-flex col-md-9" style={style.main}>
+                { products.map(prod => 
+                    <ProductCard data={prod} />
+                    ) } 
                </div>
                
            </div>
