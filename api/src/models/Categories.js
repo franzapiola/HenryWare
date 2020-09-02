@@ -6,8 +6,10 @@ module.exports = (sequelize) => {
   // modelo categories
   sequelize.define('categories', {
     category_id :{
+      allowNull : false,
+      autoIncrement : true,
+      primaryKey: true,
       type: DataTypes.INTEGER,
-      allowNull : false
     },
     name:{
       type: DataTypes.STRING,
