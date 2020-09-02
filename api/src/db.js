@@ -78,8 +78,8 @@ Product.create({
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 
-Product.belongsToMany(Categories,{through:'product_category',foreignKey:'category_id'})
-Categories.belongsToMany(Product,{through:'product_category',foreignKey:'product_id'})
+Product.belongsToMany(Categories,{through:'product_category',as:"categories",foreignKey:'product_id'})
+Categories.belongsToMany(Product,{through:'product_category',as:"products",foreignKey:'category_id'})
 
 module.exports = {
   ...sequelize.models,  // para poder importar los modelos así: const { Product, User } = require('./db.js');
