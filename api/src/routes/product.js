@@ -19,43 +19,30 @@ server.get('/categorias/:categoria',function(req,res,next){
 })
 
 
-/*
-server.put("/addProduct",(req,res,next)=>{
-
-	console.log("Name: ",req.query.name);
-	console.log("Price",req.query.price);
-	console.log("Descrip",req.query.desc);
-	console.log("Rating",req.query.rating);
-	console.log("Warr",req.query.warranty);
-	console.log("Stock",req.query.stock);
-	console.log("Img",req.query.img);
 
 
-	var obj ={
-		nombre : req.query.name,
-		price : req.query.price
-	}
-	
+server.get('/search', (req, res, next) => {
 
-	Product.findOrCreate({
-		defaults : {
-			name : req.query.name,
-			price : req.query.price,
-			desciption : req.query.desc,
-			rating : req.query.rating,
-			warranty : req.query.warranty,
-			stock : req.query.stock,
-			image : req.query.img
-		}
-	})
+	// para buscar productos : /products/search?={nombredeproducto} Jx
+    const product = req.query.product 
+        
+    //esta linea es para mostrar lo que buscamos en la consola del server, se puede comentar. JX
+    console.log("Searching ->",product)
 
-	console.log("Database updated!")
+    Product.findAll({
+        where: {
+            name: product,
+        },
+        include: [
+            {all:true}
+        ]
 
-
-
-	res.status(201).send("Database Updated");
+    })
+    .then( products => {
+        res.status(200).send(products);
+    })
+    .catch(next);
 })
-*/
 
 
 module.exports = server;
