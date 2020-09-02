@@ -17,6 +17,7 @@ module.exports = (sequelize) => {
         validate: {
             isEmail: true
         },
+        primaryKey: true,
         allowNull: false
     },
     address: {
@@ -28,36 +29,10 @@ module.exports = (sequelize) => {
         allowNull: false
     },
     role: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.ENUM('user', 'admin'),
+        defaultValue: 'user'
     }
 
 
   });
 };
-
-
-
-
-
-// const User = sequelize.define('user', {
-//     firstName: {
-//         type: Sequelize.STRING,
-//         allowNull: false
-//     },
-//     lastName: {
-//         type: Sequelize.STRING,
-//         get(){
-//             return this.getDataValue('lastName') + '!';
-//         }
-//     },
-//     fulName: {
-//         type: Sequelize.VIRTUAL,
-//         get(){
-//             return this.getDataValue('lastName') + ' ' + this.getDataValue('firstName')
-//         }
-//     }
-
-// }, {
-//     //option
-// });
