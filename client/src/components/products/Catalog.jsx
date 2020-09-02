@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import Prueba from './Prueba'
+import Card from './Card'
 //import Card from './Card'
 
 export default function Catalogo() {
-    const API_KEY = "276eac7"
     const [ products, setProducts ] = useState([]);
-    console.log(products);
     const getProducts = async ()=>{
         try {
-            const response = await fetch(`http://www.omdbapi.com/?apikey=276eac7&s=batman`);
+            const response = await fetch(`http://localhost/products`);
             const jsonData = await response.json();
             setProducts(jsonData.Search)
         } catch (error) {
@@ -17,7 +15,7 @@ export default function Catalogo() {
     }
     const renderProducts = ()=>{
         const result = products.map( product =>(
-            <Prueba data={product}/>
+            <Card data={product}/>
         ))
         return result;
     }
