@@ -146,7 +146,15 @@ server.post('/category',function(req,res){
 })
 
 
+server.delete('/category/:id',function(req,res){
+    const {id} = req.params;
 
+    Categories.destroy({
+        where:{
+            category_id:id
+        }
+    }).then(res.status(200).send('Categoría eliminada'))
+})
 
 module.exports = server;
 
