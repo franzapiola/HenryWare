@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import ProductCard from '../ProductCard'
+import ProductCard from './ProductCard';
 
 export default function Catalogo(props) {
     const { categories, products, categoryFilter } = props
@@ -25,7 +25,7 @@ export default function Catalogo(props) {
            <div className='d-flex'>
                <div className="categorias col-md-3" style={style.categoria}>
                 <ul className="list-group">                    
-                { categories.map( cat => <li key={cat.id} onClick={()=>categoryFilter(cat.id)} className='list-group-item' style={style.category}>{cat.name}</li>)}
+                { categories.map( cat => <li key={cat.id} onClick={()=>categoryFilter(cat.name)} className='list-group-item' style={style.category}>{cat.name}</li>)}
                 </ul>
                </div>
                <div className="main d-flex col-md-9" style={style.main}>
