@@ -145,7 +145,7 @@ server.post('/category',function(req,res){
 
 })
 
-
+//Ruta para eliminar categorias
 server.delete('/category/:id',function(req,res){
     const {id} = req.params;
 
@@ -155,6 +155,22 @@ server.delete('/category/:id',function(req,res){
         }
     }).then(res.status(200).send('Categoría eliminada'))
 })
+
+//Ruta para editar categorias
+server.put('/category/:id',function(req,res){
+
+    const {id} = req.params;
+
+    const {name} = req.body
+
+    Categories.update({
+        name: name
+    },{where:{
+        category_id:id
+    }}).then(res.status(200).send('Categoría modificada'))
+
+})
+
 
 module.exports = server;
 
