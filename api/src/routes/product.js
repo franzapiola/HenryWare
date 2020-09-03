@@ -1,4 +1,6 @@
 const server = require('express').Router();
+const {Op} = require('sequelize')
+
 const { Product } = require('../db.js');
 const {Categories} = require('../db.js')
 
@@ -30,14 +32,16 @@ server.get('/categorias/:categoria',function(req,res,next){
 
 server.get('/search', (req, res, next) => {
 	// para buscar productos : /products/search?product={nombredeproducto} Jx
-    const product = req.query.product 
+    const {product} = req.query
 
     //esta linea es para mostrar lo que buscamos en la consola del server, se puede comentar. JX
     //console.log("Searching ->",product)
 
     Product.findAll({
         where: {
-            name: product,
+            name:{
+               [Op.like]:`%${product}%`
+            }
         },
         include: [
             {all:true}
@@ -49,27 +53,5 @@ server.get('/search', (req, res, next) => {
     .catch(next);
 })
 
-server.get('/search', (req, res, next) => {
-
-	// para buscar productos : /products/search?producto={nombredeproducto} Jx
-    const product = req.query.product 
-        
-    //esta linea es para mostrar lo que buscamos en la consola del server, se puede comentar. JX
-    //console.log("Searching ->",product)
-
-    Product.findAll({
-        where: {
-            name: product,
-        },
-        include: [
-            {all:true}
-        ]
-
-    })
-    .then( products => {
-        res.status(200).send(products);
-    })
-    .catch(next);
-})
 
 module.exports = server;
