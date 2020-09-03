@@ -54,4 +54,38 @@ server.get('/search', (req, res, next) => {
 })
 
 
+
+
+server.post("/",(req,res,next) =>{
+    //para agregar productos: /productos/add . Jx
+    const {name, price, description, rating ,warranty , stock, image} = req.query
+
+    console.log(name,price)
+
+    // lo agrego con un form? Por ahora es solo con el body de lo que llega
+
+
+    Product.create({
+        name : name,
+        price : price,
+        description : description,
+        rating : rating,
+        warranty : warranty,
+        stock : stock,
+        image : image
+        }
+    )
+    .then((res) =>{
+       console.log({res});
+       
+    }).catch(error => console.log(error))
+
+
+    res.status(201).send("Created!")
+
+})
+
+
+
+
 module.exports = server;
