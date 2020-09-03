@@ -2,7 +2,8 @@ const server = require('express').Router();
 const {Op} = require('sequelize')
 const bodyParser = require('body-parser')
 const { Product } = require('../db.js');
-const {Categories} = require('../db.js')
+const {Categories} = require('../db.js');
+const { response } = require('express');
 
 
 server.get('/', (req, res, next) => {
@@ -56,49 +57,24 @@ server.put('/:id',function(req,res){
 
     const {id} = req.params
 
-    req.body.name && (Product.update({name:req.body.name},
-        {where:{
-            product_id:id
-        }
-    }))
+    const respuesta = {}
 
-    req.body.price && (Product.update({price:req.body.price},
-        {where:{
-            product_id:id
-        }
-    }))
+    req.body.name && (respuesta.name = req.body.name)
+    req.body.price && (respuesta.price = req.body.price)
+    req.body.description && (respuesta.description = req.body.description)
+    req.body.rating && (respuesta.rating = req.body.rating)
+    req.body.warranty && (respuesta.warranty = req.body.warranty)
+    req.body.stock && (respuesta.stock = req.body.stock)
+    req.body.image && (respuesta.image = req.body.image)
 
-    req.body.description && (Product.update({description:req.body.description},
-        {where:{
-            product_id:id
-        }
-    }))
+    // console.log(respuesta)
 
-    req.body.rating && (Product.update({rating:req.body.rating},
-        {where:{
-            product_id:id
-        }
-    }))
+    Product.update(respuesta,{where:{product_id:id}}).then(res.status(200).json(respuesta))
 
-    req.body.warranty && (Product.update({warranty:req.body.warranty},
-        {where:{
-            product_id:id
-        }
-    }))
-
-    req.body.stock && (Product.update({stock:req.body.stock},
-        {where:{
-            product_id:id
-        }
-    }))
     
-    req.body.image && (Product.update({image:req.body.image},
-        {where:{
-            product_id:id
-        }
-    }))
 
-    Product.findOne({where:{product_id:id}}).then(response => res.status(200).json(response))
+
+
 })
 
 module.exports = server;
