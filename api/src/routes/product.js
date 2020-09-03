@@ -40,7 +40,7 @@ server.get('/search', (req, res, next) => {
     Product.findAll({
         where: {
             name:{
-               [Op.like]:`%${product}%`
+               [Op.iLike]:`%${product}%`        //iLike permite buscar sin importar mayusculas/minisculas
             }
         },
         include: [
@@ -51,7 +51,25 @@ server.get('/search', (req, res, next) => {
         res.status(200).send(products);
     })
     .catch(next);
-})
+});
+
+
+// buscar producto por id, ruta = products/:id
+
+server.get('/:id',function(req,res,next){
+	const {id} = req.params;
+
+	Product.findAll({
+		where:{
+			product_id: id,
+		}
+    })
+    .then(product => {
+        res.status(200).send(product)
+    })
+    .catch(err => res.status(404).send(err))
+
+});
 
 
 
