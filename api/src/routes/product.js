@@ -103,6 +103,8 @@ server.post("/",(req,res,next) =>{
 
 })
 
+
+//Ruta para editar un producto por body
 server.put('/:id',function(req,res){
 
     const {id} = req.params;
@@ -120,21 +122,39 @@ server.put('/:id',function(req,res){
     
 })
 
-
+//Ruta para eliminar productos
 server.delete('/:id',function(req,res){
-
     const {id}=req.params;
-
+    
     Product.destroy({
         where:{
             product_id:id
         }
     }).then(res.status(200).send("Producto eliminado"))
+})
 
+
+//Ruta para crear/agregar categorias
+server.post('/category',function(req,res){
+
+    const {name}=req.body
+    
+    Categories.create({
+        name:name
+    }).then(res.status(200).send('Categoría creada!'))
 
 })
 
 
+server.delete('/category/:id',function(req,res){
+    const {id} = req.params;
+
+    Categories.destroy({
+        where:{
+            category_id:id
+        }
+    }).then(res.status(200).send('Categoría eliminada'))
+})
 
 module.exports = server;
 
