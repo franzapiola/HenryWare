@@ -33,7 +33,7 @@ server.get('/search', (req, res, next) => {
     const product = req.query.product 
 
     //esta linea es para mostrar lo que buscamos en la consola del server, se puede comentar. JX
-    console.log("Searching ->",product)
+    //console.log("Searching ->",product)
 
     Product.findAll({
         where: {
@@ -55,7 +55,7 @@ server.get('/search', (req, res, next) => {
     const product = req.query.product 
         
     //esta linea es para mostrar lo que buscamos en la consola del server, se puede comentar. JX
-    console.log("Searching ->",product)
+    //console.log("Searching ->",product)
 
     Product.findAll({
         where: {

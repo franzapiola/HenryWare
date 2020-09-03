@@ -45,7 +45,7 @@ const { Product, User, Categories} = sequelize.models;
 //Pruebas de back
 //Descomentar desde aca:
 
-/*
+
 Product.create({  
       name : "pendrive",
       price : 23,
@@ -55,7 +55,7 @@ Product.create({
       stock : 22,
       image : "req.query.img"
     }).then((res) =>{
-      console.log({res});
+      // console.log({res});
     }).catch(error => {
       console.log({error})
     })
@@ -69,11 +69,11 @@ Product.create({
       stock : 5,
       image : "req.query.img"
     }).then((res) =>{
-      console.log({res});
+      // console.log({res});
     }).catch(error => {
       console.log({error})
     })
-*/
+
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
