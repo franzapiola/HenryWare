@@ -105,24 +105,31 @@ server.post("/",(req,res,next) =>{
 
 server.put('/:id',function(req,res){
 
-    const {id} = req.params
+    const {id} = req.params;
 
     const respuesta = {}
-
-    req.body.name && (respuesta.name = req.body.name)
-    req.body.price && (respuesta.price = req.body.price)
-    req.body.description && (respuesta.description = req.body.description)
-    req.body.rating && (respuesta.rating = req.body.rating)
-    req.body.warranty && (respuesta.warranty = req.body.warranty)
-    req.body.stock && (respuesta.stock = req.body.stock)
-    req.body.image && (respuesta.image = req.body.image)
-
+    req.body.name && (respuesta.name = req.body.name);
+    req.body.price && (respuesta.price = req.body.price);
+    req.body.description && (respuesta.description = req.body.description);
+    req.body.rating && (respuesta.rating = req.body.rating);
+    req.body.warranty && (respuesta.warranty = req.body.warranty);
+    req.body.stock && (respuesta.stock = req.body.stock);
+    req.body.image && (respuesta.image = req.body.image);
     // console.log(respuesta)
-
-    Product.update(respuesta,{where:{product_id:id}}).then(res.status(200).json(respuesta))
-
+    Product.update(respuesta,{where:{product_id:id}}).then(res.status(200).json(respuesta));
     
+})
 
+
+server.delete('/:id',function(req,res){
+
+    const {id}=req.params;
+
+    Product.destroy({
+        where:{
+            product_id:id
+        }
+    }).then(res.status(200).send("Producto eliminado"))
 
 
 })
