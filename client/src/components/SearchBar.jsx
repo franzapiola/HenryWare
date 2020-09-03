@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {withRouter} from 'react-router-dom';
 
 const SearchBar = (props) => {
     //Este estado almacena el contenido del input
@@ -6,12 +7,13 @@ const SearchBar = (props) => {
     const { onSearch } = props;
     return (
         <div>
-            <form onSubmit={(e)=>{onSearch(e, search)}}>
+            <form onSubmit={(e)=>{onSearch(e, search, props)}}>
                 <input type='text' placeholder='Busca un producto...' onChange={(e)=>setSearch(e.target.value)}/>
                 <button type='submit'> Buscar </button>
             </form>
+            {/* <button onClick={()=>console.log(props)}>ConsoleLog Props</button> */}
         </div>
     );
 }
 
-export default SearchBar;
+export default withRouter(SearchBar);
