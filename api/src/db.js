@@ -60,20 +60,22 @@ Product.create({
       console.log({error})
     })
 
-Product.create({  
-      name : "cdvirgen",
-      price : 0,
-      description : "para los que jugamos al lol",
-      rating : 5,
-      warranty :999,
-      stock : 5,
-      image : "https://cdn.ttgtmedia.com/rms/onlineImages/storage-compact_disk_mobile.jpg"
-    }).then((res) =>{
-      // console.log({res});
-    }).catch(error => {
-      console.log({error})
-    })
+    Product.create({  
+  name : "cdvirgen",
+  price : 0,
+  description : "para los que jugamos al lol",
+  rating : 5,
+  warranty :999,
+  stock : 5,
+  image : "https://cdn.ttgtmedia.com/rms/onlineImages/storage-compact_disk_mobile.jpg"
+}).then((res) =>{
+  // console.log({res});
+}).catch(error => {
+  console.log({error})
+})
 */
+
+
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
