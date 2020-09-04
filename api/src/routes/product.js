@@ -15,6 +15,16 @@ server.get('/', (req, res, next) => {
 		.catch(next);
 });
 
+//Ruta que devuleve todas las categorias
+server.get('/categories',function(req,res,next){
+    Categories.findAll().then( categories => {
+        res.status(200).send(categories);
+    }).catch(error => {
+        console.log(error);
+        res.send(error);
+    })
+})
+
 
 //Ruta todos los productos según categoría --> me trae todos los products que tienen esa categoría
 server.get('/categorias/:categoria',function(req,res,next){
