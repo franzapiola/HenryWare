@@ -4,6 +4,9 @@ import {BrowserRouter,Route,Switch} from 'react-router-dom'
 import Catalog from '../components/products/Catalog';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchBar from '../components/SearchBar';
+import Producto from '../components/product - id/Producto'
+import ProductCard from '../components/products/ProductCard';
+
 
 
 const App = () => {
@@ -40,7 +43,7 @@ const App = () => {
     setProducts(jsonData)
   }
   useEffect(()=>{
-      getProducts();    
+      getProducts();   
       //getCategories();  
   },[])
 
@@ -56,6 +59,7 @@ const App = () => {
   return(
     <BrowserRouter>
       <Route path ='/' render={ ()=><SearchBar onSearch = {onSearch}/> }/>
+      
       <Switch>
         <Route exact path='/products' render={()=>{
           return <Catalog 
@@ -64,6 +68,13 @@ const App = () => {
             categoryFilter={categoryFilter}
           />
         }}/>
+
+        <Route path='/products/:id' component={Producto}/>
+        {/* <Route path='/products/test' component={Producto}/> */}
+
+        
+        
+
       </Switch>
     </BrowserRouter>
     )
