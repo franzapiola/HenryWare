@@ -70,7 +70,7 @@ const App = () => {
       <Route path ='/' render={ (props)=><SearchBar {...props} onSearch = {onSearch}/> }/>
       <Switch>
         <Route exact path='/products' render={()=>{
-          return <Catalog 
+          return <Catalog
             categories={categories}
             products={products}
             categoryFilter={categoryFilter}
