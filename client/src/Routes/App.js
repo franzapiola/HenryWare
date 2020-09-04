@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {BrowserRouter,Route,Switch} from 'react-router-dom'
-
+import Crud from '../components/products/Crud'
 import Catalog from '../components/products/Catalog';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchBar from '../components/SearchBar';
@@ -76,6 +76,11 @@ const App = () => {
             categoryFilter={categoryFilter}
           />
         }}/>
+        <Route exact path='/products/edit'> 
+        <Crud
+          products={products}
+        />
+        </Route>
       </Switch>
     </BrowserRouter>
     )
