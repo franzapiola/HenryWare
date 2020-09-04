@@ -29,9 +29,9 @@ export default function Catalogo(props) {
                 </ul>
                </div>
                <div className="main d-flex col-md-9" style={style.main}>
-                { products.map(prod => 
+                { products.length ? products.map(prod => 
                     <ProductCard key={prod.product_id} data={prod} />
-                    ) } 
+                ) : <h3>No se encontraron resultados para tu búsqueda... </h3>} 
                </div>
                
            </div>

@@ -4,7 +4,8 @@ import Crud from '../components/products/Crud'
 import Catalog from '../components/products/Catalog';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchBar from '../components/SearchBar';
-import Producto from '../components/product - id/Producto'
+import Producto from '../components/product - id/Producto';
+import AddCategory from '../components/products/AddCategory';
 
 
 
@@ -80,16 +81,14 @@ const App = () => {
         }}/>
 
         <Route exact path='/products/edit'> 
-        <Crud
-          products={products}
-          setProducts={setProducts}
-          getProducts={getProducts}
-        />
+          <Crud
+            products={products}
+            setProducts={setProducts}
+            getProducts={getProducts}
+          />
         </Route>
-
+        <Route exact path='/products/categories/addcategory' component={AddCategory}/>
         <Route path='/products/:id' component={Producto}/>
-
-
       </Switch>
     </BrowserRouter>
     )
