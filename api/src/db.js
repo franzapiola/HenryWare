@@ -73,9 +73,28 @@ Product.create({
 }).catch(error => {
   console.log({error})
 })
+
+
+//Categorias de prueba
+Categories.create({
+  category_id : 1,
+  name : "Monitores"
+}).then((resp) =>{
+      console.log({resp});
+    }).catch(error => {
+      console.log({error})
+    })
+
+Categories.create({
+  category_id : 2,
+  name : "Electrodomesticos"
+}).then((resp) =>{
+      console.log({resp});
+    }).catch(error => {
+      console.log({error})
+    })
+
 */
-
-
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
