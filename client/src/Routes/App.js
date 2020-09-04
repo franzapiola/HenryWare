@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {BrowserRouter,Route,Switch} from 'react-router-dom'
-
+import Crud from '../components/products/Crud'
 import Catalog from '../components/products/Catalog';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchBar from '../components/SearchBar';
@@ -80,11 +80,14 @@ const App = () => {
           />
         }}/>
 
+        <Route exact path='/products/edit'> 
+        <Crud
+          products={products}
+        />
+        </Route>
+
         <Route path='/products/:id' component={Producto}/>
         {/* <Route path='/products/test' component={Producto}/> */}
-
-        
-        
 
       </Switch>
     </BrowserRouter>
