@@ -60,7 +60,7 @@ const HowManyStars = (review) => {
 const ProductCard = (props) =>{
     
         return(
-            <Link to={`/product/${props.data.product_id}`}>
+            <Link to={`/products/${props.data.product_id}`}>
                 <div className="card mb-3" >
                     <div className="row no-gutters">
                         <div className="col-md-4">

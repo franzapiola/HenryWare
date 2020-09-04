@@ -53,7 +53,7 @@ Product.create({
       rating : 2,
       warranty : 1,
       stock : 22,
-      image : "req.query.img"
+      image : "https://i.ytimg.com/vi/v4yUOeevSR0/maxresdefault.jpg"
     }).then((res) =>{
       // console.log({res});
     }).catch(error => {
@@ -67,7 +67,7 @@ Product.create({
       rating : 5,
       warranty :999,
       stock : 5,
-      image : "req.query.img"
+      image : "https://cdn.ttgtmedia.com/rms/onlineImages/storage-compact_disk_mobile.jpg"
     }).then((res) =>{
       // console.log({res});
     }).catch(error => {

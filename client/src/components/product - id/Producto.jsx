@@ -16,10 +16,10 @@ export default function Producto (props) {
           console.error(error.message)
         }}
         
-        useEffect(() => {
-           getIdProduct(id)
-            
-        },[])
+    useEffect(() => {
+        getIdProduct(id)
+        
+    },[])
 
 
 
@@ -42,7 +42,7 @@ export default function Producto (props) {
             <h3 style={{'color': 'green'}}>${productData.price}</h3>
         </div>
 
-        <img style = {{'max-width': '500px', 'max-height': '500px'}}src={productData.image}/>
+        <img style = {{'max-width': '500px', 'max-height': '500px'}} src={productData.image} alt='Imagen Producto'/>
 
         <p>{productData.description}</p>
         <p>Garantía: {productData.warranty}</p>
