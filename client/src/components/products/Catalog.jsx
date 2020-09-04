@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import ProductCard from './ProductCard';
+import React from 'react'
+import ProductCard from './ProductCard.jsx';
 
 export default function Catalogo(props) {
     const { categories, products, categoryFilter } = props
@@ -30,7 +30,7 @@ export default function Catalogo(props) {
                </div>
                <div className="main d-flex col-md-9" style={style.main}>
                 { products.map(prod => 
-                    <ProductCard data={prod} />
+                    <ProductCard key={prod.product_id} data={prod} />
                     ) } 
                </div>
                

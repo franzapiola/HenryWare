@@ -5,7 +5,6 @@ import Catalog from '../components/products/Catalog';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchBar from '../components/SearchBar';
 import Producto from '../components/product - id/Producto'
-import ProductCard from '../components/products/ProductCard';
 
 
 
@@ -87,7 +86,7 @@ const App = () => {
         </Route>
 
         <Route path='/products/:id' component={Producto}/>
-        {/* <Route path='/products/test' component={Producto}/> */}
+
 
       </Switch>
     </BrowserRouter>
