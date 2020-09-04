@@ -112,17 +112,17 @@ export default function Crud(props) {
     return (
         <div className='col-md-8 offset-2 pt-3'>
         {/* Componentes de react-bootstrap */}
-        <Button variant='info' className='mb-3'  onClick={()=>handleAddUpdate('', 'POST')}>Agregar Producto</Button>
+        <Button variant='info' className='mb-3'  onClick={()=>handleAddUpdate('', 'POST')}>Agregar un producto</Button>
             <table className='table table-striped table-collapse'>
             <thead>
             <tr>
-            <th>Id</th>
+            <th>ID</th>
             <th>Nombre</th>
-            <th>Descripcion</th>
+            <th>Descripción</th>
             <th>Garantía</th>
             <th>Precio</th>
-            <th>Descripción</th>
-            <th>Imágenes</th>
+            <th>Stock</th>
+            <th>Imágen</th>
             <th></th>
             <th></th>
             </tr>
@@ -160,21 +160,21 @@ export default function Crud(props) {
                     <Modal.Title>{ addEdit==='POST'?'Agregar':'Editar'} Producto</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form.Label>Nombre de Producto</Form.Label>
-                        <Form.Control id='name' name='name' value={form.name} type="text" placeholder="Ingrese Producto" onChange={updateField} />
-                        <Form.Label>Descripcion</Form.Label>
-                        <Form.Control id='description' name='description' value={form.description} type="text" placeholder="Ingrese Descripcion" onChange={updateField}/>                    
-                        <Form.Label>Garantia (Días)</Form.Label>
-                        <Form.Control id='warranty' name='warranty' value={form.warranty} type="number" placeholder="Ingrese Tiempo de Garantía" onChange={updateField}/> 
+                        <Form.Label>Nombre del producto</Form.Label>
+                        <Form.Control id='name' name='name' value={form.name} type="text" placeholder="Ingrese el nombre del producto" onChange={updateField} />
+                        <Form.Label>descripción</Form.Label>
+                        <Form.Control id='description' name='description' value={form.description} type="text" placeholder="Ingrese de la descripción" onChange={updateField}/>                    
+                        <Form.Label>Garantía (días)</Form.Label>
+                        <Form.Control id='warranty' name='warranty' value={form.warranty} type="number" placeholder="Ingrese el tiempo de garantía" onChange={updateField}/> 
                         <Form.Label>Precio</Form.Label>
-                        <Form.Control id='price' name='price' value={form.price} type="number" placeholder="Precio" onChange={updateField}/> 
+                        <Form.Control id='price' name='price' value={form.price} type="number" placeholder="Ingrese el precio" onChange={updateField}/> 
                         <Form.Label>Stock</Form.Label>
-                        <Form.Control id='stock' name='stock' value={form.stock} type="text" placeholder="Ingrese Existencias" onChange={updateField}/> 
+                        <Form.Control id='stock' name='stock' value={form.stock} type="text" placeholder="Ingrese las existencias" onChange={updateField}/> 
                         <Form.Label>Imagen</Form.Label>
                         <Form.File 
                             id="image"
                             name='image'
-                            label="Custom file input"
+                            label="Ingrese la imagen del producto"
                             custom
                         />                    
                     </Modal.Body>
@@ -183,7 +183,7 @@ export default function Crud(props) {
                         Cerrar
                     </Button>
                     <Button variant="primary" type='submit'>
-                        Guardar Cambios
+                        Guardar cambios
                     </Button>                
                     </Modal.Footer>
                     </Form.Group>

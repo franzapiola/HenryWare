@@ -11,7 +11,7 @@ const SearchBar = (props) => {
             <form onSubmit={(e)=>{onSearch(e, search, props)}}>
                 <input type='text' placeholder='Busca un producto...' onChange={(e)=>setSearch(e.target.value)}/>
                 
-                <Button variant='warning' type='submit'> Buscar </Button>
+                <Button variant='warning' type='submit'>Buscar</Button>
             </form>
 
         
