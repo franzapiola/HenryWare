@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import { Navbar, Button, NavDropdown } from 'react-bootstrap'
 
 const SearchBar = (props) => {
@@ -13,10 +13,19 @@ const SearchBar = (props) => {
                 
                 <Button variant='warning' type='submit'>Buscar</Button>
             </form>
+            <Link to='/products'>Catálogo</Link>
+            <NavDropdown title='Administrar'>
+                <NavDropdown.Item><Link to='/products/edit'>Productos</Link></NavDropdown.Item>
+                <NavDropdown.Item><Link to='/products/categories/addcategory'>Agregar una nueva categoría</Link></NavDropdown.Item>
+            </NavDropdown>
 
-        
+            {/* <Link>Iniciar sesión</Link>
+            <NavDropdown title='Mi cuenta'>
+                <NavDropdown.Item>Perfil</NavDropdown.Item>
+                <NavDropdown.Item>Historial de compras</NavDropdown.Item>
+            </NavDropdown>
+            <Link>¿Quiénes somos?</Link> */}
         </Navbar>
-        
     );
 }
 
