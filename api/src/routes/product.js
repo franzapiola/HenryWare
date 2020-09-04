@@ -73,12 +73,34 @@ server.get('/:id',function(req,res,next){
 
 
 
+var jsonParser = bodyParser.json()
+server.post("/",jsonParser,(req,res,next) =>{
 
-server.post("/",(req,res,next) =>{
+    //para agregar productos: /products . Jx
+    Product.create({
+        name : req.body.name,
+        price : req.body.price,
+        description : req.body.description,
+        rating : req.body.rating,
+        warranty : req.body.warranty,
+        stock : req.body.stock,
+        image : req.body.image
+    })
+    .then((pro) => {
+            //console.log("Creado en /product");
+            res.status(201).send("Created!")}
+        ).catch(error => {
+            res.status(404).send(error)
+        })
+})
+
+/*server.post("/",(req,res,next) =>{
+
+
+
     //para agregar productos: /productos/add . Jx
     const {name, price, description, rating ,warranty , stock, image} = req.query
-
-    console.log(name,price)
+    //console.log(name,price)
 
     // lo agrego con un form? Por ahora es solo con el body de lo que llega
 
@@ -93,15 +115,15 @@ server.post("/",(req,res,next) =>{
         image : image
         }
     )
-    .then((res) =>{
-       console.log({res});
+    .then((product) =>{
+
+        console.log("Product:",product)
+        res.status(201).send("Created!")
        
-    }).catch(error => console.log(error))
+    }).catch(error => res.status(404).send(error))
 
 
-    res.status(201).send("Created!")
-
-})
+})*/
 
 
 //Ruta para editar un producto por body
