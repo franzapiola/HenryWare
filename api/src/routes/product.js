@@ -3,6 +3,7 @@ const {Op} = require('sequelize')
 const bodyParser = require('body-parser')
 const { Product } = require('../db.js');
 const {Categories} = require('../db.js');
+const {product_category} = require('../db.js')
 const { response } = require('express');
 
 
@@ -15,28 +16,23 @@ server.get('/', (req, res, next) => {
 });
 
 
-
 //Ruta todos los productos según categoría --> me trae todos los products que tienen esa categoría
 server.get('/categorias/:categoria',function(req,res,next){
 	const {categoria} = req.params;
-
 	Categories.findAll({
 		where:{
 			name:categoria,
 		},
 		include:[{model:Product, as:"products"}]
 	}).then(response => res.status(200).send(response[0].products)).catch(err => res.status(404).send(err))
-
 })
 
 
 server.get('/search', (req, res, next) => {
 	// para buscar productos : /products/search?product={nombredeproducto} Jx
     const {product} = req.query
-
     //esta linea es para mostrar lo que buscamos en la consola del server, se puede comentar. JX
     //console.log("Searching ->",product)
-
     Product.findAll({
         where: {
             name:{
@@ -68,7 +64,6 @@ server.get('/:id',function(req,res,next){
         res.status(200).send(product)
     })
     .catch(err => res.status(404).send(err))
-
 });
 
 
@@ -93,38 +88,6 @@ server.post("/",jsonParser,(req,res,next) =>{
             res.status(404).send(error)
         })
 })
-
-/*server.post("/",(req,res,next) =>{
-
-
-
-    //para agregar productos: /productos/add . Jx
-    const {name, price, description, rating ,warranty , stock, image} = req.query
-    //console.log(name,price)
-
-    // lo agrego con un form? Por ahora es solo con el body de lo que llega
-
-
-    Product.create({
-        name : name,
-        price : price,
-        description : description,
-        rating : rating,
-        warranty : warranty,
-        stock : stock,
-        image : image
-        }
-    )
-    .then((product) =>{
-
-        console.log("Product:",product)
-        res.status(201).send("Created!")
-       
-    }).catch(error => res.status(404).send(error))
-
-
-})*/
-
 
 //Ruta para editar un producto por body
 server.put('/:id',function(req,res){
@@ -152,9 +115,8 @@ server.delete('/:id',function(req,res){
         where:{
             product_id:id
         }
-    }).then(res.status(200).send("Producto eliminado"))
+    }).then(res.status(200).send("Producto eliminado")).catch(err => res.status(400).send(err))
 })
-
 
 //Ruta para crear/agregar categorias
 server.post('/category',function(req,res){
@@ -163,8 +125,7 @@ server.post('/category',function(req,res){
     
     Categories.create({
         name:name
-    }).then(res.status(200).send('Categoría creada!'))
-
+    }).then(res.status(200).send('Categoría creada!')).catch(err => res.status(400).send(err))
 })
 
 //Ruta para eliminar categorias
@@ -175,7 +136,7 @@ server.delete('/category/:id',function(req,res){
         where:{
             category_id:id
         }
-    }).then(res.status(200).send('Categoría eliminada'))
+    }).then(res.status(200).send('Categoría eliminada')).catch(err => res.status(400).send(err))
 })
 
 //Ruta para editar categorias
@@ -189,8 +150,17 @@ server.put('/category/:id',function(req,res){
         name: name
     },{where:{
         category_id:id
-    }}).then(res.status(200).send('Categoría modificada'))
+    }}).then(res.status(200).send('Categoría modificada')).catch(err => res.status(400).send(err))
+})
 
+server.post("/:idproducto/category/:idcategoria",function(req,res){
+
+    const {idproducto,idcategoria} = req.params
+
+    product_category.create({
+        product_id:idproducto,
+        category_id:idcategoria
+    }).then(res.status(200).send(`La categoría ${idcategoria} se agregó en el producto ${idproducto}`)).catch(err => res.status(400).send(err))      
 })
 
 
