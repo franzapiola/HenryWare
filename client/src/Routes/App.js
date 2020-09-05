@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchBar from '../components/SearchBar';
 import Producto from '../components/product - id/Producto';
 import AddCategory from '../components/products/AddCategory';
-
+import Footer from '../components/Footer'
 
 
 const App = () => {
@@ -85,6 +85,7 @@ const App = () => {
         <Route exact path='/products/categories/addcategory' component={AddCategory}/>
         <Route path='/products/:id' component={Producto}/>
       </Switch>
+        <Route path='/' component={Footer}/>
     </BrowserRouter>
     )
 }

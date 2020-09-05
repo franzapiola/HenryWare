@@ -6,25 +6,33 @@ p{
     margin: 0;
 }
 .card-img{
-    max-height: 120px;
-    min-height: 120px;
-    object-fit: contain;
+    max-height: 150px;
+    max-width: 150px;
     background-color: white;
+    margin: 0px auto;
 }
+
+.hr{
+    margin:5px;
+}
+
 .product-card{
     transition: all 0.5s;
     display: flex;
     flex-direction: row;
     color:black;
+    height: fit-content;
+    text-align:center;
+    height: 300px;
+    width: 250px;
+    border-radius: 50px;
 }
-.product-card:hover{
-    transform: scale(1.05);
+
+.btn-buy{
+    background-color:red;
+    padding:0px;
+    width:50%;
+    height: 70px;
+    margin:auto;
 }
-.product-card:nth-child(n):hover{
-    text-decoration: none;
-}
-.tituloProducto{
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
+
