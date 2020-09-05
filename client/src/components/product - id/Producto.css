@@ -1,0 +1,25 @@
+
+a:hover{
+    text-decoration: none !important;
+}
+p{
+    margin: 0;
+}
+.image{
+    max-height: 500px;
+    min-height: 500px;
+    object-fit: contain;
+    background-color: white;
+}
+.product-card{
+    transition: all 0.5s;
+    display: flex;
+    flex-direction: row;
+    color:black;
+}
+
+.tituloProducto{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
