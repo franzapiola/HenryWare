@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom"
 import {AiFillStar,AiOutlineStar} from "react-icons/ai"
+import style from './ProductCard.css'
 
 
 const HowManyStars = (review) => {
@@ -60,23 +61,17 @@ const HowManyStars = (review) => {
 const ProductCard = (props) =>{
     
         return(
-            <Link to={`/products/${props.data.product_id}`}>
-                <div className="card mb-3" >
-                    <div className="row no-gutters">
-                        <div className="col-md-4">
-                            <img src={props.data.image} className="card-img" alt="..."/>
-                        </div>
-                        <div className="col-md-8">
-                            <div className="card-body">
-                                <h5 className="card-title">{props.data.name}</h5>
-                                <p className="card-star ">{HowManyStars(props.data.stock)}</p>
-                                <p className="card-text">{props.data.price}</p>
-                            </div>
-                        </div>
-                    </div>
+        <Link to={`/products/${props.data.product_id}`} className='col-md-4 col-sm-6 col-12 mb-2'>
+            <div className="card bg-light d-flex product-card" >               
+                <img src={props.data.image} className="card-img" alt={`Imagen ${props.data.name}`}/>
+                <div className="col-md-12">
+                    <h5 className="card-title tituloProducto">{props.data.name}</h5>
+                    <p className="card-star text-primary">{HowManyStars(props.data.stock)}</p>
+                    <p className="card-text font-weight-bold">$ {Number.parseFloat(props.data.price).toFixed(2)}</p>
                 </div>
+            </div>
+        </Link>
             
-            </Link>
         )
     }
 
