@@ -14,20 +14,15 @@ const App = () => {
   const [ products, setProducts ] = useState([]);
 
   //Estado categorías. Lo actualiza getCategories
-  const [ categories, setCategories ] = useState([
-    {id: 1, name:'Electronica'}, 
-    {id: 2, name:'Insumos'}, 
-    {id: 3, name:'Componentes'}, 
-    {id: 4, name:'Placas de Video'},
-  ]);
+  const [ categories, setCategories ] = useState([]);
 
   //Traer lista entera actualizada de categorías de la base de datos
   const getCategories = async ()=>{
     try {
-        const response = await fetch(`http://localhost:3001/categories`);
+        const response = await fetch(`http://localhost:3001/products/categories`);
         const jsonData = await response.json();
         setCategories(jsonData)
-        // console.log(jsonData);
+        console.log(jsonData);
     } catch (error) {
         console.error(error.message)
     }
@@ -53,7 +48,7 @@ const App = () => {
 
   useEffect(()=>{
       getProducts();   
-      //getCategories();  
+      getCategories();  
   },[])
 
   //Función ejecutada al buscar un producto en la search bar
