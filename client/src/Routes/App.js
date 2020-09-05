@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchBar from '../components/SearchBar';
 import Producto from '../components/product - id/Producto';
 import AddCategory from '../components/products/AddCategory';
+import Jumbotron from '../components/Jumbotron';
 
 
 
@@ -67,6 +68,11 @@ const App = () => {
     <BrowserRouter>
       <Route path ='/' render={ (props)=><SearchBar {...props} onSearch = {onSearch}/> }/>
       <Switch>
+
+        <Route exact path = '/' render={() =>{
+          return <Jumbotron />
+        }} />
+
         <Route exact path='/products' render={()=>{
           return <Catalog
             categories={categories}
