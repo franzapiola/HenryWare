@@ -3,8 +3,13 @@ html{
 }
 
 footer{
+    height: 80px;
     width: 100%;
     background-color: black;
     position: absolute;
     bottom: 0;
+}
+
+img{
+    width: 80px;
 }
