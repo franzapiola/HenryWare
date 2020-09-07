@@ -9,7 +9,7 @@ const { response } = require('express');
 
 server.get('/', (req, res, next) => {
 	Product.findAll({
-        oreder:[
+        order:[
             ['product_id','ASC']
         ]
     })
