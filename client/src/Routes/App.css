@@ -1,0 +1,27 @@
+.carousel{
+  margin: 10px auto;
+  width: 90%;
+  background-color: white;
+  overflow: hidden;
+  -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+  box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+}
+.carousel-item{
+  height: 400px;
+}
+.carousel .carousel-control-next:hover, .carousel .carousel-control-prev:hover{
+  background-color: rgba(0,0,0,0.2);
+}
+.carousel-caption{
+  color: white;
+  background: rgba(0,0,0,0.5);
+}
+
+.sliderImage{
+  margin: 0 auto;
+  max-width: 100%;
+  object-fit: contain;
+  height: auto;
+  max-height: 100%;
+}

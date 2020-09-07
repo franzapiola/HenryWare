@@ -1,4 +1,3 @@
-
 a:hover{
     text-decoration: none !important;
 }
@@ -6,26 +5,28 @@ p{
     margin: 0;
 }
 .card-img{
-    max-height: 150px;
-    max-width: 150px;
+    height: 150px;
+    min-width: 100%;
     background-color: white;
     margin: 0px auto;
+    object-fit: contain;
 }
 
 .hr{
-    margin:5px;
+    margin:1px;
 }
-
+.titulo-producto{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 .product-card{
     transition: all 0.5s;
-    display: flex;
-    flex-direction: row;
     color:black;
     height: fit-content;
     text-align:center;
     height: 300px;
     width: 250px;
-    border-radius: 50px;
 }
 
 .btn-buy{
