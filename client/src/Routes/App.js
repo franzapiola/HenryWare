@@ -83,6 +83,7 @@ const App = () => {
           return <Jumbotron />
         }} /> */}
         <Route exact path='/' >
+          <Jumbotron />
           <Carousel activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
             {products.map(prod => 
               <Carousel.Item>
