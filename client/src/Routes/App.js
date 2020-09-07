@@ -93,8 +93,8 @@ const App = () => {
                     alt={prod.name}
                   />
                   <Carousel.Caption>
-                    <h3>First slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                    <h3>{prod.name}</h3>
+                    <p>{prod.description}</p>
                   </Carousel.Caption>
                 </Link>
               </Carousel.Item>
