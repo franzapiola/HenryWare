@@ -84,7 +84,7 @@ const App = () => {
         }} /> */}
         <Route exact path='/' >
           <Jumbotron />
-          <Carousel activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
+          <Carousel className="carousel" activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
             {products.map(prod => 
               <Carousel.Item>
                 <Link to={`/products/${prod.product_id}`}>
@@ -114,6 +114,7 @@ const App = () => {
         <Route exact path='/products/edit'> 
           <Crud
             products={products}
+            categories={categories}
             setProducts={setProducts}
             getProducts={getProducts}
           />

@@ -8,7 +8,11 @@ const { response } = require('express');
 
 
 server.get('/', (req, res, next) => {
-	Product.findAll()
+	Product.findAll({
+        order:[
+            ['product_id','ASC']
+        ]
+    })
 		.then(products => {
 			res.status(200).send(products);
 		})

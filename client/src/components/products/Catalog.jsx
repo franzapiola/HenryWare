@@ -23,7 +23,7 @@ export default function Catalogo(props) {
                 { categories.map( cat => {
                   let categoryClass = 'list-group-item list-group-item-action'
                   if(isActive===cat.name) categoryClass += ' active'
-                  return <li key={cat.id} onClick={()=> {
+                  return <li key={cat.id} onClick={()=> { //no es cat.category_id ? 
                         setIsActive(cat.name)
                         categoryFilter(cat.name)                        
                     }

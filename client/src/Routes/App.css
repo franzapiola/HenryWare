@@ -7,8 +7,9 @@
   -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
   box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
 }
+
 .carousel-item{
-  height: 400px;
+  height: 480px;
 }
 .carousel .carousel-control-next:hover, .carousel .carousel-control-prev:hover{
   background-color: rgba(0,0,0,0.2);
@@ -16,6 +17,7 @@
 .carousel-caption{
   color: white;
   background: rgba(0,0,0,0.5);
+  bottom:0px;
 }
 
 .sliderImage{
@@ -23,5 +25,11 @@
   max-width: 100%;
   object-fit: contain;
   height: auto;
-  max-height: 100%;
+  min-height: 100%;
+}
+
+.carousel{
+  height: 480px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
 }

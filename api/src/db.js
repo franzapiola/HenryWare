@@ -106,7 +106,16 @@ Categories.create({
       console.log({resp});
     }).catch(error => {
       console.log({error})
-    })*/
+
+User.create({
+  email:'nicokenny98@gmail.com',
+  first_name:'Nicolas',
+  last_name:'Kenny',
+  address:'lalala 1234',
+  phone_number:1161171314,
+  role:'ADMIN'
+})
+})*/
 
 
 
