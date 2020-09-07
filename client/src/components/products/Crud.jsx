@@ -116,13 +116,13 @@ export default function Crud(props) {
             <table className='table table-striped table-collapse'>
             <thead>
             <tr>
-            <th>Id</th>
+            <th>ID</th>
             <th>Nombre</th>
-            <th>Descripcion</th>
+            <th>Descripción</th>
             <th>Garantía</th>
             <th>Precio</th>
-            <th>Descripción</th>
-            <th>Imágenes</th>
+            <th>Stock</th>
+            <th>Imágen</th>
             <th></th>
             <th></th>
             </tr>
@@ -160,17 +160,17 @@ export default function Crud(props) {
                     <Modal.Title>{ addEdit==='POST'?'Agregar':'Editar'} Producto</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form.Label>Nombre de Producto</Form.Label>
+                        <Form.Label>Ingrese el nombre del producto</Form.Label>
                         <Form.Control id='name' name='name' value={form.name} type="text" placeholder="Ingrese Producto" onChange={updateField} />
-                        <Form.Label>Descripcion</Form.Label>
+                        <Form.Label>Ingrese la descripción del producto</Form.Label>
                         <Form.Control id='description' name='description' value={form.description} type="text" placeholder="Ingrese Descripcion" onChange={updateField}/>                    
-                        <Form.Label>Garantia (Días)</Form.Label>
+                        <Form.Label>Garantía (días)</Form.Label>
                         <Form.Control id='warranty' name='warranty' value={form.warranty} type="number" placeholder="Ingrese Tiempo de Garantía" onChange={updateField}/> 
-                        <Form.Label>Precio</Form.Label>
+                        <Form.Label>Ingrese el precio</Form.Label>
                         <Form.Control id='price' name='price' value={form.price} type="number" placeholder="Precio" onChange={updateField}/> 
-                        <Form.Label>Stock</Form.Label>
+                        <Form.Label>Ingrese el stock</Form.Label>
                         <Form.Control id='stock' name='stock' value={form.stock} type="text" placeholder="Ingrese Existencias" onChange={updateField}/> 
-                        <Form.Label>Imagen</Form.Label>
+                        <Form.Label>Ingrese la imagen [URL]</Form.Label>
                         <Form.Control id='image' name='image' value={form.image} type="text" placeholder="Ingrese Url de Imagen" onChange={updateField}/>                  
                     </Modal.Body>
                     <Modal.Footer>
@@ -178,7 +178,7 @@ export default function Crud(props) {
                         Cerrar
                     </Button>
                     <Button variant="primary" type='submit'>
-                        Guardar Cambios
+                        Guardar los cambios
                     </Button>                
                     </Modal.Footer>
                     </Form.Group>
