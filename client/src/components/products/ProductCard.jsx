@@ -1,4 +1,4 @@
-import style from './ProductCard.css'
+import './ProductCard.css'
 import React from "react";
 import {Link} from "react-router-dom"
 import {Button} from "react-bootstrap"
@@ -55,7 +55,13 @@ const HowManyStars = (review) => {
             </span> //3 estrellas
         
         default:
-          return <p>0</p> //estrellas vacias
+          return <span>
+          {<AiOutlineStar/>}
+          {<AiOutlineStar/>}
+          {<AiOutlineStar/>}
+          {<AiOutlineStar/>}
+          {<AiOutlineStar/>}
+        </span> //estrellas vacias
       }
 }
 
@@ -68,7 +74,7 @@ const ProductCard = (props) =>{
                 <hr className="hr"/>
                 <div className="info-card">
                     <h5 className="card-title titulo-producto">{props.data.name}</h5>
-                    <p className="card-star text-primary">{HowManyStars(props.data.stock)}</p>
+                    <p className="card-star text-primary">{HowManyStars(props.data.rating)}</p>
                     <p className="card-text font-weight-bold">$ {Number.parseFloat(props.data.price).toFixed(2)}</p>
                 </div>
                 <Button className='mt-2 w-75 align-self-center' variant="primary">Comprar</Button>

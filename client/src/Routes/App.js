@@ -114,6 +114,7 @@ const App = () => {
         <Route exact path='/products/edit'> 
           <Crud
             products={products}
+            categories={categories}
             setProducts={setProducts}
             getProducts={getProducts}
           />
