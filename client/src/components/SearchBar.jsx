@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {withRouter, Link} from 'react-router-dom';
 import { Navbar, Button, NavDropdown } from 'react-bootstrap'
 import Style from './navbar.css'
-import img from './LogoHW.svg'
+import img from './Logo largo.svg'
 
 const SearchBar = (props) => {
     //Este estado almacena el contenido del input
