@@ -16,7 +16,7 @@ export default function Catalogo(props) {
     }
 
     return (
-        <div className='container-fluid mt-2 pt-2'>      
+        <div className='container-fluid mt-2 pt-2 mb-2'>      
            <div className='d-flex'>
                <div className="categorias col-md-3" style={style.categoria}>
                 <ul className="list-group">                    

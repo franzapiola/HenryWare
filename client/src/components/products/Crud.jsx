@@ -103,14 +103,14 @@ export default function Crud(props) {
     const style = {
         img: {
             width: '100px',
-        }
+        },
     }
     useEffect( () => {
         //Cambia el nombre del file-input
         bsCustomFileInput.init();
     })
     return (
-        <div className='col-md-8 offset-2 pt-3'>
+        <div className='col-md-8 offset-2 pt-3 table-responsive'>
         {/* Componentes de react-bootstrap */}
         <Button variant='info' className='mb-3'  onClick={()=>handleAddUpdate('', 'POST')}>Agregar Producto</Button>
             <table className='table table-striped table-collapse'>
@@ -132,7 +132,7 @@ export default function Crud(props) {
                 <tr key={prod.product_id}>
                 <td>{prod.product_id}</td>
                 <td>{prod.name}</td>
-                <td>{prod.description}</td>
+                <td>{prod.description.length>15?prod.description.slice(0, 15)+'...':prod.description}</td>
                 <td>{prod.warranty}</td>
                 <td>{prod.price}</td>
                 <td>{prod.stock}</td>
