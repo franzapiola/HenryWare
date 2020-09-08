@@ -11,7 +11,8 @@ server.get('/', (req, res, next) => {
 	Product.findAll({
         order:[
             ['product_id','ASC']
-        ]
+        ],
+        include:[{model:Categories,as:'categories'}]
     })
 		.then(products => {
 			res.status(200).send(products);
