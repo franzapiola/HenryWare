@@ -6,6 +6,9 @@ server.use(bodyParser.json());
 
 
 //Ruta para crear un usuario    /user    NV.
+server.get('/',function(req,res){
+    User.findAll({}).then(response => res.status(200).send(response))
+})
 
 
 server.post('/',(req, res) => {
