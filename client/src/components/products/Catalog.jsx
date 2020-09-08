@@ -3,7 +3,7 @@ import ProductCard from './ProductCard.jsx';
 import { Button } from 'react-bootstrap';
 
 export default function Catalogo(props) {
-    const { categories, products, getProducts, categoryFilter } = props
+    const { categories, products, getProducts, categoryFilter, getCategories } = props
     const [ isActive, setIsActive ] = useState('Mostrar todo')
     const style={
         categoria: {
@@ -17,6 +17,7 @@ export default function Catalogo(props) {
     }
     useEffect(()=>{
         getProducts();
+        getCategories();
     }, [])
     return (
         <div className='container-fluid mt-2 pt-2 mb-2'>      

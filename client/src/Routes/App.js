@@ -109,6 +109,7 @@ const App = () => {
             categories={categories}
             products={products}
             categoryFilter={categoryFilter}
+            getCategories={getCategories}
           />
         }}/>
 
