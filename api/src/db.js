@@ -38,7 +38,57 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Product, User, Categories} = sequelize.models;
+const { Product, User, Categories, Carrito, Order, LineaDeOrden} = sequelize.models;
+
+
+// Relaciones:
+
+//Producto-Categoría M:M
+//product_category es la tabla intermedia
+Product.belongsToMany(Categories, {
+  through:'product_category',
+  as:"categories",
+  foreignKey:'product_id'
+});
+Categories.belongsToMany(Product, {
+  through:'product_category',
+  as:"products",
+  foreignKey:'category_id'
+});
+
+//User-Carrito 1:1
+//añade el foreign key user_id al modelo de Carrito
+User.hasOne(Carrito, {
+  foreignKey: 'user_id'
+});
+Carrito.belongsTo(User, {
+  foreignKey: 'user_id'
+});
+
+//User-Order 1:M
+//añade el foreign key user_id al modelo de Order
+User.hasMany(Order, {
+  foreignKey: 'user_id'
+});
+Order.belongsTo(User, {
+  foreignKey: 'user_id'
+});
+
+//Producto-Order M:M
+//Utiliza Línea de Orden como tabla intermedia
+Product.belongsToMany(Order, {
+  through: LineaDeOrden,
+  as: 'orders',
+  foreignKey:'product_id'
+});
+Order.belongsToMany(Product, {
+  through: LineaDeOrden,
+  as: 'products',
+  foreignKey:'order_id'
+});
+
+
+
 
 
 //Comentado por JX.
@@ -117,13 +167,6 @@ User.create({
 })
 })*/
 
-
-
-// Aca vendrian las relaciones
-// Product.hasMany(Reviews);
-
-Product.belongsToMany(Categories,{through:'product_category',as:"categories",foreignKey:'product_id'})
-Categories.belongsToMany(Product,{through:'product_category',as:"products",foreignKey:'category_id'})
 
 module.exports = {
   ...sequelize.models,  // para poder importar los modelos así: const { Product, User } = require('./db.js');
