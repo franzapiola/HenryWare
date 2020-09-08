@@ -8,6 +8,13 @@ const SearchBar = (props) => {
     //Este estado almacena el contenido del input
     const [search, setSearch] = useState('');
     const { onSearch } = props;
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onSearch(e, search, props);
+        setSearch('');
+    }
+    
     return (
         <Navbar className="navbar" >
             
@@ -23,8 +30,8 @@ const SearchBar = (props) => {
             </NavDropdown>
             </div>
 
-            <form onSubmit={(e)=>{onSearch(e, search, props)}}>
-                <input type='text' placeholder='Busca un producto...' onChange={(e)=>setSearch(e.target.value)}/>
+            <form onSubmit={(e)=>{handleSubmit(e);}}>
+                <input value={search} type='text' placeholder='Busca un producto...' onChange={(e)=>setSearch(e.target.value)}/>
                 
                 <Button className="nav-submit" type='submit'>Buscar</Button>
             </form>
