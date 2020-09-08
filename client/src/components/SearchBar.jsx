@@ -25,7 +25,7 @@ const SearchBar = (props) => {
             <div className="button-navbar"> 
             <Link className="navbutton" to='/products'>Catálogo</Link>
             <NavDropdown  title={<span className="navbutton">Administrar</span>}>
-                <NavDropdown.Item><Link to='/products/edit'>Productos</Link></NavDropdown.Item>
+            <NavDropdown.Item><Link to='/products/edit'><div>Productos</div></Link></NavDropdown.Item>
                 <NavDropdown.Item><Link to='/products/categories/addcategory'>Agregar una nueva categoría</Link></NavDropdown.Item>
             </NavDropdown>
             </div>

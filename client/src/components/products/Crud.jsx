@@ -152,13 +152,15 @@ export default function Crud(props) {
 
     const handleSubmitCat = (e) =>{
         e.preventDefault()
-        //console.log(`http://localhost:3001/products/${idProducto}/category/${idCategoria}`)
-        fetch(`http://localhost:3001/products/${idProducto}/category/${idCategoria}`,{
-            method:'POST',
-            mode:'cors',
+        const submitCat = fetch(`http://localhost:3001/products/${idProducto}/category/${idCategoria}`, {
+            method: 'POST',
         });
         handleCloseCat();
-        getProducts();
+        
+        console.log(products)
+        submitCat.then(res => res.text()).then(res => {
+            getProducts();
+        })
     }
 
     const showModalCat = (idProducto)=>{
