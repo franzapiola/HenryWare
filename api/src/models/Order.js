@@ -10,16 +10,11 @@ module.exports = (sequelize) => {
             primaryKey: true
         },
         state: {
-            type: DataTypes.ENUM('Created', 'Processing', 'Cancelled', 'Complete'),
-            defaultValue: 'Created',
+            type: DataTypes.ENUM('Carrito', 'Creada','Procesando', 'Cancelada', 'Completa'),
             allowNull: false
         },
         payment_method: {
             type: DataTypes.ENUM('Debito', 'Credito'),
-            allowNull: false
-        },
-        total_price: {
-            type: DataTypes.FLOAT,
             allowNull: false
         }
     })
