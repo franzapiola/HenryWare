@@ -81,10 +81,10 @@ const App = () => {
 
         {/* <Route exact path = '/' render={() =>{
           return <Jumbotron />
-        }} /> */}
+        }} /> */}git 
         <Route exact path='/' >
           <Jumbotron />
-          <Carousel className="carousel" activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
+          <Carousel style={{width:"60%"}}className="carousel" activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
             {products.map(prod => 
               <Carousel.Item>
                 <Link to={`/products/${prod.product_id}`}>
@@ -95,7 +95,7 @@ const App = () => {
                   />
                   <Carousel.Caption>
                     <h3>{prod.name}</h3>
-                    <p>{prod.description}</p>
+                    <p>{prod.description.length>15?prod.description.slice(0, 50)+'...':prod.description}</p>
                   </Carousel.Caption>
                 </Link>
               </Carousel.Item>
