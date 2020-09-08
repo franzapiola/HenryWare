@@ -1,6 +1,6 @@
 const server = require('express').Router()
 const bodyParser = require('body-parser')
-const { User } = require('../db.js')
+const { User, LineaDeOrden} = require('../db.js')
 
 server.use(bodyParser.json());
 
@@ -28,6 +28,16 @@ server.post('/',(req, res) => {
     .catch((error) => {
         res.status(404).send(error)
     })
+})
+
+server.post('/:idUser/cart',function(req,res){
+
+    const {idUser} = req.params;
+
+    LineaDeOrden.create({
+        
+    })
+
 })
 
 module.exports = server;
