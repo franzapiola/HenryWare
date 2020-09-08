@@ -6,7 +6,9 @@ import Select from 'react-select'
 
 export default function Crud(props) {
 
-    const { categories } = props
+    //Estado local de categorías
+    const [categories, setCategories] = useState([]);
+
     //Estado local de products
     const [products, setProducts] = useState([]);
 
@@ -37,7 +39,10 @@ export default function Crud(props) {
         stock:'',
         image:'',
         rating:null,
-    })
+    });
+
+    //Estado para mostrar/esconder el modal de eliminar producto
+    const [showModalEliminar, setShowModalEliminar] = useState(false);
 
     //Trae todos los productos de la base de datos y setea el estado products
     const getProducts = async ()=>{
@@ -51,6 +56,17 @@ export default function Crud(props) {
         }        
     }
 
+    //Trae todas las categorías de la base de datos y setea el estado categories
+    const getCategories = async ()=>{
+        try {
+            const response = await fetch(`http://localhost:3001/products/categories`);
+            const jsonData = await response.json();
+            setCategories(jsonData)
+        } catch (error) {
+            console.error(error.message)
+        }
+      }
+
     //actualiza el state de form segun van cambiando los inputs
     const updateField = async e => {
         const {name, value} = e.target
@@ -60,6 +76,11 @@ export default function Crud(props) {
             [name]: value
         })
     }
+
+    //Modal de botón de eliminar producto
+    const handleCloseElim = () => setShowModalEliminar(false);
+    const handleShowElim = () => setShowModalEliminar(true);
+    const [ idEliminar, setIdEliminar ] = useState(null);
 
     //handleClose cierra la ventana modal
     const handleClose = () => setShow(false);
@@ -98,15 +119,16 @@ export default function Crud(props) {
     }
 
     //Delete del elemento por el Id
-    const handleDelete = (id) => {
-        const deletear = fetch(`http://localhost:3001/products/${id}`, {
+    const handleDelete = () => {
+        const deletear = fetch(`http://localhost:3001/products/${idEliminar}`, {
             method: 'DELETE',
             headers:{
                 'Content-type': 'application/json'
             }
         })
         deletear.then( res => {
-            setProducts(products.filter( prod => prod.product_id !== id))
+            setProducts(products.filter( prod => prod.product_id !== idEliminar));
+            handleCloseElim();
         })
     }
 
@@ -127,18 +149,23 @@ export default function Crud(props) {
         })
         handleClose()
     } 
+
     const handleSubmitCat = (e) =>{
         e.preventDefault()
         //console.log(`http://localhost:3001/products/${idProducto}/category/${idCategoria}`)
         fetch(`http://localhost:3001/products/${idProducto}/category/${idCategoria}`,{
             method:'POST',
             mode:'cors',
-        })
+        });
+        handleCloseCat();
+        getProducts();
     }
+
     const showModalCat = (idProducto)=>{
         setShowCat(true)
         setIdProducto(idProducto)
     }
+
     const categorias = (cate) => {
         const options = []
         for (const objeto of cate) {
@@ -157,22 +184,21 @@ export default function Crud(props) {
     }
     const style = {
         img: {
-            width: '100px',
+            height: '80px',
         },
     }
 
     
     useEffect( () => {
-        //Cambia el nombre del file-input
-        bsCustomFileInput.init();
         getProducts();
+        getCategories();
     }, []);
     
     return (
         <div className='col-md-8 offset-2 pt-3 table-responsive'>
         {/* Componentes de react-bootstrap */}
         <Button variant='info' className='mb-3'  onClick={()=>handleAddUpdate('', 'POST')}>Agregar Producto</Button>
-            <table className='table table-striped table-collapse'>
+            <table style={{backgroundColor: 'whitesmoke'}} className='table table-striped table-collapse'>
             <thead>
             <tr>
             <th>ID</th>
@@ -190,8 +216,8 @@ export default function Crud(props) {
             </thead>
             <tbody>
             {products.map(prod => 
-                <tr key={prod.product_id}>
-                <td>{prod.product_id}</td>
+                <tr style={{height: '100px', padding: 'auto 0'}} key={prod.product_id}>
+                <td >{prod.product_id}</td>
                 <td>{prod.name}</td>
                 <td>{prod.description.length>15?prod.description.slice(0, 15)+'...':prod.description}</td>
                 <td>{prod.warranty}</td>
@@ -205,7 +231,7 @@ export default function Crud(props) {
                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                     </svg>    
                 </Button></td>
-                <td><Button variant='danger' onClick={ () => handleDelete(prod.product_id) } >
+                <td><Button variant='danger' onClick={ () => {handleShowElim(); setIdEliminar(prod.product_id);} } >
                 <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -267,6 +293,21 @@ export default function Crud(props) {
                         </Modal.Footer>
                     </Form.Group>
                 </Form>
+            </Modal>
+
+
+            <Modal show={showModalEliminar} onHide={handleCloseElim}>
+                        <Modal.Header closeButton>
+                            <Modal.Title> Seguro que desea eliminar el producto?</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Footer>
+                            <Button variant="danger" onClick={()=>handleDelete(idEliminar)}>
+                                Sí
+                            </Button>
+                            <Button variant="primary"  onClick={()=>handleCloseElim()}>
+                                No
+                            </Button>                
+                        </Modal.Footer>
             </Modal>                          
         </div>
     )

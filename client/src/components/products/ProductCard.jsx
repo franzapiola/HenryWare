@@ -77,7 +77,7 @@ const ProductCard = (props) =>{
                     <p className="card-star text-primary">{HowManyStars(props.data.rating)}</p>
                     <p className="card-text font-weight-bold">$ {Number.parseFloat(props.data.price).toFixed(2)}</p>
                 </div>
-                <Button className='mt-2 w-75 align-self-center' variant="primary">Comprar</Button>
+                <Button className='mt-2 w-75 align-self-center' variant="primary">Ver detalles</Button>
             </div>
         </Link>
             

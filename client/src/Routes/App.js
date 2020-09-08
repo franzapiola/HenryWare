@@ -105,6 +105,7 @@ const App = () => {
 
         <Route exact path='/products' render={()=>{
           return <Catalog
+            getProducts={getProducts}
             categories={categories}
             products={products}
             categoryFilter={categoryFilter}
@@ -113,10 +114,7 @@ const App = () => {
 
         <Route exact path='/products/edit'> 
           <Crud
-            products={products}
             categories={categories}
-            setProducts={setProducts}
-            getProducts={getProducts}
           />
         </Route>
         <Route exact path='/products/categories/addcategory' component={AddCategory}/>
