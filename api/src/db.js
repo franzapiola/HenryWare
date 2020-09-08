@@ -56,15 +56,6 @@ Categories.belongsToMany(Product, {
   foreignKey:'category_id'
 });
 
-//User-Carrito 1:1
-//añade el foreign key user_id al modelo de Carrito
-User.hasOne(Carrito, {
-  foreignKey: 'user_id'
-});
-Carrito.belongsTo(User, {
-  foreignKey: 'user_id'
-});
-
 //User-Order 1:M
 //añade el foreign key user_id al modelo de Order
 User.hasMany(Order, {
