@@ -5,7 +5,6 @@ const AddCategory = () => {
     //Estado que almacena el valor del input del form, se actualiza automáticamente al escribir en el input
     const [form, setForm] = useState({name:''});
     //handler del submit, hace un POST, en el body está el estado form
-    const [sent, setSent] = useState(false);
     const handleSubmit = (data, e) => {
         e.preventDefault();
         fetch('http://localhost:3001/products/category', {
@@ -16,7 +15,6 @@ const AddCategory = () => {
             body: JSON.stringify(data)
         })
         .then(()=>{
-            setSent(true);
             setForm({name:''})
         })
         .catch(err=>console.log(err));
