@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ProductCard from './ProductCard.jsx';
+import { Button } from 'react-bootstrap';
 
 export default function Catalogo(props) {
-    const { categories, products, categoryFilter } = props
-    const [ isActive, setIsActive ] = useState()
+    const { categories, products, getProducts, categoryFilter } = props
+    const [ isActive, setIsActive ] = useState('Mostrar todo')
     const style={
         categoria: {
             width: '250px',
@@ -14,12 +15,25 @@ export default function Catalogo(props) {
         }
 
     }
-
+    useEffect(()=>{
+        getProducts();
+    }, [])
     return (
         <div className='container-fluid mt-2 pt-2 mb-2'>      
            <div className='d-flex'>
                <div className="categorias col-md-3" style={style.categoria}>
-                <ul className="list-group">                    
+                {/* <Button>Todos los productos</Button> */}
+                <ul className="list-group">
+
+                    {/* Botón mostrar todos */}
+                    <li onClick={()=>{
+                            setIsActive('Mostrar todo')
+                            getProducts()
+                        }}
+                        className={`list-group-item list-group-item-action ${isActive==='Mostrar todo' && 'active'}`}
+                        style={{cursor:'pointer', fontWeight: 'bold'}}>Todos los productos</li>
+                    {/* Botón mostrar todos */}
+
                 { categories.map( cat => {
                   let categoryClass = 'list-group-item list-group-item-action'
                   if(isActive===cat.name) categoryClass += ' active'
@@ -33,9 +47,9 @@ export default function Catalogo(props) {
                 </ul>
                </div>
                <div className="main d-flex flex-wrap col-md-9">
-                { products.map(prod => 
+                { products.length ? products.map(prod => 
                     <ProductCard key={prod.product_id} data={prod} />
-                    ) } 
+                    ) : <h3>No se encontraron resultados para tu búsqueda...</h3>} 
                </div>
                
            </div>
