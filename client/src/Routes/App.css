@@ -14,10 +14,16 @@
 .carousel .carousel-control-next:hover, .carousel .carousel-control-prev:hover{
   background-color: rgba(0,0,0,0.2);
 }
+
+.carousel .carousel-control-next, .carousel .carousel-control-prev{
+  width:10%;
+  background-color:rgba(0,0,0,0.3)
+}
+
 .carousel-caption{
   color: white;
   background: rgba(0,0,0,0.5);
-  bottom:0px;
+  bottom:15px;
 }
 
 .sliderImage{
