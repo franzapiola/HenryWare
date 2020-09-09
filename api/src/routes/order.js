@@ -17,20 +17,21 @@ server.post('/:user_id/cart',function(req,res){
         }
     })
     .then(ord => {
+        //findOrCreate devuelve un array [objeto, booleano]
+        //Si el registro ya existía y no se creó nada nuevo, el booleano es false.
         const order_id = ord[0].order_id;
         return LineaDeOrden.create({
             product_id,
             order_id,
             quantity,
             price
-        })
+        });
     })
     .then((l)=>{
         res.status(200).send(l)
     })
 
     .catch(err=>{
-        console.log(err);
         res.status(400).send(err)})
     
 });
@@ -45,10 +46,10 @@ server.get('/:user_id/cart', (req, res) => {
             state: 'Carrito'
         }
     })
-    .then((response) => {
+    .then((orden) => {
         return  LineaDeOrden.findAll({
             where: {
-                order_id: response.order_id
+                order_id: orden.order_id
             }
         })
     })
@@ -60,5 +61,38 @@ server.get('/:user_id/cart', (req, res) => {
 
     })
 });
+
+//Cambiar cantidad de un determinado producto(product_id) en el carrito de un determinado usuario(user_id)
+server.put('/:user_id/cart', function(req, res){
+    //El front tiene que mandar por params el user_id, y por body el product_id y la cantidad deseada
+    const { user_id } = req.params;
+    const { product_id, quantity } = req.body;
+
+    Order.findOne({
+        where:{
+            user_id,
+            state: 'Carrito'
+        }
+    })
+    .then(order => {
+        //Busco la línea de orden relacionada al product_id que recibimos por body y al order_id que recibimos por params
+        return LineaDeOrden.findOne({
+            where:{
+                order_id: order.order_id,
+                product_id
+            }
+        });
+    })
+    .then(response=>{
+        //findOne devuelve una referencia directa al registro que encontró
+        //por ende con un .update actualizamos el atributo que queremos, y listo!
+        return response.update({
+            quantity
+        });
+    })
+    .then(() => {
+        res.status(200).send(`Se ha actualizado la cantidad del producto a ${quantity}`);
+    })
+})
 
 module.exports = server;
