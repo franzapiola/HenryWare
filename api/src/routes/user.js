@@ -4,7 +4,9 @@ const { User, LineaDeOrden} = require('../db.js')
 
 server.use(bodyParser.json());
 
+
 //Ruta para obtener todos los usuarios  /users
+
 server.get('/',function(req,res){
     User.findAll({}).then(response => res.status(200).send(response))
 })
@@ -74,5 +76,21 @@ server.post('/:idUser/cart',function(req,res){
     })
 
 })
+
+// users/:id   ruta para eliminar usuario            NV.
+
+server.delete('/:id', (req, res)=>{
+    User.destroy({
+        where: {
+            user_id: req.params.id
+        }
+    })
+    .then(()=>{
+        res.status(200).send("User deleted!")
+    })
+    .catch((error) => {
+        res.status(404).send(error)
+    })
+});
 
 module.exports = server;
