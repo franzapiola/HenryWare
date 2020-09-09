@@ -95,4 +95,39 @@ server.put('/:user_id/cart', function(req, res){
     })
 })
 
+
+//Ruta para eliminar linea de ordenl carrito de determinado usuario pasado por paramas user_id
+
+server.delete('/:user_id/cart', (req, res) => {
+    const { user_id } = req.params;
+    
+    Order.findOne({
+        where: {
+            user_id: user_id,
+            state: 'Carrito'
+        }
+    })
+    .then((orden)=>{
+        return LineaDeOrden.findAll({
+            where: {
+                order_id: orden.order_id
+            }
+        })
+    })
+    //  Iteramos sobre la linea de orden y eliminamos 
+    .then((relation)=>{
+        relation.forEach(element => {
+           element.destroy() 
+        });
+        
+    })
+    .then(()=>{
+        res.send("Eliminado")
+    })
+    .catch((error)=>{
+        res.send(error)
+    })
+    
+})
+
 module.exports = server;
