@@ -19,7 +19,7 @@ const HowManyStars = (review) => {
             
         case 2: 
             return  <span>
-            {<AiFillStar/>}
+            {<AiFillStar />}
             {<AiFillStar/>}
             {<AiOutlineStar/>}
             {<AiOutlineStar/>}
@@ -68,16 +68,16 @@ const HowManyStars = (review) => {
 const ProductCard = (props) =>{
     
         return(
-        <Link to={`/products/${props.data.product_id}`} className='product-card mr-2 mb-3'>
-            <div className="card bg-light d-flex product-card mr-3" >               
+        <Link to={`/products/${props.data.product_id}`} className='product-card mr-4 mb-3'>
+            <div className="card d-flex product-card mr-3 mx-auto" >               
                 <img src={props.data.image} className="card-img" alt={`Imagen ${props.data.name}`}/>
                 <hr className="hr"/>
                 <div className="info-card">
                     <h5 className="card-title titulo-producto">{props.data.name}</h5>
-                    <p className="card-star text-primary">{HowManyStars(props.data.rating)}</p>
+                    <p className="card-star estrella">{HowManyStars(props.data.stock)}</p>
                     <p className="card-text font-weight-bold">$ {Number.parseFloat(props.data.price).toFixed(2)}</p>
                 </div>
-                <Button className='mt-2 w-75 align-self-center' variant="primary">Ver detalles</Button>
+                <Button className='mt-2 w-75 align-self-center' variant="comprar"><b>Ver detalles</b></Button>
             </div>
         </Link>
             
