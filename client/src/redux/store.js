@@ -1,9 +1,22 @@
-import { createStore } from "redux";
-import rootReducer from './reducers/reducer';
+import { createStore, applyMiddleware, compose } from "redux";
+import rootReducer from './reducers/rootReducer';
+import { fetchProducts } from './actions/actions'
+import thunkMiddleware from 'redux-thunk'
 
+//import { createLogger } from 'redux-logger'
 
-const store = createStore(
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, /* thunkMiddleware,  */composeEnhancers(
+    applyMiddleware(thunkMiddleware)
+  ));
+/* const store = createStore(
 	rootReducer,
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    //applyMiddleware(thunk)
-	);
+	applyMiddleware(
+		thunkMiddleware, 
+		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+	), 
+	
+); */
+store.subscribe(() => {console.log(store.getState())})
+
+export default store;

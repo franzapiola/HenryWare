@@ -22,7 +22,7 @@ export default function Catalogo(props) {
     }, [])
     return (
         <div className='container-fluid mt-2 pt-2 mb-2'>      
-           <div className='d-flex align-items-start'>
+ master
                <div className="categorias col-md-3" style={style.categoria}>
                 {/* <Button>Todos los productos</Button> */}
                 <ul className="list-group">
@@ -48,8 +48,7 @@ export default function Catalogo(props) {
                 })}
                 </ul>
                </div>
-               <div style={{marginLeft:"10px"}} className=" main d-flex flex-wrap col-md-9">
-                { products.length ? products.map(prod =>
+master
                     <ProductCard key={prod.product_id} data={prod} />
                     ) : <h3>No se encontraron resultados para tu búsqueda...</h3>} 
                </div>

@@ -29,14 +29,18 @@ const SearchBar = (props) => {
                 <NavDropdown.Item><Link to='/products/categories/addcategory'>Agregar una nueva categoría</Link></NavDropdown.Item>
             </NavDropdown>
             </div>
-
             <form onSubmit={(e)=>{handleSubmit(e);}}>
-                <input value={search} type='text' placeholder='Busca un producto...' onChange={(e)=>setSearch(e.target.value)}/>
-                
+                <input value={search} type='text' placeholder='Busca un producto...' onChange={(e)=>setSearch(e.target.value)}/>                
                 <Button className="nav-submit" type='submit'>Buscar</Button>
             </form>
             </div>
-
+            <div>
+            <NavDropdown title={<span className="navbutton"> Mi Cuenta</span>}>
+                <NavDropdown.Item><Link to="/profile"> Perfil </Link></NavDropdown.Item>
+                <NavDropdown.Item><Link to="/order"> Carrito </Link></NavDropdown.Item>
+                <NavDropdown.Item> <Link to="/profile/payment_methods">Metodos de Pago</Link> </NavDropdown.Item>
+            </NavDropdown>
+            </div>
             {/* <Link>Iniciar sesión</Link>
             <NavDropdown title='Mi cuenta'>
                 <NavDropdown.Item>Perfil</NavDropdown.Item>
