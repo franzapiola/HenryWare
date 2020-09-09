@@ -1,6 +1,6 @@
 const server = require('express').Router()
 const bodyParser = require('body-parser')
-const { User, LineaDeOrden} = require('../db.js')
+const { User } = require('../db.js')
 
 server.use(bodyParser.json());
 
@@ -67,15 +67,6 @@ server.put('/:user_id', function(req, res){
     .catch( err => res.status(400).send(err));
 })
 
-server.post('/:idUser/cart',function(req,res){
-
-    const {idUser} = req.params;
-
-    LineaDeOrden.create({
-        
-    })
-
-})
 
 // users/:id   ruta para eliminar usuario            NV.
 
