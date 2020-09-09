@@ -13,7 +13,6 @@ export default function Catalogo(props) {
         category: {
             cursor: 'pointer',
         }
-
     }
     useEffect(()=>{
         getProducts();
