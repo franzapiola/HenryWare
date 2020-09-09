@@ -35,4 +35,30 @@ server.post('/:user_id/cart',function(req,res){
     
 });
 
+//Traer todos los items del carrito de un usuario en particular         /order/:user_id/cart
+server.get('/:user_id/cart', (req, res) => {
+    const { user_id } = req.params;
+
+    Order.findOne({
+        where: {
+            user_id,
+            state: 'Carrito'
+        }
+    })
+    .then((response) => {
+        return  LineaDeOrden.findAll({
+            where: {
+                order_id: response.order_id
+            }
+        })
+    })
+    .then((items) => {
+        res.status(200).send(items)
+    })
+    .catch((error) => {
+        res.status(404).send(error)
+
+    })
+});
+
 module.exports = server;
