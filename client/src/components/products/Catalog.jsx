@@ -14,7 +14,6 @@ export default function Catalogo(props) {
         category: {
             cursor: 'pointer',
         }
-
     }
     useEffect(()=>{
         getProducts();
@@ -51,8 +50,7 @@ export default function Catalogo(props) {
 master
                     <ProductCard key={prod.product_id} data={prod} />
                     ) : <h3>No se encontraron resultados para tu búsqueda...</h3>} 
-               </div>
-               
+               </div>               
            </div>
         </div>
     )
