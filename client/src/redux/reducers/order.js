@@ -1,16 +1,14 @@
-
+import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS } from '../actions/actions'
 const initialState = {
-
-	products : [],
+	isFetching: false,
+    didInvalidate: false,
 	id_order : "",
 	status : "cart",
+	products : [],
 	total_price : 0,
 	payment_method : ""
 	// modo de envio , fecha de envio
-
-
 };
-
 
 export default (state= initialState, action) => {
 
@@ -30,14 +28,20 @@ export default (state= initialState, action) => {
 				...state,
 				payment_method : action.method
 			}
-		case('GET_PRODUCTS'):
-		console.log(action)
+		case(REQUEST_PRODUCTS):
 			return{
 				...state,
+				isFetching: true,
+				products: []
+		}
+		case(RECEIVE_PRODUCTS):
+			return{
+				...state,
+				isFetching: false,
 				products: action.products
-			}
+		}
 	}
 
 	return state;
-
+	
 };

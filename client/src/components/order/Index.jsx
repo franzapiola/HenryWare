@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './index.module.scss'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch, connect } from 'react-redux'
+import { fetchProducts } from '../../redux/actions/actions'
 
-export default function Order() {
-    const products = useSelector(state => state.order.products)
-    const dispatch = useDispatch()    
-    console.log(products)
+function Order({products}) {
+    const dispatch = useDispatch()
     const [cant, setCant] = useState(1)
     const restaUno = () => {
         cant>0&&setCant(cant-1)
@@ -14,11 +13,13 @@ export default function Order() {
     const sumaUno = () => {
         setCant(cant+1)
     }
+    useEffect(() => {
+        dispatch(fetchProducts())
+    }, [])
     return (
         <div className='card offset-2 col-md-8 col-12 mt-2 pt-4 pb-4'>
             <h4 className='text-center'>Carrito</h4>
             <hr/>
-            <Button onClick={ ()=>dispatch({type: 'GET_PRODUCTS'})}>productos</Button>
             {products.map(product => 
                <div className='d-flex'>
                     <div className="imagen col-md-2">
@@ -39,12 +40,23 @@ export default function Order() {
                     </div>
                     <div className="precio col-md-2">
                         $ 4.318 
-                    </div>
-                    
+                    </div>                    
                 </div> 
-            )}   
-            
+            )}               
         </div>
     )
 }
 
+const mapStateToProps = state => {
+    return {
+        products: state.order.products
+    }
+}
+  
+const mapDispatchToProps = (dispatch, props) => {
+return {
+    fetchProducts: () => dispatch(fetchProducts())
+}
+}
+    
+export default connect(mapStateToProps, mapDispatchToProps)(Order)

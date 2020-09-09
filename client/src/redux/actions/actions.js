@@ -1,4 +1,7 @@
-export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS'
+export const REQUEST_PRODUCTS = 'REQUEST_PRODUCTS';
+export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
+export const INVALID_REQUEST_PRODUCTS = 'INVALID_REQUEST_PRODUCTS';
+
 export const addProduct = (product) =>{
 	return {
 		type : "ADD_PRODUCT",
@@ -6,12 +9,6 @@ export const addProduct = (product) =>{
 	}
 }
 
-export const receiveProducts = (products) => {
-	return {
-		type: RECEIVE_PRODUCTS,
-		products: products,
-	  }
-}
 export const changeStatus = (status) =>{
 	return{
 		type: "CHANGE_STATUS",
@@ -25,20 +22,25 @@ export const addPaymentMethod = (method) =>{
 		method : method
 	}
 }
-export const getProducts = (products) => {
-	return{
-		type: "GET_PRODUCTS",
-		products: ['a', 'b']
+export const requestProducts = () => {
+	console.log('request products')
+	return {
+		type: REQUEST_PRODUCTS,
 	}
 }
-/* export function getProducts() { 
-	return function (dispatch) {
-	  return fetch(`http://localhost:3001/products`)
-		.then(
-		  response => response.json()
-		)
-		.then(json =>
-		  dispatch(getProducts(json))
-		)
+export function fetchProducts() { 
+	return dispatch => {
+		dispatch(requestProducts())
+		fetch(`http://localhost:3001/products`)
+		.then( response => response.json())
+		.then( json => dispatch(receiveProducts(json)))
+		
 	}
-  } */
+}
+export const receiveProducts = products => {
+	console.log('receiveProducts')
+	return {
+		type: RECEIVE_PRODUCTS,
+		products: products,
+	}
+}
