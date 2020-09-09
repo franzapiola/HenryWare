@@ -13,9 +13,9 @@ module.exports = (sequelize) => {
             type: DataTypes.ENUM('Carrito', 'Creada','Procesando', 'Cancelada', 'Completa'),
             allowNull: false
         },
-        payment_method: {
-            type: DataTypes.ENUM('Debito', 'Credito'),
-            allowNull: false
-        }
+        // payment_method: {
+        //     type: DataTypes.ENUM('Debito', 'Credito'),
+        //     allowNull: true
+        // }
     })
 }
