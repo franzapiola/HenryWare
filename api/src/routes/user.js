@@ -5,12 +5,12 @@ const { User, LineaDeOrden} = require('../db.js')
 server.use(bodyParser.json());
 
 
-//Ruta para crear un usuario    /user    NV.
+
 server.get('/',function(req,res){
     User.findAll({}).then(response => res.status(200).send(response))
 })
 
-
+//Ruta para crear un usuario    /user    NV.
 server.post('/',(req, res) => {
     User.create({
         email: req.body.email,
@@ -39,5 +39,21 @@ server.post('/:idUser/cart',function(req,res){
     })
 
 })
+
+// users/:id   ruta para eliminar usuario            NV.
+
+server.delete('/:id', (req, res)=>{
+    User.destroy({
+        where: {
+            user_id: req.params.id
+        }
+    })
+    .then(()=>{
+        res.status(200).send("User deleted!")
+    })
+    .catch((error) => {
+        res.status(404).send(error)
+    })
+});
 
 module.exports = server;
