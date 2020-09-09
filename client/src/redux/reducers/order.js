@@ -30,6 +30,12 @@ export default (state= initialState, action) => {
 				...state,
 				payment_method : action.method
 			}
+		case('GET_PRODUCTS'):
+		console.log(action)
+			return{
+				...state,
+				products: action.products
+			}
 	}
 
 	return state;
