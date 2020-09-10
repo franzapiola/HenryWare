@@ -16,17 +16,22 @@ function Order({products}) {
     useEffect(() => {
         dispatch(fetchProducts())
     }, [])
+
+
     return (
+
+
         <div className='card offset-2 col-md-8 col-12 mt-2 pt-4 pb-4'>
-            <h4 className='text-center'>Carrito</h4>
-            <hr/>
+            <h4 className='text-center'>Carrito de USUARIO</h4>
             {products.map(product => 
+
                <div className='d-flex'>
+
                     <div className="imagen col-md-2">
                         <img src={product.image} style={{height: '100px'}}/>
                     </div>
                     <div className="descripcion col-md-4">
-                        descripcion
+                        {product.description}
                     </div>
                     <div className="cantidad offset-1 col-md-2 text-center" style={{padding:0}}>
                         <div className="col-md-12 mb-1">
@@ -36,15 +41,21 @@ function Order({products}) {
                             <Button variant='info' className={styles.masMenos} onClick={restaUno}>-</Button>
                             <Button variant='info' className={`${styles.masMenos}`} onClick={sumaUno}>+</Button>
                         </div>
-                        <Form.Text className="text-muted">15 en Stock</Form.Text>
+                        <Form.Text className="text-muted">Stock: {product.stock - cant} </Form.Text>
                     </div>
                     <div className="precio col-md-2">
-                        $ 4.318 
+                        ${product.price*cant}
                     </div>                    
                 </div> 
-            )}               
+            )}              
         </div>
+
+        
+        
     )
+
+
+
 }
 
 const mapStateToProps = state => {

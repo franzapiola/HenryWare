@@ -85,7 +85,7 @@ const App = () => {
         }} /> */}git 
         <Route exact path='/' >
           <Jumbotron />
-          <Carousel style={{width:"60%"}}className="carousel" activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
+          <Carousel style={{width:"100%" }, {height:"50%"}}className="carousel" activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
             {products.map(prod => 
               <Carousel.Item>
                 <Link to={`/products/${prod.product_id}`}>
