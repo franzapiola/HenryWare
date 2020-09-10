@@ -7,8 +7,9 @@ import Catalog from '../components/products/Catalog';
 import SearchBar from '../components/SearchBar';
 import Producto from '../components/product-id/Producto';
 import AddCategory from '../components/products/AddCategory';
-//import './App.css'
-import Order from '../components/order/Index'
+import './App.css'
+import Cart from '../components/cart/Index'
+import Order from '../components/order/index'
 import Footer from '../components/Footer'
 import Jumbotron from '../components/Jumbotron';
 import './App.scss'; 
@@ -123,6 +124,9 @@ const App = () => {
         <Route path='/products/:id' component={Producto}/>
       </Switch>
         <Route path='/' component={Footer}/>
+        <Route path='/cart'>
+          <Cart/>
+        </Route>
         <Route path='/order'>
           <Order/>
         </Route>
