@@ -1,3 +1,5 @@
+Tests para back (postman)
+
 Productos:
 POST /products
 Para agregarles cada imágen una por una: POST /products/:product_id/images
