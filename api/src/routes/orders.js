@@ -50,6 +50,29 @@ server.get('/:order_id', function(req, res){
     })
 })
 
+// Actualizar el estado de una orden     /orders/order_id
+// Front envia orden_id por params y state por body
+
+server.put('/:order_id', (req, res) => {
+    const {order_id} = req.params;
+    const {state} = req.body;
+
+    if(state !== 'Carrito' && state !== 'Creada' && state !== 'Procesando' && state !== 'Cancelada' && state !== 'Completa'){
+        res.status(404).send('No es un estado válido')
+    }
+    Order.update({
+        state
+    }, {where: {
+        order_id
+    }})
+    .then((response)=>{
+        res.status(200).send("Estado actualizado")
+    })
+    .catch((error)=>{
+        res.status(404).send(error)
+    })
+})
+
 
 
 module.exports = server;
