@@ -4,7 +4,7 @@ import styles from './index.module.scss'
 import { useSelector, useDispatch, connect } from 'react-redux'
 import { fetchProducts } from '../../redux/actions/actions'
 
-function Order({products}) {
+function Cart({products}) {
     const dispatch = useDispatch()
     const [cant, setCant] = useState(1)
     const restaUno = () => {
@@ -38,7 +38,7 @@ function Order({products}) {
                             <Form.Control type="text" value={cant} className='text-center col-md-12' onChange={ e => setCant(parseInt(e.target.value))} />
                         </div>
                         <div className="buttons">
-                            <Button variant='info' className={styles.masMenos} onClick={restaUno}>-</Button>
+                            <Button variant='info' className={`${styles.masMenos}`} onClick={restaUno}>-</Button>
                             <Button variant='info' className={`${styles.masMenos}`} onClick={sumaUno}>+</Button>
                         </div>
                         <Form.Text className="text-muted">Stock: {product.stock - cant} </Form.Text>
@@ -47,7 +47,10 @@ function Order({products}) {
                         ${product.price*cant}
                     </div>                    
                 </div> 
-            )}              
+            )} 
+            <span class="badge badge-primary badge-pill" className={`${styles.padre}`} >
+                <a href="/order" class="btn btn-warning ">SIGUIENTE</a>            
+            </span>
         </div>
 
         
@@ -60,7 +63,7 @@ function Order({products}) {
 
 const mapStateToProps = state => {
     return {
-        products: state.order.products
+        products: state.cart.products
     }
 }
   
@@ -70,4 +73,4 @@ return {
 }
 }
     
-export default connect(mapStateToProps, mapDispatchToProps)(Order)
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)
