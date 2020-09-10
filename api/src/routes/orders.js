@@ -1,6 +1,6 @@
 const server = require('express').Router()
 const bodyParser = require('body-parser')
-const { User, LineaDeOrden, Order, Product} = require('../db.js')
+const { LineaDeOrden, Order, Product} = require('../db.js')
 
 server.use(bodyParser.json());
 
@@ -30,6 +30,24 @@ server.get('/',function(req,res){
         .catch(err => res.status(404).send(err))
 
     }
+});
+
+//Traer una orden en particular según order_id, pasada por params       /orders/:order_id
+server.get('/:order_id', function(req, res){
+    const { order_id } = req.params;
+
+    Order.findOne({
+        where:{
+            order_id
+        },
+        include: [{model: Product, as:'products'}]
+    })
+    .then(order => {
+        res.send(order);
+    })
+    .catch(error => {
+        res.status(400).send(error);
+    })
 })
 
 
