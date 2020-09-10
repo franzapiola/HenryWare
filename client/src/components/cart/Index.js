@@ -49,7 +49,7 @@ function Cart({products}) {
                 </div> 
             )} 
             <span class="badge badge-primary badge-pill" className={`${styles.padre}`} >
-                <a href="/order" class="btn btn-primary">SIGUIENTE</a>            
+                <a href="/order" class="btn btn-warning ">SIGUIENTE</a>            
             </span>
         </div>
 
