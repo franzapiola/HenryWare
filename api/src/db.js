@@ -85,7 +85,7 @@ Order.belongsToMany(Product, {
 //Comentado por JX.
 //Pruebas de back
 //Descomentar desde aca:
-/*
+
 
 Product.create({  
       name : "Pendrive 32 GB",
@@ -128,7 +128,6 @@ Product.create({
   image : "https://www.notebookcheck.net/fileadmin/Notebooks/News/_nc3/ThinkPad_T480_7.png"
 })
 
-*/
 
 //Categorias de prueba
 /*Categories.create({
