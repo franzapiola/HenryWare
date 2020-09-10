@@ -215,4 +215,20 @@ server.delete('/:user_id/cart', (req, res) => {
 })
 
 
+// Ruta que trae todas las ordenes de un usuario en particular (Por ID (params) )    /users/iduser/orders
+server.get('/:user_id/orders',function(req,res){
+
+    const {user_id} = req.params
+
+    Order.findAll({
+        where:{
+            user_id
+        },
+        // include:[{model:Product,as:'products'}]
+    })
+    .then(response => res.status(200).send(response))
+    .catch(err => res.status(404).send(err))
+
+})
+
 module.exports = server;
