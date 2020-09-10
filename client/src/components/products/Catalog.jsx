@@ -21,7 +21,7 @@ export default function Catalogo(props) {
     }, [])
     return (
         <div className='container-fluid mt-2 pt-2 mb-2'>      
- master
+        <div className='d-flex flex-row'>
                <div className="categorias col-md-3" style={style.categoria}>
                 {/* <Button>Todos los productos</Button> */}
                 <ul className="list-group">
@@ -47,7 +47,8 @@ export default function Catalogo(props) {
                 })}
                 </ul>
                </div>
-master
+               <div className="main d-flex flex-wrap col-md-9 aling-content-strech">
+                   { products.length ? products.map(prod => 
                     <ProductCard key={prod.product_id} data={prod} />
                     ) : <h3>No se encontraron resultados para tu búsqueda...</h3>} 
                </div>               

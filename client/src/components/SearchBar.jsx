@@ -39,6 +39,7 @@ const SearchBar = (props) => {
                 <NavDropdown.Item><Link to="/profile"> Perfil </Link></NavDropdown.Item>
                 <NavDropdown.Item><Link to="/order"> Carrito </Link></NavDropdown.Item>
                 <NavDropdown.Item> <Link to="/profile/payment_methods">Metodos de Pago</Link> </NavDropdown.Item>
+                <NavDropdown.Item> <Link to="/disconnect">Cerrar Sesión</Link> </NavDropdown.Item>
             </NavDropdown>
             </div>
             {/* <Link>Iniciar sesión</Link>
