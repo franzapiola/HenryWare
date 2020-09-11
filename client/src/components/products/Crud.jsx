@@ -225,7 +225,7 @@ export default function Crud(props) {
                 <td>{prod.warranty}</td>
                 <td>{prod.price}</td>
                 <td>{prod.stock}</td>
-                <td><img src={prod.image} style={style.img}/></td>
+                <td><img src={prod.images[0].img_url} style={style.img}/></td>
                 <td><ul style={{listStyleType:'none',padding:'0'}}>{prod.categories.map((cat)=>{return <li>{cat.name}</li>})}</ul></td>
                 <td><Button variant='primary' onClick={()=>handleAddUpdate(prod, 'PUT')}>
                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

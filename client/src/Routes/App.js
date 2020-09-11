@@ -92,7 +92,7 @@ const App = () => {
                 <Link to={`/products/${prod.product_id}`}>
                   <img
                     className="d-block sliderImage"
-                    src={prod.image}
+                    src={prod.images[0].img_url}
                     alt={prod.name}
                   />
                   <Carousel.Caption>

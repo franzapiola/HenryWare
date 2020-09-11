@@ -4,12 +4,12 @@ const bodyParser = require('body-parser')
 const { Product, Categories, product_category, Image } = require('../db.js');
 
 //Trae *todos* los productos
-server.get('/', (req, res) => {
+server.get('/', (req, res, next) => {
 	Product.findAll({
         order:[
             ['product_id','ASC']
         ],
-        include:[{model:Categories,as:'categories'}]
+        include:[{model:Categories,as:'categories'}, {model:Image}]
     })
 		.then(products => {
 			res.status(200).send(products);
@@ -88,6 +88,10 @@ server.get('/:product_id/images', function(req, res){
     })
     .catch(error => res.status(400).send(error));
 });
+
+//-----------------------------------Imágenes----------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------
+
 
 server.get('/search', (req, res, next) => {
 	// para buscar productos : /products/search?product={nombredeproducto} Jx
