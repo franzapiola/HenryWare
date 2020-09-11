@@ -47,7 +47,7 @@ export default function Catalogo(props) {
                 })}
                 </ul>
                </div>
-               <div className="main d-flex flex-wrap col-md-9 aling-content-strech">
+               <div className="main d-flex flex-wrap col-md-9 align-content-start">
                    { products.length ? products.map(prod => 
                     <ProductCard key={prod.product_id} data={prod} />
                     ) : <h3>No se encontraron resultados para tu búsqueda...</h3>} 
