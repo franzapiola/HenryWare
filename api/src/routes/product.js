@@ -136,20 +136,27 @@ server.get('/:id',function(req,res,next){
 
 var jsonParser = bodyParser.json()
 server.post("/",jsonParser,(req,res,next) =>{
+    const { name, price, description, rating, warranty, stock, image} = req.body
 
     //para agregar productos: /products . Jx
     Product.create({
-        name : req.body.name,
-        price : req.body.price,
-        description : req.body.description,
-        rating : req.body.rating,
-        warranty : req.body.warranty,
-        stock : req.body.stock,
-        image : req.body.image
+        name,
+        price,
+        description,
+        rating,
+        warranty,
+        stock
+    })
+    .then(noImgYet => {
+        //Hay que agregarle la imagen ahora
+        return Image.create({
+            product_id: noImgYet.product_id,
+            img_url: image
+        })
     })
     .then((pro) => {
             //console.log("Creado en /product");
-            res.status(201).send("Created!")}
+            res.status(201).send('Listo!')}
         ).catch(error => {
             res.status(404).send(error)
         })
