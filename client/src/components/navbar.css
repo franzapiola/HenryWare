@@ -27,21 +27,20 @@ body{
     display:flex;
     flex-direction: row;
     align-items: center;
+    justify-content: start;
 }
 
 .button-navbar{
     display:flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 250px;
-    margin-right: 60px;
     align-items: center;
 }
 
 
 form input{
     background-color:white;
-    width:250px;
+    width:400px;
     margin-right:10px;
     border-radius:5px;
     border:0px;
@@ -70,12 +69,18 @@ form input::placeholder{
     background-color: #f0f009;
 }
 
+.navbar-cart{
+    display: flex;
+    align-items: center;
+}
+
 .navbutton{
     color:white;
     transition:0.3s;
-    padding:  28px;
+    padding:  15px;
     border-radius:5px;
 }
+
 
 .navbutton:hover{
     transition:0.3s;
@@ -83,7 +88,9 @@ form input::placeholder{
     background-color: rgb(34, 33, 33);
 }
 
-
+.dropdown-toggle{
+    width: fit-content;
+}
 .dropdown-toggle::after{
     content:none;
 }
@@ -106,4 +113,35 @@ form input::placeholder{
 .dropdown-item:hover{
     color:black;
 
+}
+
+
+.navbutton-cart{
+    color:white;
+    padding:10px;
+}
+
+.navbutton-cart:hover{
+    color:rgb(124, 124, 124);
+}
+
+
+.nav-item{
+    width: fit-content;
+}
+
+.login-navbar{
+    display:flex;
+}
+
+.navbutton-login{
+    color:white;
+    transition:0.3s;
+    border-radius:5px;
+    padding:15px;
+}
+.navbutton-login:hover{
+    transition:0.3s;
+    color:white;
+    background-color: rgb(34, 33, 33);
 }
