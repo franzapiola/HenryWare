@@ -24,9 +24,15 @@ const SearchBar = (props) => {
 
             <div className="button-navbar"> 
             <Link className="navbutton" to='/products'>Catálogo</Link>
-            <NavDropdown  title={<span className="navbutton">Administrar</span>}>
-            <NavDropdown.Item><Link to='/products/edit'><div>Productos</div></Link></NavDropdown.Item>
-                <NavDropdown.Item><Link to='/products/categories/addcategory'>Agregar una nueva categoría</Link></NavDropdown.Item>
+            {/*<NavDropdown  title={<span className="navbutton">Administrar</span>}>
+                            <NavDropdown.Item><Link to='/products/edit'><div>Productos</div></Link></NavDropdown.Item>
+                            <NavDropdown.Item><Link to='/products/categories/addcategory'>Agregar una nueva categoría</Link></NavDropdown.Item>
+                        </NavDropdown>*/}
+            <NavDropdown title={<span className="navbutton" > Categorias </span>} >
+                <NavDropdown.Item> <span>Categoria1</span></NavDropdown.Item>
+                <NavDropdown.Item> <span>Categoria1</span></NavDropdown.Item>
+                <NavDropdown.Item> <span>Categoria1</span></NavDropdown.Item>
+                <NavDropdown.Item> <span>Categoria1</span></NavDropdown.Item>
             </NavDropdown>
             </div>
             <form onSubmit={(e)=>{handleSubmit(e);}}>
@@ -55,8 +61,11 @@ const SearchBar = (props) => {
                 </span>
             }>
                 <NavDropdown.Item><Link to="/profile"> Perfil </Link></NavDropdown.Item>
-                <NavDropdown.Item> <Link to="/profile/payment_methods">Metodos de Pago</Link> </NavDropdown.Item>
+                <NavDropdown.Item><Link to="/products/edit">Agregar Producto</Link></NavDropdown.Item>
+                <NavDropdown.Item><Link to="/products/categories/addcategory">Agregar categoría</Link></NavDropdown.Item>
+                <NavDropdown.Divider />
                 <NavDropdown.Item> <Link to="/disconnect">Cerrar Sesión</Link> </NavDropdown.Item>
+                
             </NavDropdown>
             </div>
             {/* <Link>Iniciar sesión</Link>

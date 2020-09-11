@@ -14,7 +14,7 @@ function Order({products}) {
 
 
     return ( 
-        <div className={`$containerOrder`}>
+        <div className={styles.containerOrder}>
             <div class="py-5 text-center">
                  <h2>Ya casi estamos!</h2>
                 <p class="lead">Completa tus datos para terminar con la compra</p>
@@ -60,14 +60,14 @@ function Order({products}) {
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="firstName">Nombre</label>
-            <input type="text" class="form-control" id="firstName" placeholder="" value="" required/>
+            <input type="text" class="form-control" id="firstName" placeholder="ingresa tu nombre"  required />
             <div class="invalid-feedback">
               Ingresa tu nombre.
             </div>
           </div>
           <div class="col-md-6 mb-3">
             <label for="lastName">Apellido</label>
-            <input type="text" class="form-control" id="lastName" placeholder="" value="" required/>
+            <input type="text" class="form-control" id="lastName" placeholder="ingresa tu apellido" required/>
             <div class="invalid-feedback">
               Tu apellido es necesario.
             </div>
@@ -80,7 +80,7 @@ function Order({products}) {
             <div class="input-group-prepend">
               <span class="input-group-text">@</span>
             </div>
-            <input type="text" class="form-control" id="username" placeholder="Username" required/>
+            <input type="text" class="form-control" id="username" placeholder="Nombre de usuario" required/>
             <div class="invalid-feedback" style={{"width": "100%;"}}>
               Tu nombre de usuario es importante!.
             </div>
@@ -89,7 +89,7 @@ function Order({products}) {
 
         <div class="mb-3">
           <label for="email">Email <span class="text-muted">(Opcional)</span></label>
-          <input type="email" class="form-control" id="email" placeholder="you@example.com"/>
+          <input type="email" class="form-control" id="email" placeholder="herny@gmail.com"/>
           <div class="invalid-feedback">
             Ingresa una dirección de email válida.
           </div>
@@ -97,31 +97,36 @@ function Order({products}) {
 
         <div class="mb-3">
           <label for="address">Dirección</label>
-          <input type="text" class="form-control" id="address" placeholder="1234 Main St" required/>
+          <input type="text" class="form-control" id="direccion" placeholder="Av. Luis Maria Campos 1053" required/>
           <div class="invalid-feedback">
             Por favor ingresa una direción válida.
           </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="Piso">Piso/Departamento</label>
+            <input type="text" class="form-control" id="piso" placeholder="5/H" />
         </div>
 
        
         <h4 class="mb-3">Forma de Pago</h4>
 
         <div class="d-block my-3">
-          <div class="custom-control custom-radio">
-            <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required/>
+          <div class="custom-control custom-box">
+            <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" required/>
             <label class="custom-control-label" for="credit">Tarjeta de crédito</label>
           </div>
-          <div class="custom-control custom-radio">
+          <div class="custom-control custom-box">
             <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required/>
             <label class="custom-control-label" for="debit">Tarjeta de débito</label>
           </div>
-          <div class="custom-control custom-radio">
+          <div class="custom-control custom-box">
             <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required/>
             <label class="custom-control-label" for="paypal">PayPal</label>
           </div>
-          <div class="custom-control custom-radio">
-            <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required/>
-            <label class="custom-control-label" for="paypal">Efectivo en la entrega</label>
+          <div class="custom-control custom-box">
+            <input id="efectivo" name="paymentMethod" type="radio" class="custom-control-input" required/>
+            <label class="custom-control-label" for="efectivo">Efectivo en la entrega</label>
           </div>
         </div>
         <div class="row">
