@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
-import order from './order'
+import cart from './cart'
 
 export default combineReducers({
-  order,  
+  cart,
+    
 })

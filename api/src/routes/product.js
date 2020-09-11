@@ -1,18 +1,15 @@
 const server = require('express').Router();
 const {Op} = require('sequelize')
 const bodyParser = require('body-parser')
-const { Product } = require('../db.js');
-const {Categories} = require('../db.js');
-const {product_category} = require('../db.js')
-const { response } = require('express');
+const { Product, Categories, product_category, Image } = require('../db.js');
 
-
+//Trae *todos* los productos
 server.get('/', (req, res, next) => {
 	Product.findAll({
         order:[
             ['product_id','ASC']
         ],
-        include:[{model:Categories,as:'categories'}]
+        include:[{model:Categories,as:'categories'}, {model:Image}]
     })
 		.then(products => {
 			res.status(200).send(products);
@@ -32,15 +29,68 @@ server.get('/categories',function(req,res,next){
 
 
 //Ruta todos los productos según categoría --> me trae todos los products que tienen esa categoría
-server.get('/categorias/:categoria',function(req,res,next){
+server.get('/categorias/:categoria',function(req,res){
 	const {categoria} = req.params;
 	Categories.findAll({
 		where:{
 			name:categoria,
 		},
-		include:[{model:Product, as:"products"}]
+		include:[{model:Product, as:"products", include:[{model:Image}]}]
 	}).then(response => res.status(200).send(response[0].products)).catch(err => res.status(404).send(err))
 })
+
+
+
+//---------------------------------------------------------------------------------------------------------
+//--------------------------------Imágenes-----------------------------------------------------------------
+
+//Agregar imagen a un producto
+server.post('/:product_id/images', function(req, res){
+    const { product_id } = req.params;
+    //Front debe enviar por params el product_id y por body el URL de la imagen
+    const { img_url } = req.body;
+
+    Image.create({
+      product_id,
+      img_url
+    })
+    .then( () => res.status(200).send('Imagen agregada con éxito!'))
+    .catch( error => res.status(400).send(error))
+});
+
+//Quitar imagen de un producto
+server.delete('/:product_id/images/:img_id', function(req, res){
+    const { product_id, img_id } = req.params;
+    //Front debe enviar por params el product_id y el img_id
+    Image.destroy({
+        where:{
+            img_id,
+            product_id
+        }
+    })
+    .then( ()=>res.status(200).send('Imagen eliminada con éxito!'))
+    .catch( error => res.status(400).send(error))
+});
+
+//Traer todas las imágenes asociadas a un producto
+//(aunque no es necesario ya que al hacer un GET a products o product/:product_id,
+//ya vienen incluidas todas las imágenes asociadas... quizá esta ruta está al p2)
+server.get('/:product_id/images', function(req, res){
+    const { product_id } = req.params;
+
+    Image.findAll({
+        where: {
+            product_id
+        }
+    })
+    .then(images => {
+        res.send(images);
+    })
+    .catch(error => res.status(400).send(error));
+});
+
+//-----------------------------------Imágenes----------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------
 
 
 server.get('/search', (req, res, next) => {
@@ -73,7 +123,8 @@ server.get('/:id',function(req,res,next){
 	Product.findAll({
 		where:{
 			product_id: id,
-		}
+        },
+        include:[{model:Categories,as:'categories'}, {model: Image}]
     })
     .then(product => {
         res.status(200).send(product)
@@ -85,20 +136,27 @@ server.get('/:id',function(req,res,next){
 
 var jsonParser = bodyParser.json()
 server.post("/",jsonParser,(req,res,next) =>{
+    const { name, price, description, rating, warranty, stock, image} = req.body
 
     //para agregar productos: /products . Jx
     Product.create({
-        name : req.body.name,
-        price : req.body.price,
-        description : req.body.description,
-        rating : req.body.rating,
-        warranty : req.body.warranty,
-        stock : req.body.stock,
-        image : req.body.image
+        name,
+        price,
+        description,
+        rating,
+        warranty,
+        stock
+    })
+    .then(noImgYet => {
+        //Hay que agregarle la imagen ahora
+        return Image.create({
+            product_id: noImgYet.product_id,
+            img_url: image
+        })
     })
     .then((pro) => {
             //console.log("Creado en /product");
-            res.status(201).send("Created!")}
+            res.status(201).send('Listo!')}
         ).catch(error => {
             res.status(404).send(error)
         })
@@ -132,6 +190,10 @@ server.delete('/:id',function(req,res){
         }
     }).then(res.status(200).send("Producto eliminado")).catch(err => res.status(400).send(err))
 })
+
+
+//-------------------------------------------------------------------------------------------------------
+//-------------------------------------Categorías--------------------------------------------------------
 
 //Ruta para crear/agregar categorias
 server.post('/category',function(req,res){
@@ -168,6 +230,7 @@ server.put('/category/:id',function(req,res){
     }}).then(res.status(200).send('Categoría modificada')).catch(err => res.status(400).send(err))
 })
 
+//Ruta para agregar categoría a un producto
 server.post("/:idproducto/category/:idcategoria",function(req,res){
 
     const {idproducto,idcategoria} = req.params
@@ -177,6 +240,7 @@ server.post("/:idproducto/category/:idcategoria",function(req,res){
         category_id:idcategoria
     }).then(res.status(200).send(`La categoría ${idcategoria} se agregó en el producto ${idproducto}`)).catch(err => res.status(400).send(err))      
 })
+
 
 
 module.exports = server;

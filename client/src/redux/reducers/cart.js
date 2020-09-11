@@ -1,5 +1,4 @@
-import {REQUEST_PRODUCTS, RECEIVE_PRODUCTS } from '../actions/actions_order'
-
+import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS } from '../actions/actions'
 const initialState = {
 	isFetching: false,
     didInvalidate: false,
