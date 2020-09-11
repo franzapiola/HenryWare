@@ -1,0 +1,17 @@
+.container{
+    height: 70vh;
+}
+.titulo{
+    position: absolute;
+    top: 13%;  /* position the top  Edge of the element at the middle of the parent */
+    left: 50%; /* position the left Edge of the element at the middle of the parent */
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+form input:focus{
+    border: 0;
+}
+.henryColor{
+    background-color: black !important;
+    color: yellow !important;
+}
