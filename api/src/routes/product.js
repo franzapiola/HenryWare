@@ -35,7 +35,7 @@ server.get('/categorias/:categoria',function(req,res){
 		where:{
 			name:categoria,
 		},
-		include:[{model:Product, as:"products"}]
+		include:[{model:Product, as:"products", include:[{model:Image}]}]
 	}).then(response => res.status(200).send(response[0].products)).catch(err => res.status(404).send(err))
 })
 

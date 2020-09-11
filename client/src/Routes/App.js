@@ -83,7 +83,7 @@ const App = () => {
 
         {/* <Route exact path = '/' render={() =>{
           return <Jumbotron />
-        }} /> */}git 
+        }} /> */} 
         <Route exact path='/' >
           <Jumbotron />
           <Carousel style={{width:"100%" }, {height:"50%"}}className="carousel" activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
