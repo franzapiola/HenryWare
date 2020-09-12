@@ -43,8 +43,8 @@ export default function Producto (props) {
                         <p className='text-primary'><Rating rating={productData.rating}/> </p>
                         <p>Garantía: {productData.warranty} días</p>
                         <h4>{productData.stock>0?'Stock Disponible': 'Sin Stock'}</h4>
-                        <Button className="col-md-5 col-12 mr-2" variant='comprar'>Comprar</Button>
-                        <Button className="col-md-5 col-12" variant='info'>Añadir al Carrito</Button>
+                        <Button className={`col-md-5 col-12 mr-2" variant='comprar' `} disabled={productData.stock<=0?'disabled':null}>Comprar</Button>
+                        <Button className="col-md-5 col-12" variant='info' disabled={productData.stock<=0?'disabled':null}>Añadir al Carrito</Button>
                     </div>
                 </div>
             </div>

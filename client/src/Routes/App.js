@@ -8,12 +8,12 @@ import SearchBar from '../components/SearchBar';
 import Producto from '../components/product-id/Producto';
 import AddCategory from '../components/products/AddCategory';
 import './App.css'
-import Cart from '../components/cart/Index'
-import Order from '../components/order/index'
 import Footer from '../components/Footer'
 import Jumbotron from '../components/Jumbotron';
 import './App.scss'; 
 import Register from '../components/users/Register';
+import Cart from '../components/cart'
+import Order from '../components/order'
 
 
 
@@ -93,7 +93,7 @@ const App = () => {
                 <Link to={`/products/${prod.product_id}`}>
                   <img
                     className="d-block sliderImage"
-                    src={prod.images[0].img_url}
+                    src={prod.images[0] && prod.images[0].img_url}
                     alt={prod.name}
                   />
                   <Carousel.Caption>

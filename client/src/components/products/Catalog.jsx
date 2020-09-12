@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ProductCard from './ProductCard.jsx';
 import { Button } from 'react-bootstrap';
-import styles from './catalog.css'
+import styles from './catalog.module.scss'
 
 export default function Catalogo(props) {
     const { categories, products, getProducts, categoryFilter, getCategories } = props
@@ -49,7 +49,7 @@ export default function Catalogo(props) {
                </div>
                <div className="main d-flex flex-wrap col-md-9 align-content-start">
                    { products.length ? products.map(prod => 
-                    <ProductCard key={prod.product_id} data={prod} />
+                    <ProductCard key={prod.product_id} data={prod}/>
                     ) : <h3>No se encontraron resultados para tu búsqueda...</h3>} 
                </div>               
            </div>
