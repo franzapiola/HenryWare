@@ -19,6 +19,13 @@ p{
     text-overflow: ellipsis;
     overflow: hidden;
 }
+.card .nodisplay{
+    display:none;
+}
+
+.card:hover .nodisplay{
+    display:inline;
+}
 
 .card>*{
     border:none;
@@ -29,7 +36,7 @@ p{
     color:black;
     height: fit-content;
     text-align:center;
-    height: 300px;
+    height: 60%;
     width: 250px;
     
 }
@@ -57,4 +64,9 @@ p{
     color: white;
     background: rgba(0,0,0,0.5 );
     z-index: 2000;
+}
+
+.card{
+    background-color: #ebebeb;
+    
 }
