@@ -49,10 +49,10 @@ export default function Crud(props) {
             const response = await fetch(`http://localhost:3001/products`);
             const jsonData = await response.json();
             setProducts(jsonData);
-            if(showImgs) setImgModalData({
-                ...jsonData.find(p => p.product_id === idProducto)
-            });
-            // console.log(jsonData)
+            // if(showImgs) setImgModalData({
+            //     ...jsonData.find(p => p.product_id === idProducto)
+            // });
+            //Dejar comentado por lo pronto porfa! -fran
         } catch (error) {
             console.error(error.message)
         }        
@@ -206,9 +206,18 @@ export default function Crud(props) {
         fetch(`http://localhost:3001/products/${product_id}/images/${img_id}`, {
             method: 'DELETE'
         })
-        .then(()=>{
-            getProducts();
+        .then( () => {
+            return fetch(`http://localhost:3001/products/${product_id}/images`);
         })
+        .then(response => response.json())
+        .then(newImages => {
+            setImgModalData({
+                ...imgModalData,
+                images: newImages
+            });
+            setAddImgURL('');
+        })
+        .catch(error => console.log(error));
     };
     //URL de imagen para agregarla a un producto en el modal de imágenes
     const [ addImgURL, setAddImgURL ] = useState()
@@ -227,11 +236,19 @@ export default function Crud(props) {
             }
         })
         .then( () => {
-            getProducts();
-            setAddImgURL('');
+            //Utilizo la ruta /products/:product_id/images
+            //para traer sólo las imágenes del producto al que le agregué una.
+            return fetch(`http://localhost:3001/products/${product_id}/images`);
         })
-        
-            .catch(error => console.log(error))
+        .then(response => response.json())
+        .then(newImages => {
+            setImgModalData({
+                ...imgModalData,
+                images: newImages
+            });
+            setAddImgURL('')
+        })
+        .catch(error => console.log(error));
     };
 
 
