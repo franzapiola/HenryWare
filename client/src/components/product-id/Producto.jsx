@@ -9,7 +9,6 @@ import axios from "axios"
 export default function Producto (props) {
     const [ productData, setProductData ] = useState({})
     const { id } = useParams()
-    
     const getIdProduct = async (id) =>{
         try {
           const res = await fetch(`http://localhost:3001/products/${id}`);
