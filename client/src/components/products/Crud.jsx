@@ -189,7 +189,7 @@ export default function Crud(props) {
     }
     const style = {
         img: {
-            height: '80px',
+            width: '80px',
         }
     }
 
@@ -208,10 +208,6 @@ export default function Crud(props) {
         })
         .then(()=>{
             getProducts();
-            setImgModalData({
-                ...imgModalData,
-                images: imgModalData.images.filter(i=>i.img_id != img_id)
-            })
         })
     };
     //URL de imagen para agregarla a un producto en el modal de imágenes
@@ -230,8 +226,12 @@ export default function Crud(props) {
                 'Content-Type': 'application/json'
             }
         })
-        .then( getProducts() )
-        .catch(error => console.log(error))
+        .then( () => {
+            getProducts();
+            setAddImgURL('');
+        })
+        
+            .catch(error => console.log(error))
     };
 
 
@@ -264,7 +264,7 @@ export default function Crud(props) {
             {products.map(prod => 
                 <tr style={{height: '100px', padding: 'auto 0'}} key={prod.product_id}>
                 <td >{prod.product_id}</td>
-                <td>{prod.name}</td>
+                <td><a href={`${prod.product_id}`}>{prod.name}</a></td>
                 <td>{prod.description.length>15?prod.description.slice(0, 15)+'...':prod.description}</td>
                 <td>{prod.warranty}</td>
                 <td>{prod.price}</td>
@@ -273,7 +273,7 @@ export default function Crud(props) {
                     setImgModalData(prod);
                     setIdProducto(prod.product_id);
                     setShowImgs(true);
-                    }}><img src={prod.images[0].img_url} style={style.img}/></td>
+                    }} style={{alignItems:'center'}}><img src={prod.images[0].img_url} style={style.img}/></td>
                 <td><ul style={{listStyleType:'none',padding:'0'}}>{prod.categories.map((cat)=>{return <li key={cat.category_id}>{cat.name}</li>})}</ul></td>
                 <td><Button variant='primary' onClick={()=>handleAddUpdate(prod, 'PUT')}>
                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
