@@ -66,11 +66,10 @@ const HowManyStars = (review) => {
 }
 
 const ProductCard = (props) =>{
-    
         return(
-        <Link to={`/products/${props.data.product_id}`} className='product-card mr-4 mb-3'>
-            <div className="card d-flex product-card mr-3 mx-auto" >               
-                {props.data.images.length && <img src={props.data.images[0].img_url} className="card-img" alt={`Imagen ${props.data.name}`}/>}
+        <Link to={`/products/${props.data.product_id}`} className={`mr-4 mb-3 ${props.data.stock<=0?'no-disponible':null} `}>
+            <div className="card d-flex product-card mr-3 mx-auto " >               
+                {props.data.images.length && <img src={props.data.images && props.data.images[0].img_url} className="card-img" alt={`Imagen ${props.data.name}`}/>}
                 <hr className="hr"/>
                 <div className="info-card">
                     <h5 className="card-title titulo-producto">{props.data.name}</h5>
