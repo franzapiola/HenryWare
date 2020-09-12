@@ -227,12 +227,13 @@ export default function Crud(props) {
                 'Content-Type': 'application/json'
             }
         })
-        .then( getProducts )
         .then( ()=>{
             setImgModalData({
                 ...imgModalData,
                 images: products.filter(p=>p.product_id === idProducto)[0].images
             });
+            getProducts();
+            console.log(imgModalData)
             setAddImgURL('');
         })
         .catch(error => console.log(error))
@@ -395,8 +396,8 @@ export default function Crud(props) {
                     <h4>Agregar nueva imagen</h4>
                     <Form onSubmit={addImg}>
                         <Form.Label>Ingrese una URL de imagen</Form.Label>
-                        <Form.Control id='imgURL' name='imgURL' value={addImgURL} type="text" placeholder="Ingrese Url de Imagen" onChange={(e)=>{setAddImgURL(e.target.value)}}/>
-                        <Button type='submit' style={{borderRadius: '20px', fontWeight: 'bold'}}>+</Button>
+                        <Form.Control id='imgURL' name='imgURL' value={addImgURL} type="text" placeholder="Ingrese URL de Imagen" onChange={(e)=>{setAddImgURL(e.target.value)}}/>
+                        <Button type='submit' style={{borderRadius: '5px', fontWeight: 'bold',marginTop:'10px'}}>Agregar imagen</Button>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>

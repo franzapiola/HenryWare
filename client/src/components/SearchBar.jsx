@@ -14,7 +14,7 @@ const SearchBar = (props) => {
         onSearch(e, search, props);
         setSearch('');
     }
-
+    console.log(props)
     return (
         <Navbar className="navbar" >
 
