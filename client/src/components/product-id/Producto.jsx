@@ -2,12 +2,14 @@ import React,{ useState, useEffect } from 'react';
 import {useParams}  from 'react-router-dom'
 import style from './producto.css'
 import Rating from './Rating'
-import { Button } from 'react-bootstrap'
+import { Button, Carousel } from 'react-bootstrap'
 import axios from "axios"
 
 
 export default function Producto (props) {
-    const [ productData, setProductData ] = useState({})
+    const [ productData, setProductData ] = useState({
+        images:[]
+    })
     const { id } = useParams()
     const getIdProduct = async (id) =>{
         try {
@@ -37,7 +39,7 @@ export default function Producto (props) {
           });
         
     }
-
+    console.log('Hola puta',productData.images)
 
     return (
         <div className='mt-4 col-md-12 '>
@@ -47,13 +49,13 @@ export default function Producto (props) {
             </div>
             <div className="card-body">
                 <div className="row">
-                    <div className="div-imagen col-md-7 col-8">
-                        <img 
-                            className='imagen-producto img-fluid' 
-                            src={productData.img_id} 
-                            alt={`Imagen ${productData.name}`}
-                        />
-                    </div>
+                    
+                    <Carousel style={{width:"50%"}}>
+                        {productData.images.map(function(imagen){
+                            return <Carousel.Item style={{textAlign:'center'}}><img style={{height:'100%'}}src={imagen.img_url}/></Carousel.Item>
+                        })}
+                    </Carousel>
+
                     <div className='product-data col-md-5 col-4'>
                         <div className="vertical-line"></div>
                         <p>{productData.description}</p>

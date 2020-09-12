@@ -12,7 +12,7 @@ import Footer from '../components/Footer'
 import Jumbotron from '../components/Jumbotron';
 import './App.scss'; 
 import Register from '../components/users/Register';
-import Cart from '../components/cart'
+import Cart from '../components/cart/index'
 import Order from '../components/order'
 
 
