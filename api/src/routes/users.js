@@ -91,6 +91,7 @@ server.delete('/:id', (req, res)=>{
 //Agregar producto al carrito de un usuario en particular       /users/:user_id/cart
 server.post('/:user_id/cart',function(req,res){
 
+    console.log(req.body);
     const {user_id} = req.params;
     const { product_id, quantity, price } = req.body;
 

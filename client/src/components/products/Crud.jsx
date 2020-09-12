@@ -18,7 +18,7 @@ export default function Crud(props) {
     //addEdit lo utilizamos para setear el método POST o PUT en el fetch que agrega o edita
     const [ addEdit, setAddEdit ] = useState()
 
-    //state para editar un registro
+    //state para editar un registro / agregar imágenes a un producto
     const [ idUpdate, setIdUpdate ] = useState()
 
     //show muestra el modal si esta en TRUE
@@ -43,13 +43,15 @@ export default function Crud(props) {
 
     //Estado para mostrar/esconder el modal de eliminar producto
     const [showModalEliminar, setShowModalEliminar] = useState(false);
-
     //Trae todos los productos de la base de datos y setea el estado products
     const getProducts = async ()=>{
         try {
             const response = await fetch(`http://localhost:3001/products`);
             const jsonData = await response.json();
             setProducts(jsonData);
+            if(showImgs) setImgModalData({
+                ...jsonData.find(p => p.product_id === idProducto)
+            });
             // console.log(jsonData)
         } catch (error) {
             console.error(error.message)
@@ -188,10 +190,51 @@ export default function Crud(props) {
     const style = {
         img: {
             height: '80px',
-        },
+        }
     }
 
     
+    //state para mostrar/esconder el modal de imagenes
+    const [ showImgs, setShowImgs ] = useState(false);
+    //información del producto cuyas imágenes va a mostrar el modal de imágenes (incluye nombre, id, etc. Todo)
+    const [ imgModalData, setImgModalData ] = useState({
+        images: []
+    });
+    //hace el fetch para borrar la imagen cuando se clickea el botón eliminar en el modal de imágenes
+    const handleOnClickDeleteImg = (product_id, img_id) => {
+        console.log(imgModalData)
+        fetch(`http://localhost:3001/products/${product_id}/images/${img_id}`, {
+            method: 'DELETE'
+        })
+        .then(()=>{
+            getProducts();
+            setImgModalData({
+                ...imgModalData,
+                images: imgModalData.images.filter(i=>i.img_id != img_id)
+            })
+        })
+    };
+    //URL de imagen para agregarla a un producto en el modal de imágenes
+    const [ addImgURL, setAddImgURL ] = useState()
+    const addImg = (e) => {
+        e.preventDefault();
+
+        const { product_id } = imgModalData;
+
+        fetch(`http://localhost:3001/products/${product_id}/images`, {
+            method: 'POST',
+            body: JSON.stringify({
+                img_url: addImgURL
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then( getProducts() )
+        .catch(error => console.log(error))
+    };
+
+
     useEffect( () => {
         getProducts();
         getCategories();
@@ -210,8 +253,8 @@ export default function Crud(props) {
             <th>Garantía</th>
             <th>Precio</th>
             <th>Stock</th>
-            <th>Imágen</th>
-            <th>categorias</th>
+            <th>Imágenes <p style={{fontSize: '10px'}}>(clickear)</p></th>
+            <th>Categorías</th>
             <th></th>
             <th></th>
             <th></th>
@@ -226,18 +269,22 @@ export default function Crud(props) {
                 <td>{prod.warranty}</td>
                 <td>{prod.price}</td>
                 <td>{prod.stock}</td>
-                {prod.images.length && <td><img src={prod.images[0].img_url} style={style.img}/></td>}
-                <td><ul style={{listStyleType:'none',padding:'0'}}>{prod.categories.map((cat)=>{return <li>{cat.name}</li>})}</ul></td>
+                <td onClick={()=>{
+                    setImgModalData(prod);
+                    setIdProducto(prod.product_id);
+                    setShowImgs(true);
+                    }}><img src={prod.images[0].img_url} style={style.img}/></td>
+                <td><ul style={{listStyleType:'none',padding:'0'}}>{prod.categories.map((cat)=>{return <li key={cat.category_id}>{cat.name}</li>})}</ul></td>
                 <td><Button variant='primary' onClick={()=>handleAddUpdate(prod, 'PUT')}>
                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                    <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                     </svg>    
                 </Button></td>
                 <td><Button variant='danger' onClick={ () => {handleShowElim(); setIdEliminar(prod.product_id);} } >
                 <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                 </svg>    
                 </Button></td>
                 <td><button className="btn btn-primary " onClick={()=>showModalCat(prod.product_id)}>Añadir categoria</button></td>
@@ -245,6 +292,8 @@ export default function Crud(props) {
             )}     
             </tbody>       
             </table>
+
+            {/* MODAL EDITAR/AGREGAR PRODUCTO */}
             <Modal show={show} onHide={handleClose}>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group>
@@ -262,7 +311,7 @@ export default function Crud(props) {
                         <Form.Control id='price' name='price' value={form.price} type="number" placeholder="Precio" onChange={updateField}/> 
                         <Form.Label>Ingrese el stock</Form.Label>
                         <Form.Control id='stock' name='stock' value={form.stock} type="text" placeholder="Ingrese Existencias" onChange={updateField}/> 
-                        <Form.Label>Ingrese la imagen [URL]</Form.Label>
+                        <Form.Label>Ingrese una imagen [URL]</Form.Label>
                         <Form.Control id='image' name='image' value={form.image} type="text" placeholder="Ingrese Url de Imagen" onChange={updateField}/>                  
                     </Modal.Body>
                     <Modal.Footer>
@@ -270,12 +319,14 @@ export default function Crud(props) {
                         Cerrar
                     </Button>
                     <Button variant="primary" type='submit'>
-                        Guardar los cambios
+                        {addEdit === 'POST' ? 'Guardar' :'Guardar cambios'}
                     </Button>                
                     </Modal.Footer>
                     </Form.Group>
                 </Form>
-            </Modal> 
+            </Modal>
+
+            {/* MODAL AÑADIR CATEGORÍAS  */}
             <Modal show={showCat} onHide={handleCloseCat}>
                 <Form onSubmit={handleSubmitCat}>
                     <Form.Group>
@@ -298,7 +349,7 @@ export default function Crud(props) {
                 </Form>
             </Modal>
 
-
+            {/* MODAL ELIMINAR PRODUCTO */}
             <Modal show={showModalEliminar} onHide={handleCloseElim}>
                         <Modal.Header closeButton>
                             <Modal.Title> Seguro que desea eliminar el producto?</Modal.Title>
@@ -311,7 +362,46 @@ export default function Crud(props) {
                                 No
                             </Button>                
                         </Modal.Footer>
-            </Modal>                          
+            </Modal>
+
+            {/* MODAL IMAGENES    */}
+            <Modal show={showImgs}>
+                <Modal.Header>
+                    <Modal.Title>Administrar imágenes de "{imgModalData.name}"</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p style={{fontSize:'12px'}}>Recuerde que los productos deben tener al menos una imagen</p>
+                    <ul style={{listStyleType: 'none'}}>
+                        {imgModalData.images.map(img=>{
+                            const { img_url, img_id } = img;
+                            const { product_id } = imgModalData;
+                            return (
+                            <li key={img_id}>
+                                <div style={{'margin': '7px'}}>
+                                    <img src={img_url} style={{'width': '100px', marginRight: '40px'}} alt={`Imagen ID ${img_id}`}></img>
+                                    {/* Sólo debería estar disponible el botón de eliminar si el producto tiene más de una imagen, para que no queden productos sin imagen */}
+                                    {imgModalData.images.length > 1 && <Button variant="danger" style={{borderRadius: '20px'}} onClick={()=>handleOnClickDeleteImg(product_id, img_id)}> X </Button>}
+                                </div>
+                            </li>
+                            );
+                        })}
+                    </ul>
+                    <br/>
+                    {/* Para agregar una imagen al producto */}
+                    <h4>Agregar nueva imagen</h4>
+                    <Form onSubmit={addImg}>
+                        <Form.Label>Ingrese una URL de imagen</Form.Label>
+                        <Form.Control id='imgURL' name='imgURL' value={addImgURL} type="text" placeholder="Ingrese URL de Imagen" onChange={(e)=>{setAddImgURL(e.target.value)}}/>
+                        <Button type='submit' style={{borderRadius: '5px', fontWeight: 'bold',marginTop:'10px'}}>Agregar imagen</Button>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={()=>{
+                        setShowImgs(false);
+                        setAddImgURL('');
+                    }}>Listo</Button>
+                </Modal.Footer>
+            </Modal>                       
         </div>
     )
 }

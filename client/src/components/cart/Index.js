@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './index.module.scss'
 import { useSelector, useDispatch, connect } from 'react-redux'
-import { fetchProducts } from '../../redux/actions/actions'
+import { fetchProducts,fetchUserCart} from '../../redux/actions/actions'
 
 function Cart({products}) {
     const dispatch = useDispatch()
@@ -14,7 +14,7 @@ function Cart({products}) {
         setCant(cant+1)
     }
     useEffect(() => {
-        dispatch(fetchProducts())
+        dispatch(fetchUserCart())
     }, [])
 
 

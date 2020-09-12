@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './orderStyle.module.css'
 import { useSelector, useDispatch, connect } from 'react-redux'
-import { fetchProducts } from '../../redux/actions/actions_order'
+import { fetchProducts,fetchUserCart } from '../../redux/actions/actions'
+
 
 function Order({products}) {
     const dispatch = useDispatch()
     const [cant, setCant] = useState(1)
  
     useEffect(() => {
-        dispatch(fetchProducts())
+        dispatch(fetchUserCart())
     }, [])
 
 
