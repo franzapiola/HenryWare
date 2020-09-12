@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './register.module.scss'
 import { FormControl, TextField, Button } from '@material-ui/core';
-import GoogleButton from 'react-google-button'
+import GoogleButton from 'react-google-button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
