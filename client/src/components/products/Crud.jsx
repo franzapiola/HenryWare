@@ -49,6 +49,9 @@ export default function Crud(props) {
             const response = await fetch(`http://localhost:3001/products`);
             const jsonData = await response.json();
             setProducts(jsonData);
+            if(showImgs) setImgModalData({
+                ...jsonData.find(p => p.product_id === idProducto)
+            });
             // console.log(jsonData)
         } catch (error) {
             console.error(error.message)
@@ -227,15 +230,7 @@ export default function Crud(props) {
                 'Content-Type': 'application/json'
             }
         })
-        .then( ()=>{
-            setImgModalData({
-                ...imgModalData,
-                images: products.filter(p=>p.product_id === idProducto)[0].images
-            });
-            getProducts();
-            console.log(imgModalData)
-            setAddImgURL('');
-        })
+        .then( getProducts() )
         .catch(error => console.log(error))
     };
 
