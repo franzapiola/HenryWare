@@ -1,4 +1,4 @@
-import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS } from '../actions/actions'
+import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS ,RECEIVE_USER_CART} from '../actions/actions'
 const initialState = {
 	isFetching: false,
     didInvalidate: false,
@@ -40,6 +40,12 @@ export default (state= initialState, action) => {
 				isFetching: false,
 				products: action.products
 		}
+		case(RECEIVE_USER_CART):
+			return{
+				...state,
+				isFetching: false,
+				products: action.products
+			}
 	}
 
 	return state;
