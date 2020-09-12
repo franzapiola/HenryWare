@@ -13,6 +13,7 @@ import Order from '../components/order/index'
 import Footer from '../components/Footer'
 import Jumbotron from '../components/Jumbotron';
 import './App.scss'; 
+import Register from '../components/users/Register';
 
 
 
@@ -104,7 +105,9 @@ const App = () => {
             )}                    
           </Carousel>
         </Route>
-
+        <Route exact path='/signin'>
+              <Register/>
+        </Route>
         <Route exact path='/products' render={()=>{
           return <Catalog
             getProducts={getProducts}
