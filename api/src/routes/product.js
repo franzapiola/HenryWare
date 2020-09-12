@@ -73,8 +73,6 @@ server.delete('/:product_id/images/:img_id', function(req, res){
 });
 
 //Traer todas las imágenes asociadas a un producto
-//(aunque no es necesario ya que al hacer un GET a products o product/:product_id,
-//ya vienen incluidas todas las imágenes asociadas... quizá esta ruta está al p2)
 server.get('/:product_id/images', function(req, res){
     const { product_id } = req.params;
 
