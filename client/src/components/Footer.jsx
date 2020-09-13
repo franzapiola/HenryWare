@@ -5,7 +5,7 @@ import Style from './footer.css'
 const Footer = (props) => {
     
     return (
-        <footer class="page-footer font-small blue" style={Style.footer}>
+        <footer className="page-footer font-small blue" style={Style.footer}>
 
   
 

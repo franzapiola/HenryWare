@@ -21,9 +21,6 @@ export default function Crud(props) {
     //state para editar un registro / agregar imágenes a un producto
     const [ idUpdate, setIdUpdate ] = useState()
 
-    //show muestra el modal si esta en TRUE
-    const [ showCat, setShowCat ] = useState(false);
-
     //state para id de categoria
     const [ idCategoria, setIdCategoria ] = useState()
 
@@ -87,9 +84,6 @@ export default function Crud(props) {
     //handleClose cierra la ventana modal
     const handleClose = () => setShow(false);
 
-    //handleClose cierra la ventana modal categories
-    const handleCloseCat = () => setShowCat(false);
-
     //handleAddUpdate muestra la ventana modal y además actualiza el state de addEdit para hacer el fetch
     const handleAddUpdate = (product, addEdit) =>{
         setAddEdit(addEdit)
@@ -116,7 +110,7 @@ export default function Crud(props) {
                 rating:null,
             })
         }
-        console.log(idUpdate)
+        handleSubmitCat()
         setShow(true);
     }
 
@@ -146,31 +140,26 @@ export default function Crud(props) {
                 'Content-Type': 'application/json'
             }
         })
+        .then(res=>{
+            return res.json()
+        })
         .then(res => {
             //traigo de nuevo los products de la db
             getProducts();
+            handleSubmitCat(res.product_id)
         })
         handleClose()
     } 
 
-    const handleSubmitCat = (e) =>{
-        e.preventDefault()
-        const submitCat = fetch(`http://localhost:3001/products/${idProducto}/category/${idCategoria}`, {
+    const handleSubmitCat = (idp) =>{
+        let idprod = idp || idUpdate
+        fetch(`http://localhost:3001/products/${idprod}/category/${idCategoria}`, {
             method: 'POST',
-        });
-        handleCloseCat();
-        
-        console.log(products)
-        submitCat.then(res => res.text()).then(res => {
+        }).then(res => res.text())
+        .then(res => {
             getProducts();
         })
     }
-
-    const showModalCat = (idProducto)=>{
-        setShowCat(true)
-        setIdProducto(idProducto)
-    }
-
     const categorias = (cate) => {
         const options = []
         for (const objeto of cate) {
@@ -304,7 +293,6 @@ export default function Crud(props) {
                 <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                 </svg>    
                 </Button></td>
-                <td><button className="btn btn-primary " onClick={()=>showModalCat(prod.product_id)}>Añadir categoria</button></td>
                 </tr>
             )}     
             </tbody>       
@@ -330,6 +318,8 @@ export default function Crud(props) {
                         <Form.Control id='stock' name='stock' value={form.stock} type="text" placeholder="Ingrese Existencias" onChange={updateField}/> 
                         <Form.Label>Ingrese una imagen [URL]</Form.Label>
                         <Form.Control id='image' name='image' value={form.image} type="text" placeholder="Ingrese Url de Imagen" onChange={updateField}/>                  
+                        <Form.Label>Categorias</Form.Label>
+                        <Select options ={categorias(categories)} onChange={handleChangeCat}/>     
                     </Modal.Body>
                     <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
@@ -339,29 +329,6 @@ export default function Crud(props) {
                         {addEdit === 'POST' ? 'Guardar' :'Guardar cambios'}
                     </Button>                
                     </Modal.Footer>
-                    </Form.Group>
-                </Form>
-            </Modal>
-
-            {/* MODAL AÑADIR CATEGORÍAS  */}
-            <Modal show={showCat} onHide={handleCloseCat}>
-                <Form onSubmit={handleSubmitCat}>
-                    <Form.Group>
-                        <Modal.Header closeButton>
-                            <Modal.Title> añadir categorias</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Form.Label>categorias</Form.Label>
-                            <Select options ={categorias(categories)} onChange={handleChangeCat}/>     
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleCloseCat}>
-                                Cerrar
-                            </Button>
-                            <Button variant="primary" type='submit'>
-                                Guardar Cambios
-                            </Button>                
-                        </Modal.Footer>
                     </Form.Group>
                 </Form>
             </Modal>
