@@ -101,6 +101,7 @@ const App = () => {
         </Route>
         <Route exact path='/products/categories/addcategory' component={AddCategory}/>
         <Route path='/products/:id' component={Producto}/>
+        
         <Route exact path='/load' component={Load}/>
         {/* <Route component={NotFound} /> */}
 
