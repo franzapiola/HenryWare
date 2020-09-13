@@ -21,8 +21,6 @@ export default function Register() {
     //handlesubmit envia al servidor la data para ingresar el nuevo usuario
     const handleSubmit = (e) => {
         e.preventDefault();
-        //checkea que el telefono sea un numero porque si envio un string es complicado manejar el error que devuelve
-        if (isNaN(form.phone_number)) return setErrors({ phone_number: 'Debe ser un numero' })
         //envio datos al servidor
         const result = fetch(`http://localhost:3001/users`, {
             method: 'POST',
@@ -58,6 +56,7 @@ export default function Register() {
             })
 
     }
+    
 
     const notify = (message = 'Usuario creado con exito', type = 'success') => toast[type](message, { position: toast.POSITION.TOP_CENTER });
     return (
@@ -69,6 +68,7 @@ export default function Register() {
                             <FormControl className='col-md-12'>
                                 <TextField
                                     error={errors.first_name ? 'error' : null}
+                                    
                                     helperText={errors.first_name ? errors.first_name : null}
                                     value={form.first_name ? form.first_name : ''}
                                     id="first_name"
