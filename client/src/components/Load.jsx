@@ -20,7 +20,7 @@ const Load = () => {
         </div>
     )
 }
-
-
+ 
+ 
 
 export default Load
