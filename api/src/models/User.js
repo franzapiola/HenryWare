@@ -13,18 +13,16 @@ module.exports = (sequelize) => {
     email: {
       type: DataTypes.STRING,
       validate: {
-          isEmail: true,
-          isInt: {
+          isEmail: {
             msg: "No es un email valido"
+          },
+          notNull: {
+            msg: 'Email obligatorio'
           }
       },
       unique: true,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Email obligatorio'
-        }
-      }
+      
     },
     first_name: {
       type: DataTypes.STRING,
