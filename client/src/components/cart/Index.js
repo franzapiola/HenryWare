@@ -5,8 +5,6 @@ import { useSelector, useDispatch, connect } from 'react-redux'
 import { fetchProducts,fetchUserCart} from '../../redux/actions/actions'
 
 function Cart({products}) {
-
-
     const dispatch = useDispatch()
     const [cant, setCant] = useState(1)
     const restaUno = () => {
@@ -18,6 +16,7 @@ function Cart({products}) {
     useEffect(() => {
         dispatch(fetchUserCart())
     }, [])
+    
     
     return (
 
