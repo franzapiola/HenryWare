@@ -19,9 +19,9 @@ function Cart({products}) {
 
 
     return (
-
-
-        <div className='card offset-2 col-md-8 col-12 mt-2 pt-4 pb-4'>
+    
+    
+    <div className='card offset-2 col-md-8 col-12 mt-2 pt-4 pb-4'>
             <h4 className='text-center'>Carrito de USUARIO</h4>
             {products.map(product => 
 
