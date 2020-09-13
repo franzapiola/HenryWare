@@ -3,7 +3,7 @@ import React from "react";
 import {Link} from "react-router-dom"
 import {Button, Carousel} from "react-bootstrap"
 import {AiFillStar,AiOutlineStar} from "react-icons/ai"
-
+import {useState} from 'react'
 
 const HowManyStars = (review) => {
     switch (review) {
@@ -66,13 +66,19 @@ const HowManyStars = (review) => {
 }
 // props.data.images.length && <img src={props.data.images && props.data.images[0].img_url} className="card-img" alt={`Imagen ${props.data.name}`}/>
 const ProductCard = (props) =>{
-    console.log(props.data.images)
+
+        const [index,setIndex] = useState(0)
+        const handleSelect = (selectedIndex, e) => {
+            setIndex(selectedIndex);
+          };
+
 
         return(
-        <Link to={`/products/${props.data.product_id}`} className={`mr-4 mb-3 ${props.data.stock<=0?'no-disponible':null} `}>
+            <Link to={`/products/${props.data.product_id}`} style={{width:'fit-content',height:'fit-content'}} className={`mr-4 mb-3 ${props.data.stock<=0?'no-disponible':null} `}>
+
             <div style={{display:'flex',flexDirection:'column',justifyContent:'space-between'}} className="card d-flex product-card mr-3 mx-auto" >               
-                <Carousel style={{boxShadow:"none",height:'50%',}}>{props.data.images.map(function(image){
-                    return <Carousel.Item><img style={{height:"30%",width:'100%'}} src={image.img_url}/></Carousel.Item>
+                <Carousel  controls={props.data.images.length >= 2 && 'true'} activeIndex={index} onSelect={handleSelect} style={{boxShadow:"none",height:'50%',zIndex:'999'}}>{props.data.images.map(function(image){
+                    return <Carousel.Item><img className="d-block w-100" controls={false} src={image.img_url}/></Carousel.Item>
                 })}
                 </Carousel>
                 <div className="info-card">

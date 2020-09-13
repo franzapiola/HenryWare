@@ -12,9 +12,13 @@ import Footer from '../components/Footer'
 import Jumbotron from '../components/Jumbotron';
 import './App.scss'; 
 import Register from '../components/users/Register';
-import Cart from '../components/cart/index'
+import Cart from '../components/cart/Index'
 import Order from '../components/order'
+
 import Login from '../components/users/login'
+
+
+import NotFound from  '../components/NotFound'
 
 
 
@@ -128,6 +132,7 @@ const App = () => {
         </Route>
         <Route exact path='/products/categories/addcategory' component={AddCategory}/>
         <Route path='/products/:id' component={Producto}/>
+        <Route component={NotFound} />
       </Switch>
         <Route path='/' component={Footer}/>
         <Route path='/cart'>
