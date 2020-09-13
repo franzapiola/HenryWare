@@ -147,14 +147,15 @@ server.post("/",jsonParser,(req,res,next) =>{
     })
     .then(noImgYet => {
         //Hay que agregarle la imagen ahora
-        return Image.create({
+        Image.create({
             product_id: noImgYet.product_id,
             img_url: image
         })
+        return noImgYet
     })
     .then((pro) => {
             //console.log("Creado en /product");
-            res.status(201).send('Listo!')}
+            res.status(201).send(pro)}
         ).catch(error => {
             res.status(404).send(error)
         })
