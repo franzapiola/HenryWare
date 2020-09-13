@@ -1,24 +1,24 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
-import {BrowserRouter,Route,Switch, Link} from 'react-router-dom'
-import { Carousel } from 'react-bootstrap'
+import {BrowserRouter,Route,Switch} from 'react-router-dom'
+import './App.css'
+import './App.scss'; 
+import Home from '../components/Home/Home'
 import Crud from '../components/products/Crud'
 import Catalog from '../components/products/Catalog';
 import SearchBar from '../components/SearchBar';
 import Producto from '../components/product-id/Producto';
 import AddCategory from '../components/products/AddCategory';
-import './App.css'
 import Footer from '../components/Footer'
-import Jumbotron from '../components/Jumbotron';
-import './App.scss'; 
 import Register from '../components/users/Register';
-import Cart from '../components/cart/Index'
+import Cart from '../components/cart/index'
 import Order from '../components/order'
 
 import Login from '../components/users/login'
 
 
 import NotFound from  '../components/NotFound'
+
 
 
 
@@ -29,13 +29,6 @@ const App = () => {
 
   //Estado categorías. Lo actualiza getCategories
   const [ categories, setCategories ] = useState([]);
-
-  const [carouselIndex, setCarouselIndex] = useState(0);
-
-  const handleCarouselSelect = (selectedIndex, e) => {
-    setCarouselIndex(selectedIndex);
-  }
-
   
   //Traer lista entera actualizada de categorías de la base de datos
   const getCategories = async ()=>{
@@ -87,34 +80,12 @@ const App = () => {
     <BrowserRouter>
       <Route path ='/' render={ (props)=><SearchBar {...props} onSearch = {onSearch}/> }/>
       <Switch>
-
-        {/* <Route exact path = '/' render={() =>{
-          return <Jumbotron />
-        }} /> */} 
-        <Route exact path='/' >
-          <Jumbotron />
-          <Carousel style={{width:"100%" }, {height:"50%"}}className="carousel" activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
-            {products.map(prod => 
-              <Carousel.Item>
-                <Link to={`/products/${prod.product_id}`}>
-                  <img
-                    className="d-block sliderImage"
-                    src={prod.images[0] && prod.images[0].img_url}
-                    alt={prod.name}
-                  />
-                  <Carousel.Caption>
-                    <h3>{prod.name}</h3>
-                    <p>{prod.description.length>15?prod.description.slice(0, 50)+'...':prod.description}</p>
-                  </Carousel.Caption>
-                </Link>
-              </Carousel.Item>
-            )}                    
-          </Carousel>
-        </Route>
+        <Route exact path='/' render = {()=>{
+          return <Home products={products}/>
+        }} />
         <Route exact path='/signin'>
               <Register/>
         </Route>
-        
         <Route exact path='/products' render={()=>{
           return <Catalog
             getProducts={getProducts}
@@ -124,7 +95,6 @@ const App = () => {
             getCategories={getCategories}
           />
         }}/>
-
         <Route exact path='/products/edit'> 
           <Crud
             categories={categories}
@@ -132,18 +102,12 @@ const App = () => {
         </Route>
         <Route exact path='/products/categories/addcategory' component={AddCategory}/>
         <Route path='/products/:id' component={Producto}/>
-        <Route component={NotFound} />
+        {/* <Route component={NotFound} /> */}
       </Switch>
         <Route path='/' component={Footer}/>
-        <Route path='/cart'>
-          <Cart/>
-        </Route>
-        <Route path='/order'>
-          <Order/>
-        </Route>
-        <Route exact path='/login'>
-          <Login/>
-        </Route>
+        <Route path='/cart'><Cart/></Route>
+        <Route path='/order'><Order/></Route>
+        <Route exact path='/login'><Login/></Route>
     </BrowserRouter>
     )
 }
