@@ -9,11 +9,12 @@ server.use(bodyParser.json());
 server.get('/',function(req,res){
     const {status} = req.query
 
-    if(status !== 'Carrito' && status !== 'Creada' && status !== 'Procesando' && status !== 'Cancelada' && status !== 'Completa'){
-        res.status(404).send('No es un estado válido')
-    }
+    
 
     if(status){
+        if(status !== 'Carrito' && status !== 'Creada' && status !== 'Procesando' && status !== 'Cancelada' && status !== 'Completa'){
+            res.status(404).send('No es un estado válido')
+        }
 
         Order.findAll({
             where:{
