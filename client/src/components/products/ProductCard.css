@@ -19,13 +19,7 @@ p{
     text-overflow: ellipsis;
     overflow: hidden;
 }
-.card .nodisplay{
-    display:none;
-}
 
-.card:hover .nodisplay{
-    display:inline;
-}
 
 .card>*{
     border:none;
@@ -68,5 +62,5 @@ p{
 
 .card{
     background-color: #ebebeb;
-    
+    max-height: 400px;
 }
