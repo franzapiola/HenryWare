@@ -48,7 +48,7 @@ export default function Producto (props) {
             <div className="card">
             <div className="card-header text-center">
                 <h3>{productData.name}</h3>
-                <h3>actualID: {localStorage.getItem("actualUserId")}</h3>
+                {/*<h3>actualID: {localStorage.getItem("actualUserId")}</h3>*/}
             </div>
             <div className="card-body">
                 <div className="row">

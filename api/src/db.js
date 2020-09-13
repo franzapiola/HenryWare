@@ -41,6 +41,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Product, User, Categories, Order, LineaDeOrden, Image} = sequelize.models;
 
 
+
+
 // Relaciones:
 
 //Producto-Categoría M:M

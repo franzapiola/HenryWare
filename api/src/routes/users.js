@@ -84,6 +84,24 @@ server.delete('/:id', (req, res)=>{
     })
 });
 
+// /users/usersID/email={email} Ruta que trae el id de un usuario en particular pasado por email
+
+server.get('/usersID/',(req,res) => {
+    const {email} = req.query;
+    
+    User.findAll({
+        where: {
+           email 
+        }
+    }).then( user =>{
+        var obj = {
+            id : user[0].dataValues.user_id, 
+            name : user[0].dataValues.first_name
+        }
+        res.status(200).json(obj)
+    }).catch(() => res.status(201).json({id : "Usuario no encontrado"}) )
+})
+
 
 
 //-----------------------CARRITO---------------------------------------------------------------------
@@ -231,5 +249,8 @@ server.get('/:user_id/orders',function(req,res){
     .catch(err => res.status(404).send(err))
 
 })
+
+
+
 
 module.exports = server;
