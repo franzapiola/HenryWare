@@ -14,10 +14,16 @@ import './App.scss';
 import Register from '../components/users/Register';
 import Cart from '../components/cart/Index'
 import Order from '../components/order'
+
+import Login from '../components/users/login'
+
+
 import NotFound from  '../components/NotFound'
 
 
+
 const App = () => {
+  
   //Estado de productos: los que va a mostrar el catálogo en la ruta /products
   const [ products, setProducts ] = useState([]);
 
@@ -108,6 +114,7 @@ const App = () => {
         <Route exact path='/signin'>
               <Register/>
         </Route>
+        
         <Route exact path='/products' render={()=>{
           return <Catalog
             getProducts={getProducts}
@@ -133,6 +140,9 @@ const App = () => {
         </Route>
         <Route path='/order'>
           <Order/>
+        </Route>
+        <Route exact path='/login'>
+          <Login/>
         </Route>
     </BrowserRouter>
     )

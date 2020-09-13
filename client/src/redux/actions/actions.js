@@ -47,9 +47,10 @@ export const receiveProducts = products => {
 }
 
 export function fetchUserCart() { 
+	const idUser = localStorage.getItem("actualUserId");
 	return dispatch => {
 		dispatch(requestProducts())
-		fetch(`http://localhost:3001/users/1/cart`)
+		fetch(`http://localhost:3001/users/${idUser}/cart`)
 		.then( response => response.json())
 		.then( json => dispatch(receiveProducts(json)))
 		

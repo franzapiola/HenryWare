@@ -24,7 +24,8 @@ export default function Producto (props) {
         getIdProduct(id)  
      } ,[]) 
     
-
+    const userID = localStorage.getItem("actualUserId");
+    
     const enviarACarrito = async (id,product_id,quantity,price) => { 
         axios.post(`http://localhost:3001/users/${id}/cart`, {
             product_id : product_id,
@@ -39,13 +40,15 @@ export default function Producto (props) {
           });
         
     }
-    console.log('Hola puta',productData.images)
+    
 
     return (
+
         <div className='mt-4 col-md-12 '>
             <div className="card">
             <div className="card-header text-center">
                 <h3>{productData.name}</h3>
+                <h3>actualID: {localStorage.getItem("actualUserId")}</h3>
             </div>
             <div className="card-body">
                 <div className="row">
@@ -66,7 +69,8 @@ export default function Producto (props) {
                         <p>Garantía: {productData.warranty} días</p>
                         <h4>{productData.stock>0?'Stock Disponible': 'Sin Stock'}</h4>
                         {/*<Button className="col-md-5 col-12 mr-2" variant='comprar'  disabled={productData.stock<=0?'disabled':null}>Comprar</Button>*/}
-                        <Button className="col-md-5 col-12" variant='info'  disabled={productData.stock<=0?'disabled':null} onClick={ () => enviarACarrito(1,productData.product_id,1,productData.price)} >Añadir al Carrito</Button>
+                        <Button className="col-md-5 col-12" variant='info'  disabled={productData.stock<=0?'disabled':null} onClick={ 
+                            () => enviarACarrito(userID,productData.product_id,1,productData.price)} >Añadir al Carrito</Button>
                     </div>
                 </div>
             </div>
