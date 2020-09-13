@@ -13,26 +13,58 @@ module.exports = (sequelize) => {
     email: {
       type: DataTypes.STRING,
       validate: {
-          isEmail: true
+          isEmail: true,
+          isInt: {
+            msg: "No es un email valido"
+          }
       },
       unique: true,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Email obligatorio'
+        }
+      }
     },
     first_name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Nombre obligatorio'
+        }
+      }
     },
     last_name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Apellido obligatorio'
+        }
+      }
     },
     address: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Dirección obligatoria'
+          }
+        }
     },
     phone_number: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          isNumeric: true,
+          isInt: {
+            msg: "No es un numero"
+          },
+          notNull: {
+            msg: 'Numero obligatorio'
+          }
+        }
     },
     role: {
         type: DataTypes.ENUM('user', 'admin'),
