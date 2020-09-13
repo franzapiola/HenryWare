@@ -1,0 +1,14 @@
+body{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+#root{
+    background-color: rgba(20, 20, 20, 0.54)
+ }
+.container{
+    height: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

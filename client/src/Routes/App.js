@@ -15,9 +15,10 @@ import Cart from '../components/cart/index'
 import Order from '../components/order'
 
 import Login from '../components/users/login'
+import Load from '../components/Load'
 
 
-import NotFound from  '../components/NotFound'
+//import NotFound from  '../components/NotFound'
 
 
 
@@ -83,9 +84,7 @@ const App = () => {
         <Route exact path='/' render = {()=>{
           return <Home products={products}/>
         }} />
-        <Route exact path='/signin'>
-              <Register/>
-        </Route>
+        <Route exact path='/signin'><Register/></Route>
         <Route exact path='/products' render={()=>{
           return <Catalog
             getProducts={getProducts}
@@ -102,7 +101,9 @@ const App = () => {
         </Route>
         <Route exact path='/products/categories/addcategory' component={AddCategory}/>
         <Route path='/products/:id' component={Producto}/>
+        <Route exact path='/load' component={Load}/>
         {/* <Route component={NotFound} /> */}
+
       </Switch>
         <Route path='/' component={Footer}/>
         <Route path='/cart'><Cart/></Route>
