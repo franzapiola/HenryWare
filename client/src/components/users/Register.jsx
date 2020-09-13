@@ -41,7 +41,6 @@ export default function Register() {
                     //si hay algun error lo manejo. puede ser un array como un objeto por eso el if else
                     let texto;
                     const resErrors = res.message.errors
-                    console.log(res.message)
                     if (Array.isArray(resErrors)) {
                         texto = 'No se ha podido crear el usuario'
                         resErrors.map(async err =>
