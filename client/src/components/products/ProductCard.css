@@ -64,3 +64,12 @@ p{
     width: 250px;
     max-height: 400px;
 }
+
+.btn-comprar{
+    background-color: rgb(255, 232, 24);
+    margin-bottom: 10px;
+}
+
+.btn-comprar:hover{
+    background-color:  rgb(255, 213, 24);
+}
