@@ -14,6 +14,7 @@ import './App.scss';
 import Register from '../components/users/Register';
 import Cart from '../components/cart/index'
 import Order from '../components/order'
+import OrdersTable from '../components/order/OrdersTable';
 
 import Login from '../components/users/login'
 
@@ -143,6 +144,9 @@ const App = () => {
         </Route>
         <Route exact path='/login'>
           <Login/>
+          </Route>
+        <Route exact path='/orders/table'>
+          <OrdersTable/>
         </Route>
     </BrowserRouter>
     )
