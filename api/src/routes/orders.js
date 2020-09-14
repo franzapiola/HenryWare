@@ -75,6 +75,18 @@ server.put('/:order_id', (req, res) => {
     })
 })
 
+//Traer el precio total de una orden en particular
+server.get('/:order_id/totalprice', (req, res) => {
+    const { order_id } = req.params;
 
+    LineaDeOrden.findAll({
+        where:{
+            order_id
+        }
+    })
+    .then(ldo => ldo.reduce((acc, curr)=> acc + curr.price, 0))
+    .then(total_price => res.send({total_price}))
+    .catch(error => res.status(400).send(error));
+});
 
 module.exports = server;
