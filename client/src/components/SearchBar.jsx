@@ -5,26 +5,45 @@ import './navbar.css'
 import img from './Logo largo.svg'
 import styles from './searchBar.module.scss'
 
+import store from '../redux/store'
+import {connect} from 'react-redux';
+import { search, selectCategory, selectAll } from '../redux/actions/main'
+
 const SearchBar = (props) => {
+    const { onSearch, categories, reduxSearch, selectCategory, selectAll } = props;
     //Este estado almacena el contenido del input
-    const [search, setSearch] = useState('');
-    const { onSearch } = props;
+
+    const [search, setSearch] = useState();
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSearch(e, search, props);
+        onSearch(e, props);
         setSearch('');
     }
     // console.log(props)
     return (
-        <Navbar className="navbar d-flex flex-wrap pt-2 h-auto" >
 
-            <div className="up col-md-12 d-flex justify-content-center">
-                <Link to='/' className='mr-4'><img className="brand" src={img} /></Link>
-                <form onSubmit={(e) => { handleSubmit(e); }}>
-                    <input value={search} type='text' placeholder='Busca un producto...' onChange={(e) => setSearch(e.target.value)} />
-                    <Button className="nav-submit" type='submit'>Buscar</Button>
-                </form>
+        <Navbar className="navbar" >
+            <Link to='/'><img className="brand" src={img} /></Link>
+
+
+            <div className="search-bar">
+                <div className="button-navbar">
+                    <Link className="navbutton" to='/products' onClick={selectAll}>Catálogo</Link>
+                </div>
+
+            <NavDropdown title={<span className="navbutton" > Categorias </span>} >
+                        {categories.map(c => <NavDropdown.Item onClick={()=>{selectCategory(c.name)}} style={{color: 'white'}}> {c.name} </NavDropdown.Item>)}
+            </NavDropdown>
+            <form onSubmit={(e)=>{handleSubmit(e);}}>
+                <input value={search} type='text' placeholder='Busca un producto...' onChange={(e)=>{
+                                                                                                setSearch(e.target.value);
+                                                                                                reduxSearch(e.target.value);
+                                                                                                }}/>                
+                <Button className="nav-submit" type='submit'>Buscar</Button>
+            </form>
+
             </div>
             <div className="down h-auto d-flex col-md-12">
                 <div className="catalogo col-md-10 offset-1 d-flex justify-content-center">
@@ -60,4 +79,18 @@ const SearchBar = (props) => {
     );
 }
 
-export default withRouter(SearchBar);
+const mapStateToProps = state => {
+    return {
+        searchInput: state.main.searchInput
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        reduxSearch: (input) => dispatch(search(input)),
+        selectCategory: (category) => dispatch(selectCategory(category)),
+        selectAll: () => dispatch(selectAll())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

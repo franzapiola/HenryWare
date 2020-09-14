@@ -28,6 +28,11 @@ export default (state= initialState, action) => {
 				...state,
 				payment_method : action.method
 			}
+		case("SET_ID"):
+			return{
+				...state,
+				id_order : action.id
+			}
 		case(REQUEST_PRODUCTS):
 			return{
 				...state,

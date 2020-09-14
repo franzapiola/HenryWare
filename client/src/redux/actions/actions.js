@@ -3,6 +3,13 @@ export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 export const INVALID_REQUEST_PRODUCTS = 'INVALID_REQUEST_PRODUCTS';
 export const RECEIVE_USER_CART = "RECEIVE_USER_CART";
 
+export const setId = (id) => {
+	return{
+		type: "SET_ID",
+		id : id
+	}
+}
+
 export const addProduct = (product) =>{
 	return {
 		type : "ADD_PRODUCT",
