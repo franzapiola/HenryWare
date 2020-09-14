@@ -5,6 +5,7 @@
     justify-content: center;
     
 }
+
 .numeroCarrito{
     position: absolute;
     left: 50%;
@@ -15,4 +16,12 @@
     right: 50%;
     transform: translate(-50%, -50%);
     color: black;
+
+
+.dropdownWhite, .dropdownWhite>*{
+    color:white;
+}
+
+.dropdownWhite>*:hover{
+    color:White;
 }
