@@ -2,8 +2,16 @@ body{
 	background: radial-gradient(#e5e5e5,#ffff,#e5e5e5);
 }
 
+img{
+	height: 12rem;
+	
+	width: 10rem;
+	
+}
+
 .card{
 	width: 20rem;
+	height: 40rem;
 }
 
 .card:hover{
@@ -13,6 +21,5 @@ body{
 .card-body{
 	padding: 3rem 0 !important;
 }
-
 
 
