@@ -81,7 +81,7 @@ export function changeQuantity(userId, product_id, quantity){
             }
 		})
 		.then( response => response.json())
-		.then( json => dispatch(fetchUserCart()))
+		.then( json => dispatch(receiveQuantity(json)))
 		
 	}
 }

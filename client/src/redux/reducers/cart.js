@@ -56,11 +56,21 @@ export default (state= initialState, action) => {
 				...state,
 				isFetching: true,
 			}
-		/* case(RECEIVE_QUANTITY):
+		case(RECEIVE_QUANTITY):
+		//console.log('receive quantity',action.payload)
+		//console.log('state products',state.products.products)
+		const products = state.products.products.map( prod => {
+			if(prod.product_id === action.payload.quantity.product_id){
+				prod.LineaDeOrden.quantity = action.payload.quantity.quantity
+			}
+			return prod
+		})
+		//console.log('Productos modificado',products)
+		state.products.products = products
 			return{
 				...state,
-				products.products[action.position].LineaDeOrden.quantity: action.quantity
-		} */
+				//products: {products: products}
+		}
 	}
 
 	return state;
