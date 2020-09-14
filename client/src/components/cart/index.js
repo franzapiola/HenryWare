@@ -2,19 +2,33 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './index.module.scss'
 import { useSelector, useDispatch, connect } from 'react-redux'
-import { fetchProducts,fetchUserCart} from '../../redux/actions/actions'
+import { fetchProducts,fetchUserCart,setId} from '../../redux/actions/actions'
+import axios from "axios";
+
 
 function Cart({products}) {
     const dispatch = useDispatch()
     const [cant, setCant] = useState(1)
+    const [idCarrito,setIdCarrito] = useState()
+    
     const restaUno = () => {
         cant>0&&setCant(cant-1)
     }
     const sumaUno = () => {
         setCant(cant+1)
     }
+
+    const idUser = localStorage.getItem("actualUserId");
+
+    axios.get(`http://localhost:3001/users/${idUser}/cart`).then(response => {
+        setIdCarrito(response.data.order_id)
+        console.log(response.data.order_id)
+        })
+
+
     useEffect(() => {
         dispatch(fetchUserCart())
+        dispatch(setId(idCarrito))
     }, [])
     console.log(products)
     return (
@@ -68,7 +82,8 @@ const mapStateToProps = state => {
   
 const mapDispatchToProps = (dispatch, props) => {
 return {
-    fetchProducts: () => dispatch(fetchProducts())
+    fetchProducts: () => dispatch(fetchProducts()),
+    fetchUserCart: () => dispatch(fetchUserCart())
 }
 }
     
