@@ -25,7 +25,6 @@ function Cart({products}) {
         dispatch(fetchUserCart())
         dispatch(setId(idCarrito))
     }, [])
-    console.log(products)
     return (
 
     <div className={`${styles.card} offset-1 col-md-10 col-12 mt-3 pt-4 pb-4`}>
