@@ -17,6 +17,6 @@ const store = createStore(rootReducer, /* thunkMiddleware,  */composeEnhancers(
 	), 
 	
 ); */
-store.subscribe(() => {console.log(store.getState())})
+
 
 export default store;

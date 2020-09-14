@@ -1,6 +1,6 @@
 const server = require('express').Router()
 const bodyParser = require('body-parser')
-const { User,Order,LineaDeOrden,Product } = require('../db.js')
+const { User,Order,LineaDeOrden,Product,Image } = require('../db.js')
 
 server.use(bodyParser.json());
 
@@ -150,14 +150,8 @@ server.get('/:user_id/cart', (req, res) => {
         where: {
             user_id,
             state: 'Carrito'
-        }
-    })
-    .then((orden) => {
-        return  LineaDeOrden.findAll({
-            where: {
-                order_id: orden.order_id
-            }
-        })
+        },
+        include:[{model:Product, as: 'products',include:[{model:Image}]}]
     })
     .then((items) => {
         res.status(200).send(items)

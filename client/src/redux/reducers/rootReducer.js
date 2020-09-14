@@ -1,8 +1,11 @@
 import { combineReducers } from 'redux'
-import cart from './cart'
+
 import main from './main'
+import cart from './cart';
+import Orders from './Orders';
+import User from './User'
 
 export default combineReducers({
-  cart,
-  main
+  cart, Orders, User, main
+
 })

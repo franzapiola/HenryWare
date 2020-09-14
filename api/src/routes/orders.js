@@ -1,6 +1,6 @@
 const server = require('express').Router()
 const bodyParser = require('body-parser')
-const { LineaDeOrden, Order, Product} = require('../db.js')
+const { LineaDeOrden, Order, Product, User} = require('../db.js')
 
 server.use(bodyParser.json());
 
@@ -17,6 +17,7 @@ server.get('/',function(req,res){
         }
 
         Order.findAll({
+            include:[{ model: User}],
             where:{
                 state:status
             }
@@ -26,7 +27,7 @@ server.get('/',function(req,res){
 
     }else{
 
-        Order.findAll({})
+        Order.findAll({include:[{ model: User}]})
         .then(response => {res.status(200).send(response)})
         .catch(err => res.status(404).send(err))
 

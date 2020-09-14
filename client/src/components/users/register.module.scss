@@ -3,7 +3,7 @@
 }
 .titulo{
     position: absolute;
-    top: 13%;  /* position the top  Edge of the element at the middle of the parent */
+    top: 10px;  /* position the top  Edge of the element at the middle of the parent */
     left: 50%; /* position the left Edge of the element at the middle of the parent */
     transform: translate(-50%, -50%);
     z-index: 1000;

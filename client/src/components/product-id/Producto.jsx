@@ -10,6 +10,7 @@ export default function Producto (props) {
     const [ productData, setProductData ] = useState({
         images:[]
     })
+    
     const { id } = useParams()
     const getIdProduct = async (id) =>{
         try {
@@ -45,7 +46,7 @@ export default function Producto (props) {
     return (
 
         <div className='mt-4 col-md-12 '>
-            <div className="card">
+            <div style={{maxHeight:'850px',maxWidth:'70%',margin:'auto'}}className="card">
             <div className="card-header text-center">
                 <h3>{productData.name}</h3>
                 {/*<h3>actualID: {localStorage.getItem("actualUserId")}</h3>*/}

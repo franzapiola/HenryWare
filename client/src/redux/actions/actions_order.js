@@ -23,7 +23,6 @@ export const addPaymentMethod = (method) =>{
 	}
 }
 export const requestProducts = () => {
-	console.log('request products')
 	return {
 		type: REQUEST_PRODUCTS,
 	}
