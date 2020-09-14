@@ -3,15 +3,43 @@ import { Form, Button } from 'react-bootstrap'
 import styles from './orderStyle.module.css'
 import { useSelector, useDispatch, connect } from 'react-redux'
 import { fetchProducts,fetchUserCart } from '../../redux/actions/actions'
+import store from '../../redux/store'
 
 
-function Order({products}) {
+function Order(props) {
     const dispatch = useDispatch()
     const [cant, setCant] = useState(1)
  
     useEffect(() => {
         dispatch(fetchUserCart())
     }, [])
+
+    
+    const id_order = props.id_order;
+
+    const handleSubmit = (e) => {
+
+      console.log(store)
+
+      
+      e.preventDefault();
+      //envio datos al servidor
+      const result = fetch(`http://localhost:3001/orders/${id_order}`, {
+          method: 'PUT',
+          body: {
+            state: 'Procesando'
+
+          },
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      })
+      result.then(() => {
+        console.log('enviado')
+      })
+      
+
+  }
 
 
     return ( 
@@ -24,11 +52,11 @@ function Order({products}) {
                 <div class="col-md-4 order-md-2 mb-4">
                     <h4 class="d-flex justify-content-between align-items-center mb-3">
                         <span class="text-muted">Tus productos</span>
-                        <span class="badge badge-secondary badge-warning">{products.length} </span>
+                        <span class="badge badge-secondary badge-warning">{props.products.length} </span>
                     </h4>
 
                     <ul class="list-group mb-3">
-                        {products.map(product => 
+                        {props.products.length && props.products.map(product => 
                             <li class="list-group-item d-flex justify-content-between lh-condensed">
                               <div>
                                 <h6 class="my-0">{product.name}</h6>
@@ -57,7 +85,7 @@ function Order({products}) {
                 </div>
                 <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Información de facturación</h4>
-      <form class="needs-validation" novalidate>
+      <form class="needs-validation" novalidate onSubmit={() => handleSubmit()}>
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="firstName">Nombre</label>
@@ -164,20 +192,22 @@ function Order({products}) {
           </div>
         </div>
         <hr class="mb-4"/>
-        <button class="btn btn-warning btn-lg btn-block" type="submit">Finalizar compra</button>
+        <button class="btn btn-warning btn-lg btn-block" type="submit" > Finalizar compra</button>
       </form> 
+      <button onClick={() => {console.log(store.getState())}}></button>
       </div></div>
        </div>
      
         )
-       
+        
 
 }
 
 
 const mapStateToProps = state => {
     return {
-        products: state.cart.products
+        products: state.cart.products,
+        id_order: state.cart.id_order
     }
 }
   
