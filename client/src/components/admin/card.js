@@ -10,7 +10,7 @@ const Card = props => {
 
 	return(
 
-		<div className={`${styles.card} text-center`}>
+		<div className={`card text-center`}>
 			<div className="overflow">
 				<img src={props.imgsrc} alt="usersImg" className={`${styles.imgCard} card-img-top`}/>
 			</div>
