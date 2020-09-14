@@ -2,16 +2,40 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './orderStyle.module.css'
 import { useSelector, useDispatch, connect } from 'react-redux'
-import { fetchProducts,fetchUserCart } from '../../redux/actions/actions'
+import { fetchProducts,fetchUserCart,setId} from '../../redux/actions/actions'
+import axios from "axios"
+import { Link,useHistory } from 'react-router-dom';
 
 
 function Order({products}) {
     const dispatch = useDispatch()
+    const history = useHistory()
     const [cant, setCant] = useState(1)
+    
+    const [idCarrito,setIdCarrito] = useState()
+    const idUser = localStorage.getItem("actualUserId");
+
+    axios.get(`http://localhost:3001/users/${idUser}/cart`)
+    .then(response => {
+            setIdCarrito(response.data.order_id)
+         })
+
+    console.log("[+]id carrito: " +idCarrito)
  
     useEffect(() => {
         dispatch(fetchUserCart())
+        dispatch(setId(idCarrito)) 
     }, [])
+
+    function handleSubmit(e) {
+      e.preventDefault()
+      
+       axios.put(`http://localhost:3001/orders/${idCarrito}`,{
+          state : "Completa"
+        }).then(() => history.push("/"))
+
+    }
+
 
 
     return ( 
@@ -28,7 +52,7 @@ function Order({products}) {
                     </h4>
 
                     <ul className="list-group mb-3">
-                        {products.map(product => 
+                        {products.length && products.map(product => 
                             <li className="list-group-item d-flex justify-content-between lh-condensed">
                               <div>
                                 <h6 className="my-0">{product.name}</h6>
@@ -57,7 +81,7 @@ function Order({products}) {
                 </div>
                 <div className="col-md-8 order-md-1">
                 <h4 className="mb-3">Información de facturación</h4>
-      <form className="needs-validation" novalidate>
+      <form className="needs-validation" onSubmit={handleSubmit} >
         <div className="row">
           <div className="col-md-6 mb-3">
             <label for="firstName">Nombre</label>
