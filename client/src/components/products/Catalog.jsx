@@ -46,7 +46,7 @@ function Catalogo(props) {
 
                 { categories.map( cat => {
                   let categoryClass = 'list-group-item list-group-item-action'
-                  if(selectedCategory===cat.name) categoryClass += ' active'
+                  if(selectedCategory===cat.name && view === 'Category') categoryClass += ' active'
                   return <li key={cat.category_id} className={categoryClass} style={style.category} onClick={()=> {
                     selectCategory(cat.name);
                     getProducts();

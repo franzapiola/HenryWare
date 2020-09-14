@@ -84,17 +84,9 @@ const App = (props) => {
       getCategories();
   },[])
 
-  //Función ejecutada al buscar un producto en la search bar
-  const onSearch = (e, props) => {
-    e.preventDefault();
-    //Esta línea redirige al usuario a /products, es decir al catálogo
-    props.history.push('/products');
-    getProducts();
-  }
-
   return(
     <BrowserRouter>
-      <Route path ='/' render={ (props)=><SearchBar {...props} onSearch = {onSearch} categories={categories} getCategories={getCategories}/> }/>
+      <Route path ='/' render={ ()=><SearchBar getProducts = {getProducts} categories={categories} getCategories={getCategories}/> }/>
       <Switch>
 
         {/* <Route exact path = '/' render={() =>{

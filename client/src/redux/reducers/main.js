@@ -14,6 +14,13 @@ const initialState = {
 export default (state = initialState, action) => {
     switch(action.type){
         case SEARCH:
+            if(action.payload === ''){
+                return {
+                    ...state,
+                    view: 'All',
+                    searchInput: action.payload
+                }
+            } else
             return {
                 ...state,
                 view: 'Search',
