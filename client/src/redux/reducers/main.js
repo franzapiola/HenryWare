@@ -1,0 +1,36 @@
+import { SEARCH, SELECT_CATEGORY, SELECT_ALL } from '../actions/main'
+//view determina qué se va a mostrar en el catálogo...
+//'All' : se muestran todos los productos (SELECT_ALL)
+//'Category': se muestran los productos de la categoría selectedCategory (SELECT_CATEGORY)
+//'Search': se muestran los resultados de la búsqueda del usuario (SEARCH)
+//(estos funcionamientos tienen que ser implementados en cada componente. Redux sólo le va a indicar
+// mediante este state 'view' qué es lo que el usuario desea ver)
+const initialState = {
+    searchInput: '',
+    selectedCategory: null,
+    view: 'All'
+}
+
+export default (state = initialState, action) => {
+    switch(action.type){
+        case SEARCH:
+            return {
+                ...state,
+                view: 'Search',
+                searchInput: action.payload
+            };
+        case SELECT_CATEGORY:
+            return {
+                ...state,
+                view: 'Category',
+                selectedCategory: action.payload
+            }
+        case SELECT_ALL:
+            return {
+                ...state,
+                selectedCategory: null,
+                view: 'All'
+            }
+    }
+    return state;
+}
