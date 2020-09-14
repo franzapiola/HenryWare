@@ -16,19 +16,18 @@ function Cart({products}) {
     useEffect(() => {
         dispatch(fetchUserCart())
     }, [])
-
-
+    console.log(products)
     return (
 
     <div className='card offset-2 col-md-8 col-12 mt-2 pt-4 pb-4'>
 
             <h4 className='text-center'>Carrito de { localStorage.getItem("actualUserName")}</h4>
             {products.length && products.map(product => 
-
+                
                <div className='d-flex'>
 
                     <div className="imagen col-md-2">
-                        <img src={product.image} style={{height: '100px'}}/>
+                        <img src={product.images[0].img_url} style={{height: '100px'}}/>
                     </div>
                     <div className="descripcion col-md-4">
                         {product.name}
