@@ -15,6 +15,10 @@ import Order from '../components/order'
 import OrdersTable from '../components/order/OrdersTable';
 import Home from '../components/Home/Home'
 import Login from '../components/users/login'
+
+import ControlPanel from '../components/admin/controlPanel'
+
+
 import NotFound from  '../components/NotFound'
 //Redux
 import { connect } from 'react-redux';
@@ -122,6 +126,7 @@ const App = (props) => {
         <Route exact path='/login'>
           <Login/>
           </Route>
+         <Route exact path="/admin"> <ControlPanel/></Route> 
         <Route exact path='/orders/table'>
           <OrdersTable/>
         </Route>
