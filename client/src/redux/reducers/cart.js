@@ -1,4 +1,4 @@
-import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS ,RECEIVE_USER_CART} from '../actions/actions'
+import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS ,RECEIVE_USER_CART, REQUEST_QUANTITY, RECEIVE_QUANTITY} from '../actions/actions'
 const initialState = {
 	isFetching: false,
     didInvalidate: false,
@@ -51,6 +51,16 @@ export default (state= initialState, action) => {
 				isFetching: false,
 				products: action.products
 			}
+		case(REQUEST_QUANTITY):
+			return {
+				...state,
+				isFetching: true,
+			}
+		/* case(RECEIVE_QUANTITY):
+			return{
+				...state,
+				products.products[action.position].LineaDeOrden.quantity: action.quantity
+		} */
 	}
 
 	return state;

@@ -1,4 +1,5 @@
 const server = require('express').Router()
+const { json } = require('body-parser');
 const bodyParser = require('body-parser')
 const { User,Order,LineaDeOrden,Product,Image } = require('../db.js')
 
@@ -167,7 +168,7 @@ server.put('/:user_id/cart', function(req, res){
     //El front tiene que mandar por params el user_id, y por body el product_id y la cantidad deseada
     const { user_id } = req.params;
     const { product_id, quantity } = req.body;
-
+    console.log('userID', user_id, 'product_id', product_id, 'quantity', quantity)
     Order.findOne({
         where:{
             user_id,
@@ -191,7 +192,7 @@ server.put('/:user_id/cart', function(req, res){
         });
     })
     .then(() => {
-        res.status(200).send(`Se ha actualizado la cantidad del producto a ${quantity}`);
+        res.status(200).json({product_id, quantity});
     })
 })
 
