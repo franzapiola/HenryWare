@@ -12,7 +12,7 @@ const Card = props => {
 
 		<div className={`${styles.card} text-center`}>
 			<div className="overflow">
-				<img src={props.imgsrc} alt="usersImg" className={`${styles.imgCard}card-img-top`}/>
+				<img src={props.imgsrc} alt="usersImg" className={`${styles.imgCard} card-img-top`}/>
 			</div>
 			<div className="card-body text-dark">
 				<h4 className="card-title"> {props.title}</h4>
