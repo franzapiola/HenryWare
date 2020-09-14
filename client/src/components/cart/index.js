@@ -31,7 +31,7 @@ function Cart({products}) {
                         <img src={product.image} style={{height: '100px'}}/>
                     </div>
                     <div className="descripcion col-md-4">
-                        {product.description}
+                        {product.name}
                     </div>
                     <div className="cantidad offset-1 col-md-2 text-center" style={{padding:0}}>
                         <div className="col-md-12 mb-1">
@@ -63,7 +63,7 @@ function Cart({products}) {
 
 const mapStateToProps = state => {
     return {
-        products: state.cart.products
+        products: state.cart.products.products || []
     }
 }
   

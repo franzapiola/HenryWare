@@ -24,7 +24,6 @@ export const addPaymentMethod = (method) =>{
 	}
 }
 export const requestProducts = () => {
-	console.log('request products')
 	return {
 		type: REQUEST_PRODUCTS,
 	}
@@ -39,7 +38,6 @@ export function fetchProducts() {
 	}
 }
 export const receiveProducts = products => {
-	console.log('receiveProducts')
 	return {
 		type: RECEIVE_PRODUCTS,
 		products: products,
@@ -58,7 +56,6 @@ export function fetchUserCart() {
 }
 
 export const receiveCartProducts = products => {
-	console.log('receive cart products')
 	return {
 		type: RECEIVE_USER_CART,
 		products: products,

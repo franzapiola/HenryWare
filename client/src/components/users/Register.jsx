@@ -60,7 +60,7 @@ export default function Register() {
 
     const notify = (message = 'Usuario creado con exito', type = 'success') => toast[type](message, { position: toast.POSITION.TOP_CENTER });
     return (
-        <div className={`pt-3 mt-2 d-flex align-items-center w-75 mx-auto ${styles.container}`}>
+        <div className={`pt-3 mt-2 d-flex align-items-center w-75 mx-auto ${styles.container} position-relative`}>
             <div className="d-flex align-items-center register h-75 col-md-6 border-right">
                 <form onSubmit={handleSubmit}>
                     <div className="row">

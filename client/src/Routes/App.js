@@ -12,6 +12,7 @@ import Footer from '../components/Footer'
 import Register from '../components/users/Register';
 import Cart from '../components/cart/index'
 import Order from '../components/order'
+import OrdersTable from '../components/order/OrdersTable';
 import Home from '../components/Home/Home'
 
 import Login from '../components/users/login'
@@ -107,9 +108,18 @@ const App = () => {
         <Route component={NotFound} />
       </Switch>
         <Route path='/' component={Footer}/>
-        <Route path='/cart'><Cart/></Route>
-        <Route path='/order'><Order/></Route>
-        <Route exact path='/login'><Login/></Route>
+        <Route path='/cart'>
+          <Cart/>
+        </Route>
+        <Route path='/order'>
+          <Order/>
+        </Route>
+        <Route exact path='/login'>
+          <Login/>
+          </Route>
+        <Route exact path='/orders/table'>
+          <OrdersTable/>
+        </Route>
     </BrowserRouter>
     )
 }
