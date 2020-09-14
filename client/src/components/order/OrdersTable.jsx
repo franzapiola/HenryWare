@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Order from './index'
 import Cart from './../cart'
 import { useSelector, useDispatch, connect } from 'react-redux'
-import { fetchOrders } from '../../redux/actions/Orders'
+import { fetchOrders, changeStatus } from '../../redux/actions/Orders'
 import { fetchUser } from '../../redux/actions/User'
 import Select from 'react-select'
 
@@ -12,11 +12,18 @@ function OrdersTable({ orders }) {
     useEffect(() => {
         dispatch(fetchOrders())
     }, [])
+    const status = [
+        { value: 'Carrito', label:'Carrito' },
+        { value: 'Creada', label: 'Creada'},
+        { value: 'Procesando', label: 'Procesando'},
+        { value: 'Cancelada', label: 'Cancelada'},
+        { value: 'Completa', label: 'Completa'},
 
+    ]
     return (
-        <div className='col-md-10 offset-1'>
+        <div className='col-md-10 offset-1 mt-3'>
             <div >
-                <table className='table table-striped table-collapse'>
+                <table className='table table-striped table-hover table-collapse'>
                     <thead>
                         <tr>
                             <th>id</th>
@@ -28,10 +35,19 @@ function OrdersTable({ orders }) {
                     </thead>
                     <tbody>
                         {orders.orders.map(order => (
-                            <tr>
+                            <tr key={order.order_id}>
                                 <td>{order.order_id}</td>
                                 <td className='font-weight-bold'>
-                                    {order.state}
+                                <Select
+                                    defaultValue={{value:order.state, label:order.state}}
+                                    isLoading={orders.isFetching}
+                                    isDisabled={orders.isFetching}
+                                    isClearable={false}
+                                    isSearchable
+                                    name="color"
+                                    options={status}
+                                    onChange={e=>dispatch(changeStatus(e.value, order.order_id))}
+                                />
                                 </td>
                                 <td>{order.user.email}</td>
                                 <td>{order.user.first_name}</td>

@@ -1,13 +1,43 @@
+import order from "../../components/order";
+
 export const CHANGE_STATUS = 'CHANGE_STATUS';
 export const REQUEST_ORDERS = 'REQUEST_ORDERS'
 export const RECEIVE_ORDERS = 'RECEIVE_ORDERS'
-export const changeStatus = (status) =>{
-	return{
-		type: "CHANGE_STATUS",
-		status : status
-	}
+export const REQUEST_CHANGE_STATUS = 'REQUEST_CHANGE_STATUS'
+export const RECEIVE_CHANGE_STATUS = 'RECEIVE_CHANGE_STATUS'
+
+
+
+export const changeStatus = (state, order_id) => {
+    console.log('state', state, 'orderId', order_id)
+    return dispatch => {
+        dispatch(requestChangeStatus());
+        fetch(`http://localhost:3001/orders/${order_id}`, {
+            method: 'PUT',
+            body: JSON.stringify({state:state}), // 
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+        .then( response => response.text())
+        .then( json => dispatch(receiveChangeStatus(state, order_id)))
+    }
 }
 
+export const receiveChangeStatus = (state, order_id) =>{
+	return{
+        type: RECEIVE_CHANGE_STATUS,
+        isFetching: false,
+        state,
+        order_id,
+	}
+}
+export const requestChangeStatus = () => {
+    return {
+        type: REQUEST_CHANGE_STATUS,
+        isFetching: true,
+	}
+}
 export function fetchOrders() { 
     return dispatch => {
         dispatch(requestOrders())
