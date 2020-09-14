@@ -1,25 +1,29 @@
 import React, { useState } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Navbar, Button, NavDropdown, Nav } from 'react-bootstrap'
 import './navbar.css'
 import img from './Logo largo.svg'
 import styles from './searchBar.module.scss'
 
+//Redux
 import store from '../redux/store'
 import {connect} from 'react-redux';
 import { search, selectCategory, selectAll } from '../redux/actions/main'
 
 const SearchBar = (props) => {
-    const { onSearch, categories, reduxSearch, selectCategory, selectAll } = props;
-    //Este estado almacena el contenido del input
 
-    const [search, setSearch] = useState();
+    const { getProducts, categories } = props;
 
+    //Redux
+    const {searchInput, search, selectCategory, selectAll} = props;
+
+    const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSearch(e, props);
-        setSearch('');
+        search(searchInput);
+        getProducts();
+        history.push('/products')
     }
     // console.log(props)
     return (
@@ -34,13 +38,18 @@ const SearchBar = (props) => {
                 </div>
 
             <NavDropdown title={<span className="navbutton" > Categorias </span>} >
-                        {categories.map(c => <NavDropdown.Item onClick={()=>{selectCategory(c.name)}} style={{color: 'white'}}> {c.name} </NavDropdown.Item>)}
+                        {categories.map(c => <NavDropdown.Item onClick={()=>{
+                            selectCategory(c.name);
+                            history.push('/products');
+                        }} style={{color: 'white'}}> {c.name} </NavDropdown.Item>)}
             </NavDropdown>
             <form onSubmit={(e)=>{handleSubmit(e);}}>
-                <input value={search} type='text' placeholder='Busca un producto...' onChange={(e)=>{
-                                                                                                setSearch(e.target.value);
-                                                                                                reduxSearch(e.target.value);
-                                                                                                }}/>                
+                <input value={searchInput} type='text' placeholder='Busca un producto...' onChange={(e)=>{
+                                                                                            search(e.target.value);
+                                                                                            getProducts();
+                                                                                            //Este getProducts hace que la búsqueda sea "instantánea" pero
+                                                                                            //es bastante pesado, quiza haya que sacarlo más adelante
+                                                                                            }}/>
                 <Button className="nav-submit" type='submit'>Buscar</Button>
             </form>
 
@@ -87,7 +96,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        reduxSearch: (input) => dispatch(search(input)),
+        search: (input) => dispatch(search(input)),
         selectCategory: (category) => dispatch(selectCategory(category)),
         selectAll: () => dispatch(selectAll())
     }
