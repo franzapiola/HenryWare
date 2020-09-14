@@ -49,7 +49,7 @@ export function fetchProducts() {
 export const receiveProducts = products => {
 	return {
 		type: RECEIVE_PRODUCTS,
-		products: products,
+		products: products
 	}
 }
 
@@ -88,7 +88,7 @@ export function changeQuantity(userId, product_id, quantity){
 
 export function requestQuantity(){
 	return {
-		type: REQUEST_QUANTITY,
+		type: REQUEST_QUANTITY
 	}
 }
 
