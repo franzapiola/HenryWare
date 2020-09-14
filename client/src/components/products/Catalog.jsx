@@ -9,7 +9,7 @@ import { selectAll, selectCategories, selectCategory } from '../../redux/actions
 import { connect } from 'react-redux';
 
 function Catalogo(props) {
-    const { categories, products, getProducts, getCategories } = props
+    const { categories, products, getProducts, getCategories } = props;
 
     //Redux
     const { selectAll, selectCategory, selectedCategory, view, searchInput } = props;
@@ -26,11 +26,10 @@ function Catalogo(props) {
     useEffect(()=>{
         getProducts();
         getCategories();
-    }, [])
+    }, [view, selectedCategory]);
+    
     return (
         <div className='container-fluid mt-2 pt-2 mb-2'>
-            <button onClick={()=>console.log('PROPS CATALOGO:', props)}>PROPS</button>    
-            <button onClick={()=>console.log('DESDE CATALOGO:',store.getState())}>STORE.GETSTATE</button>  
         <div className='d-flex flex-row'>
                <div className="categorias col-md-3" style={style.categoria}>
                 {/* <Button>Todos los productos</Button> */}
@@ -48,16 +47,18 @@ function Catalogo(props) {
                 { categories.map( cat => {
                   let categoryClass = 'list-group-item list-group-item-action'
                   if(selectedCategory===cat.name) categoryClass += ' active'
-                  return <li key={cat.category_id} onClick={()=> {
-                        selectCategory(cat.name);
-                    }
-                    } className={categoryClass} style={style.category}>{cat.name}
-                    </li>  
+                  return <li key={cat.category_id} className={categoryClass} style={style.category} onClick={()=> {
+                    selectCategory(cat.name);
+                    getProducts();
+                    }}>{cat.name}</li>  
                 })}
                 </ul>
                </div>
-               {(view === 'Category' && products.length > 0) && <h4>{selectedCategory}</h4>}
-               {(view === 'Search' && products.length) && <h4>{`Resultados de búsqueda para "${searchInput}"`}</h4>}
+                {(view === 'Category' && products.length) ? <h4>{selectedCategory}</h4> : null}
+                {(view === 'Search' && products.length) ? <h4>{`Resultados de búsqueda para "${searchInput}"`}</h4> : null}
+
+               {/* {(view === 'Category' && products.length) && <h4>{selectedCategory}</h4>}
+               {(view === 'Search' && products.length) && <h4>{`Resultados de búsqueda para "${searchInput}"`}</h4>} */}
                <div className="main d-flex flex-wrap col-md-9 align-content-start">
                     {products.length ? products.map(prod => 
                     <ProductCard key={prod.product_id} data={prod}/>

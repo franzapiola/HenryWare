@@ -21,8 +21,6 @@ const SearchBar = (props) => {
     // console.log(props)
     return (
         <Navbar className="navbar" >
-            <button onClick={()=>console.log('DESDE NAVBAR:',store.getState())}>STORE.GETSTATE</button>
-            <button onClick={()=>console.log('NAVBAR PROPS',props)}>NAVBAR PROPS</button>
             <Link to='/'><img className="brand" src={img} /></Link>
 
 
