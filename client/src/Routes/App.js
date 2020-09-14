@@ -1,19 +1,19 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
-import {BrowserRouter,Route,Switch, Link} from 'react-router-dom'
-import { Carousel } from 'react-bootstrap'
+import './App.css'
+import './App.scss'; 
+import {BrowserRouter,Route,Switch} from 'react-router-dom'
 import Crud from '../components/products/Crud'
 import Catalog from '../components/products/Catalog';
 import SearchBar from '../components/SearchBar';
 import Producto from '../components/product-id/Producto';
 import AddCategory from '../components/products/AddCategory';
-import './App.css'
 import Footer from '../components/Footer'
-import Jumbotron from '../components/Jumbotron';
-import './App.scss'; 
 import Register from '../components/users/Register';
 import Cart from '../components/cart/index'
 import Order from '../components/order'
+import OrdersTable from '../components/order/OrdersTable';
+import Home from '../components/Home/Home'
 import Login from '../components/users/login'
 import NotFound from  '../components/NotFound'
 //Redux
@@ -28,7 +28,6 @@ const App = (props) => {
 
   //Estado categorías. Lo actualiza getCategories
   const [ categories, setCategories ] = useState([]);
-
   const [carouselIndex, setCarouselIndex] = useState(0);
 
   //Redux
@@ -38,7 +37,6 @@ const App = (props) => {
     setCarouselIndex(selectedIndex);
   }
 
-  
   //Traer lista entera actualizada de categorías de la base de datos
   const getCategories = async ()=>{
     try {
@@ -52,7 +50,7 @@ const App = (props) => {
 
   //fusioné getProducts, categoryFilter y parte de onSearch en una sola función
   //getProducts: trae productos de la BD y setea el estado local products DEPENDIENDO del estado global 'view'.
-  //El valor de este estado se modifica en ocasiones específicas y va a determinar si getProducts:
+  //El valor de este estado se modifica en ocasiones específicas y va a determinar si getProducts:||||
   //  -trae *todos* los productos (view === 'All')
   //  -trae según selectedCategory (view === 'Category')
   //  -trae según searchInput (view === 'Search')
@@ -88,30 +86,10 @@ const App = (props) => {
     <BrowserRouter>
       <Route path ='/' render={ ()=><SearchBar getProducts = {getProducts} categories={categories} getCategories={getCategories}/> }/>
       <Switch>
-
-        {/* <Route exact path = '/' render={() =>{
-          return <Jumbotron />
-        }} /> */} 
-        <Route exact path='/' >
-          <Jumbotron />
-          <Carousel style={{width:"100%" }, {height:"50%"}}className="carousel" activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
-            {products.map(prod => 
-              <Carousel.Item>
-                <Link to={`/products/${prod.product_id}`}>
-                  <img
-                    className="d-block sliderImage"
-                    src={prod.images[0] && prod.images[0].img_url}
-                    alt={prod.name}
-                  />
-                  <Carousel.Caption>
-                    <h3>{prod.name}</h3>
-                    <p>{prod.description.length>15?prod.description.slice(0, 50)+'...':prod.description}</p>
-                  </Carousel.Caption>
-                </Link>
-              </Carousel.Item>
-            )}                    
-          </Carousel>
-        </Route>
+        <Route exact path='/' render={()=>{
+          return <Home products={products}/>
+        }}/>
+          
         <Route exact path='/signin'>
               <Register/>
         </Route>
@@ -143,6 +121,9 @@ const App = (props) => {
         </Route>
         <Route exact path='/login'>
           <Login/>
+          </Route>
+        <Route exact path='/orders/table'>
+          <OrdersTable/>
         </Route>
     </BrowserRouter>
     )

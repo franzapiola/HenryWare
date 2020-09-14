@@ -3,6 +3,13 @@ export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 export const INVALID_REQUEST_PRODUCTS = 'INVALID_REQUEST_PRODUCTS';
 export const RECEIVE_USER_CART = "RECEIVE_USER_CART";
 
+export const setId = (id) => {
+	return{
+		type: "SET_ID",
+		id : id
+	}
+}
+
 export const addProduct = (product) =>{
 	return {
 		type : "ADD_PRODUCT",
@@ -24,7 +31,6 @@ export const addPaymentMethod = (method) =>{
 	}
 }
 export const requestProducts = () => {
-	console.log('request products')
 	return {
 		type: REQUEST_PRODUCTS,
 	}
@@ -39,7 +45,6 @@ export function fetchProducts() {
 	}
 }
 export const receiveProducts = products => {
-	console.log('receiveProducts')
 	return {
 		type: RECEIVE_PRODUCTS,
 		products: products,
@@ -58,7 +63,6 @@ export function fetchUserCart() {
 }
 
 export const receiveCartProducts = products => {
-	console.log('receive cart products')
 	return {
 		type: RECEIVE_USER_CART,
 		products: products,

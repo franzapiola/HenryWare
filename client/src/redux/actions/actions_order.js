@@ -1,7 +1,14 @@
 export const REQUEST_PRODUCTS = 'REQUEST_PRODUCTS';
 export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 export const INVALID_REQUEST_PRODUCTS = 'INVALID_REQUEST_PRODUCTS';
+export const SET_ID = "SET_ID";
 
+export const setID = (id)=>{
+	return{
+		type : "SET_ID",
+		id : id
+	}
+}
 export const addProduct = (product) =>{
 	return {
 		type : "ADD_PRODUCT",
@@ -23,7 +30,6 @@ export const addPaymentMethod = (method) =>{
 	}
 }
 export const requestProducts = () => {
-	console.log('request products')
 	return {
 		type: REQUEST_PRODUCTS,
 	}

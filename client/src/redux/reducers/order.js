@@ -1,4 +1,4 @@
-import {REQUEST_PRODUCTS, RECEIVE_PRODUCTS } from '../actions/actions_order'
+import {REQUEST_PRODUCTS, RECEIVE_PRODUCTS,SET_ID } from '../actions/actions_order'
 
 const initialState = {
 	isFetching: false,
@@ -28,6 +28,11 @@ export default (state= initialState, action) => {
 			return{
 				...state,
 				payment_method : action.method
+			}
+		case(SET_ID):
+			return{
+				...state,
+				id_order : action.id
 			}
 		case(REQUEST_PRODUCTS):
 			return{
