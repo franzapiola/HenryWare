@@ -2,6 +2,8 @@ export const REQUEST_PRODUCTS = 'REQUEST_PRODUCTS';
 export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 export const INVALID_REQUEST_PRODUCTS = 'INVALID_REQUEST_PRODUCTS';
 export const RECEIVE_USER_CART = "RECEIVE_USER_CART";
+export const REQUEST_QUANTITY = "REQUEST_QUANTITY"
+export const RECEIVE_QUANTITY = "RECEIVE_QUANTITY"
 
 export const setId = (id) => {
 	return{
@@ -61,10 +63,38 @@ export function fetchUserCart() {
 		
 	}
 }
-
 export const receiveCartProducts = products => {
 	return {
 		type: RECEIVE_USER_CART,
 		products: products,
+	}
+}
+//Cambia la candidad en el carrito
+export function changeQuantity(userId, product_id, quantity){
+	return dispatch =>{
+		dispatch(requestQuantity())
+		fetch(`http://localhost:3001/users/${userId}/cart`, {
+			method: 'PUT', //POST or 'PUT'
+            body: JSON.stringify({product_id, quantity}), // data can be `string` or {object}!
+            headers:{
+                'Content-Type': 'application/json'
+            }
+		})
+		.then( response => response.json())
+		.then( json => dispatch(fetchUserCart()))
+		
+	}
+}
+
+export function requestQuantity(){
+	return {
+		type: REQUEST_QUANTITY,
+	}
+}
+
+export function receiveQuantity(quantity, position){
+	return {
+		type: RECEIVE_QUANTITY,
+		payload: {quantity, position}
 	}
 }

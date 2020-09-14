@@ -114,7 +114,6 @@ const App = (props) => {
         </Route>
         <Route exact path='/products/categories/addcategory' component={AddCategory}/>
         <Route path='/products/:id' component={Producto}/>
-        <Route component={NotFound} />
       </Switch>
         <Route path='/' component={Footer}/>
         <Route path='/cart'>
