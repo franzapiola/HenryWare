@@ -4,26 +4,31 @@ import { Navbar, Button, NavDropdown } from 'react-bootstrap'
 import './navbar.css'
 import img from './Logo largo.svg'
 
+import store from '../redux/store'
+import {connect} from 'react-redux';
+import { search, selectCategory, selectAll } from '../redux/actions/main'
+
 const SearchBar = (props) => {
+    const { onSearch, categories, reduxSearch, selectCategory, selectAll } = props;
     //Este estado almacena el contenido del input
-    const [search, setSearch] = useState('');
-    const { onSearch } = props;
-    
+    const [search, setSearch] = useState();
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSearch(e, search, props);
+        onSearch(e, props);
         setSearch('');
     }
     // console.log(props)
     return (
         <Navbar className="navbar" >
-
+            <button onClick={()=>console.log('DESDE NAVBAR:',store.getState())}>STORE.GETSTATE</button>
+            <button onClick={()=>console.log('NAVBAR PROPS',props)}>NAVBAR PROPS</button>
             <Link to='/'><img className="brand" src={img} /></Link>
 
 
             <div className="search-bar">
                 <div className="button-navbar">
-                    <Link className="navbutton" to='/products'>Catálogo</Link>
+                    <Link className="navbutton" to='/products' onClick={selectAll}>Catálogo</Link>
                 </div>
 
             {/*<NavDropdown  title={<span className="navbutton">Administrar</span>}>
@@ -31,13 +36,13 @@ const SearchBar = (props) => {
                             <NavDropdown.Item><Link to='/products/categories/addcategory'>Agregar una nueva categoría</Link></NavDropdown.Item>
                         </NavDropdown>*/}
             <NavDropdown title={<span className="navbutton" > Categorias </span>} >
-                <NavDropdown.Item> <span>Categoria1</span></NavDropdown.Item>
-                <NavDropdown.Item> <span>Categoria1</span></NavDropdown.Item>
-                <NavDropdown.Item> <span>Categoria1</span></NavDropdown.Item>
-                <NavDropdown.Item> <span>Categoria1</span></NavDropdown.Item>
+                        {categories.map(c => <NavDropdown.Item onClick={()=>{selectCategory(c.name)}} style={{color: 'white'}}> {c.name} </NavDropdown.Item>)}
             </NavDropdown>
             <form onSubmit={(e)=>{handleSubmit(e);}}>
-                <input value={search} type='text' placeholder='Busca un producto...' onChange={(e)=>setSearch(e.target.value)}/>                
+                <input value={search} type='text' placeholder='Busca un producto...' onChange={(e)=>{
+                                                                                                setSearch(e.target.value);
+                                                                                                reduxSearch(e.target.value);
+                                                                                                }}/>                
                 <Button className="nav-submit" type='submit'>Buscar</Button>
             </form>
             </div>
@@ -82,4 +87,18 @@ const SearchBar = (props) => {
     );
 }
 
-export default withRouter(SearchBar);
+const mapStateToProps = state => {
+    return {
+        searchInput: state.main.searchInput
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        reduxSearch: (input) => dispatch(search(input)),
+        selectCategory: (category) => dispatch(selectCategory(category)),
+        selectAll: () => dispatch(selectAll())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

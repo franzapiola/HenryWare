@@ -14,15 +14,14 @@ import './App.scss';
 import Register from '../components/users/Register';
 import Cart from '../components/cart/index'
 import Order from '../components/order'
-
 import Login from '../components/users/login'
-
-
 import NotFound from  '../components/NotFound'
+//Redux
+import { connect } from 'react-redux';
+//import store from '../redux/store';
 
 
-
-const App = () => {
+const App = (props) => {
   
   //Estado de productos: los que va a mostrar el catálogo en la ruta /products
   const [ products, setProducts ] = useState([]);
@@ -31,6 +30,9 @@ const App = () => {
   const [ categories, setCategories ] = useState([]);
 
   const [carouselIndex, setCarouselIndex] = useState(0);
+
+  //Redux
+  const { view, searchInput, selectedCategory } = props;
 
   const handleCarouselSelect = (selectedIndex, e) => {
     setCarouselIndex(selectedIndex);
@@ -48,44 +50,51 @@ const App = () => {
     }
   }
 
-  //Traer *todos* los productos de la base de datos
-  const getProducts = async ()=>{
-      try {
-          const response = await fetch(`http://localhost:3001/products`);
-          const jsonData = await response.json();
-          setProducts(jsonData);
-          // console.log(jsonData)
-      } catch (error) {
-          console.error(error.message)
-      }        
-  }
-
-  const categoryFilter = async (name) => {
-    const response = await fetch(`http://localhost:3001/products/categorias/${name}`);
-    const jsonData = await response.json();
-    setProducts(jsonData)
+  //fusioné getProducts, categoryFilter y parte de onSearch en una sola función
+  //getProducts: trae productos de la BD y setea el estado local products DEPENDIENDO del estado global 'view'.
+  //El valor de este estado se modifica en ocasiones específicas y va a determinar si getProducts:
+  //  -trae *todos* los productos (view === 'All')
+  //  -trae según selectedCategory (view === 'Category')
+  //  -trae según searchInput (view === 'Search')
+  const getProducts = ()=>{
+    switch(view){
+      case 'All':
+        fetch(`http://localhost:3001/products`)
+        .then(r=>r.json())
+        .then(json=>setProducts(json))
+        .catch(err => console.log(err));
+        break;
+      case 'Category':
+        fetch(`http://localhost:3001/products/categorias/${selectedCategory}`)
+        .then(r => r.json())
+        .then(json => setProducts(json))
+        .catch(err => console.log(err));
+        break;
+      case 'Search':
+        fetch(`http://localhost:3001/products/search?product=${searchInput}`)
+        .then(res=> res.json())
+        .then(res=> setProducts(res))
+        .catch(err => console.log(err));
+        break;
+    } 
   }
 
   useEffect(()=>{
-      getProducts();   
-      getCategories();  
+      getProducts();
+      getCategories();
   },[])
 
   //Función ejecutada al buscar un producto en la search bar
-  const onSearch = (e, search, props) => {
+  const onSearch = (e, props) => {
     e.preventDefault();
-    //Busca productos con LIKE % %
-    fetch(`http://localhost:3001/products/search?product=${search}`)
-    .then(res=> res.json())
-    //Envía el resultado al state de productos
-    .then(res=> setProducts(res))
-    //Y esta última línea redirige al usuario a /products, es decir al catálogo
-    .then(()=> props.history.push('/products'))
+    //Esta línea redirige al usuario a /products, es decir al catálogo
+    props.history.push('/products');
+    getProducts();
   }
 
   return(
     <BrowserRouter>
-      <Route path ='/' render={ (props)=><SearchBar {...props} onSearch = {onSearch}/> }/>
+      <Route path ='/' render={ (props)=><SearchBar {...props} onSearch = {onSearch} categories={categories} getCategories={getCategories}/> }/>
       <Switch>
 
         {/* <Route exact path = '/' render={() =>{
@@ -120,7 +129,6 @@ const App = () => {
             getProducts={getProducts}
             categories={categories}
             products={products}
-            categoryFilter={categoryFilter}
             getCategories={getCategories}
           />
         }}/>
@@ -148,4 +156,16 @@ const App = () => {
     )
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    view: state.main.view,
+    selectedCategory: state.main.selectedCategory,
+    searchInput: state.main.searchInput
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
