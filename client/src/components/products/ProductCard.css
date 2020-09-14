@@ -31,7 +31,6 @@ p{
     height: fit-content;
     text-align:center;
     height: 60%;
-    width: 250px;
     
 }
 .product-card:hover{
@@ -62,5 +61,6 @@ p{
 
 .card{
     background-color: #ebebeb;
+    width: 250px;
     max-height: 400px;
 }

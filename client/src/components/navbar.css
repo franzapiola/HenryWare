@@ -17,10 +17,12 @@ body{
     /* font-family: 'Poppins', sans-serif; */
     font-family: 'Montserrat', sans-serif;
     padding: 0px 80px;
+    padding-top:20px
 }
 
 .brand{
     width: 300px;
+    height: fit-content;
 }
 
 .search-bar{

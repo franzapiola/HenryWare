@@ -54,15 +54,18 @@ function Catalogo(props) {
                 })}
                 </ul>
                </div>
-                {(view === 'Category' && products.length) ? <h4>{selectedCategory}</h4> : null}
+            <div className='container-fluid'>
+                <div>
+                {(view === 'Category' && products.length) ? <h4>Resultados de busqueda para {selectedCategory}</h4> : null}
                 {(view === 'Search' && products.length) ? <h4>{`Resultados de búsqueda para "${searchInput}"`}</h4> : null}
+                </div>
 
-               {/* {(view === 'Category' && products.length) && <h4>{selectedCategory}</h4>}
-               {(view === 'Search' && products.length) && <h4>{`Resultados de búsqueda para "${searchInput}"`}</h4>} */}
                <div className="main d-flex flex-wrap col-md-9 align-content-start">
                     {products.length ? products.map(prod => 
                     <ProductCard key={prod.product_id} data={prod}/>
                     ) : <h4>{view === 'Search' ? `No se encontraron resultados para "${searchInput}"...` : `La categoría "${selectedCategory}" no contiene ningún producto...`}</h4>}
+               </div>
+
                </div>
            </div>
         </div>
