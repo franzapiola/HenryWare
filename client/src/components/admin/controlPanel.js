@@ -11,7 +11,7 @@ class ControlPanel extends Component{
 	
 	render(){
 		return(
-			<div className="container-fluid d-flex justify-content-center">
+			<div className="container-fluid d-flex mt-4 justify-content-center">
 				<div className="row">
 					<div className="col-md-4">
 						<Card 

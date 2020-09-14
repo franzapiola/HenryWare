@@ -1,0 +1,39 @@
+body{
+	background: radial-gradient(#e5e5e5,#ffff,#e5e5e5);
+}
+
+.imgCard{
+	height: 12rem;
+	
+	width: 14rem;
+}
+
+.card{
+	width: 20rem;
+	height: 40rem;
+}
+
+.card:hover{
+	box-shadow: 5px 10px 20px 1px rgba(0,0,0,0.253)!important;
+}
+
+.card-body{
+	padding: 3rem 0 !important;
+}
+
+.btnAdmin{
+	border:2px solid rgb(55,184,55);
+	text-align: center;
+	padding: 10px 0;
+	color:rgb(55,184,55);
+	transition: 0.3s;
+	border-radius: 10px;
+}
+
+.btnAdmin:hover{
+	background-color:rgb(55, 184, 55);
+	text-align: center;
+	padding: 10px 0;
+	color:white;
+	transition: 0.3s;
+}

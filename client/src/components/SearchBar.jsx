@@ -33,16 +33,9 @@ const SearchBar = (props) => {
 
 
             <div className="search-bar">
-                <div className="button-navbar">
-                    <Link className="navbutton" to='/products' onClick={selectAll}>Catálogo</Link>
-                </div>
+               
 
-                <NavDropdown title={<span className="navbutton" > Categorias </span>} >
-                    {categories.map(c => <NavDropdown.Item onClick={() => {
-                        selectCategory(c.name);
-                        history.push('/products');
-                    }} style={{ color: 'white' }}> {c.name} </NavDropdown.Item>)}
-                </NavDropdown>
+                
                 <form onSubmit={(e) => { handleSubmit(e); }}>
                     <input value={searchInput} type='text' placeholder='Busca un producto...' onChange={(e) => {
                         search(e.target.value);
@@ -55,15 +48,15 @@ const SearchBar = (props) => {
 
             </div>
             <div className="down h-auto d-flex col-md-12">
-                <div className="catalogo col-md-10 offset-1 d-flex justify-content-center">
+                <div className="catalogo col-md-10 align-items-center offset-1 d-flex justify-content-center">
                     <Link to='/products' className={`navbutton ${styles.navbarLink}`}>Catálogo</Link>
-                    <NavDropdown title="Categorias" className='navbutton' style={{ color: 'white' }}>
-                        <NavDropdown.Item> <span>Categoria1</span></NavDropdown.Item>
-                        <NavDropdown.Item> <span>Categoria1</span></NavDropdown.Item>
-                        <NavDropdown.Item> <span>Categoria1</span></NavDropdown.Item>
-                        <NavDropdown.Item> <span>Categoria1</span></NavDropdown.Item>
+                   
+                    <NavDropdown title={<span className="navbutton" > Categorias </span>} >
+                    {categories.map(c => <NavDropdown.Item onClick={() => {
+                        selectCategory(c.name);
+                        history.push('/products');
+                    }} style={{ color: 'white' }}> {c.name} </NavDropdown.Item>)}
                     </NavDropdown>
-
                     {localStorage.getItem('actualUserId') && localStorage.getItem('actualUserId') !== 'Guest' ? null : <Link className={`navbutton ${styles.navbarLink}`} to='/login'>Iniciar Sesion</Link>}
                     {localStorage.getItem('actualUserId')  && localStorage.getItem('actualUserId') !== 'Guest' ?
                         <NavDropdown title={
