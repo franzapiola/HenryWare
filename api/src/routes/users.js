@@ -99,7 +99,10 @@ server.get('/usersID/',(req,res) => {
             name : user[0].dataValues.first_name
         }
         res.status(200).json(obj)
-    }).catch(() => res.status(201).json({id : "Usuario no encontrado"}) )
+    }).catch(() => res.status(200).json({
+        id : "Usuario no encontrado",
+        name : "Guest"
+    }))
 })
 
 
