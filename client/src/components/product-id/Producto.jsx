@@ -1,6 +1,6 @@
 import React,{ useState, useEffect } from 'react';
 import {useParams}  from 'react-router-dom'
-import style from './producto.css'
+import style from './producto.module.css'
 import Rating from './Rating'
 import { Button, Carousel } from 'react-bootstrap'
 import axios from "axios"
@@ -46,7 +46,7 @@ export default function Producto (props) {
     return (
 
         <div className='mt-4 col-md-12 '>
-            <div style={{maxHeight:'850px',maxWidth:'70%',margin:'auto'}}className="card">
+            <div style={{maxHeight:'850px',maxWidth:'100%',margin:'auto'}} >
             <div className="card-header text-center">
                 <h3>{productData.name}</h3>
                 {/*<h3>actualID: {localStorage.getItem("actualUserId")}</h3>*/}

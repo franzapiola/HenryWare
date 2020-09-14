@@ -37,7 +37,7 @@ function Cart({products}) {
                     </div>
                     <div className="descripcion col-md-5 d-flex flex-column">
                         <h4 className='font-weight-bold'>{product.name}</h4>
-                        <h5>{ product.description }</h5>
+                        <h5>{ `${product.description.substr(0,100)}...`}</h5>
                     </div>
                     <div className="cantidad offset-1 col-md-2 text-center" style={{padding:0}}>
                         <div className="col-md-12 mb-1">
