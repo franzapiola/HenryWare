@@ -19,9 +19,14 @@ server.get('/', (req, res, next) => {
 
 //Ruta que devuleve todas las categorias
 server.get('/categories',function(req,res,next){
-    Categories.findAll().then( categories => {
-        res.status(200).send(categories);
-    }).catch(error => {
+    Categories.findAll({
+        //(fran)
+        //Agregué este include para poder calcular la cantidad de productos de una categoría con products.length
+        //Debe haber una mejor manera de hacerlo...
+        include: [{model: Product, as: 'products', attributes: ['product_id']}]
+    })
+    .then( categories => res.status(200).send(categories))
+    .catch( error => {
         console.log(error);
         res.send(error);
     })
