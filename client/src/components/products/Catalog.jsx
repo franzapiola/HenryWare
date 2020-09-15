@@ -60,7 +60,7 @@ function Catalogo(props) {
                 {(view === 'Search' && products.length) ? <h4>{`Resultados de búsqueda para "${searchInput}"`}</h4> : null}
                 </div>
 
-               <div className="main d-flex flex-wrap col-md-9 align-content-start">
+               <div className="main d-flex flex-wrap align-content-start">
                     {products.length ? products.map(prod => 
                     <ProductCard key={prod.product_id} data={prod}/>
                     ) : <h4>{view === 'Search' ? `No se encontraron resultados para "${searchInput}"...` : `La categoría "${selectedCategory}" no contiene ningún producto...`}</h4>}
