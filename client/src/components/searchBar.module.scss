@@ -6,6 +6,18 @@
     
 }
 
+.numeroCarrito{
+    position: absolute;
+    left: 50%;
+    background: yellow;
+    width: 20px;
+    border-radius: 20px;
+    text-align: center;
+    right: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+
+
 .dropdownWhite, .dropdownWhite>*{
     color:white;
 }

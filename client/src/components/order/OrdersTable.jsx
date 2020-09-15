@@ -14,7 +14,7 @@ function OrdersTable({ orders }) {
     }, [])
 
     return (
-        <div className='col-md-10 offset-1'>
+        <div className='col-md-10 offset-1 pt-3'>
             <div >
                 <table className='table table-striped table-collapse'>
                     <thead>

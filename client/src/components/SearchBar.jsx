@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Navbar, Button, NavDropdown, Nav } from 'react-bootstrap'
 import './navbar.css'
@@ -7,16 +7,18 @@ import styles from './searchBar.module.scss'
 
 //Redux
 import store from '../redux/store'
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { search, selectCategory, selectAll } from '../redux/actions/main'
+import { fetchUserCart } from '../redux/actions/actions'
+
 
 const SearchBar = (props) => {
 
     const { getProducts, categories } = props;
 
     //Redux
-    const { searchInput, search, selectCategory, selectAll } = props;
-
+    const { searchInput, search, selectCategory, selectAll, articles } = props;
+    const dispatch = useDispatch()
     const history = useHistory();
 
     const handleSubmit = (e) => {
@@ -26,6 +28,12 @@ const SearchBar = (props) => {
         history.push('/products')
     }
     // console.log(props)
+    useEffect(() => {
+        dispatch(fetchUserCart())
+        return () => {
+            dispatch(fetchUserCart())
+        }
+    }, [])
     return (
 
         <Navbar className="navbar d-flex flex-wrap h-auto " >
@@ -77,7 +85,8 @@ const SearchBar = (props) => {
                         : <Link className={`navbutton ${styles.navbarLink}`} to='/signin'>Registrarse</Link>}
 
 
-                    <Link className={`navbutton ${styles.navbarLink}`} to="/cart">
+                    <Link className={`navbutton ${styles.navbarLink}`} style={{position: 'relative'}} to="/cart">
+                        {articles!==0 && <span className={`${styles.numeroCarrito}`}>{articles}</span>}
                         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-cart4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
                         </svg>
@@ -101,8 +110,11 @@ const SearchBar = (props) => {
 }
 
 const mapStateToProps = state => {
+    console.log('carrito',state.cart)
+    const articles = state.cart.products.products ?  state.cart.products.products.length : null;
     return {
-        searchInput: state.main.searchInput
+        searchInput: state.main.searchInput,
+        articles
     }
 };
 
@@ -110,7 +122,8 @@ const mapDispatchToProps = dispatch => {
     return {
         search: (input) => dispatch(search(input)),
         selectCategory: (category) => dispatch(selectCategory(category)),
-        selectAll: () => dispatch(selectAll())
+        selectAll: () => dispatch(selectAll()),
+        fetchUserCart: () => dispatch(fetchUserCart())
     }
 }
 
