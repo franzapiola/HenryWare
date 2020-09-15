@@ -42,17 +42,17 @@ export default function Login(){
 
 		
 	return(
-		<div className={`pt-3 mt-2 d-flex align-items-center w-75 mx-auto ${styles.container}`}>
-			<div class="card" style={{width : "18rem"}} >
+		<div className={`pt-3 mt-2 d-flex justify-content-center align-items-center w-100 mx-auto ${styles.container}`}>
+			<div class={`card ${styles.cardLogin}`}  >
 			{/*<span>Usuario actual : {localStorage.getItem("actualUserId")} </span>*/}
 				<form >
 				 <div class="form-group">
 				    <label for="userInput">Correo Electronico</label>
-				    <input name="correo" type="text" class="form-control" id="correo" />    
+				    <input name="correo" type="text" class={`form-control ${styles.inputLogin}`} id="correo" />    
 				  </div>
 				  <div class="form-group">
 				    <label for="exampleInputPassword1">Contraseña</label>
-				    <input type="password" class="form-control" id="password"/>
+				    <input type="password" class={`form-control ${styles.inputLogin}`} id="password"/>
 				  </div>
 				  <button  className={`${styles.henryColor} col-md-12`} onClick={ (e) => {
 				  	cambiarLocalId(document.getElementById("correo").value);

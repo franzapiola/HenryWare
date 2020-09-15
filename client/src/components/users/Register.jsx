@@ -59,9 +59,13 @@ export default function Register() {
     
 
     const notify = (message = 'Usuario creado con exito', type = 'success') => toast[type](message, { position: toast.POSITION.TOP_CENTER });
+
     return (
-        <div className={`pt-3 mt-2 d-flex align-items-center w-75 mx-auto ${styles.container} position-relative`}>
-            <div className="d-flex align-items-center register h-75 col-md-6 border-right">
+        <div className={`pt-3 mt-5 d-flex align-items-center w-75 mx-auto ${styles.container} position-relative`}>
+            <h1 className={`${styles.titulo}`}>Abrir una Cuenta</h1>
+
+            <div className="d-flex align-items-center  h-75 col-md-6 border-right">
+                
                 <form onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="col-md-4 offset-2 mb-4">
@@ -140,7 +144,6 @@ export default function Register() {
                     </div>
                 </form>
             </div>
-            <h1 className={`${styles.titulo}`}>Abrir una Cuenta</h1>
             <div className="d-flex flex-column align-items-center justify-content-center login-redes h-75 col-md-6">
                 <div className='mb-2'><GoogleButton label='Continuar con Google' onClick={() => { console.log('Google button clicked') }} /></div>
             </div>

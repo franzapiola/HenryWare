@@ -1,11 +1,12 @@
 import React from 'react'
+import img from './404notfound.svg'
+import {Link} from 'react-router-dom'
 
 const NotFound = () =>{
     return(
-
-    <>
-        <h1>Error Not Found</h1>
-    </>
+            <Link to='/'>
+            <img style={{maxHeight:"50%"}}src={img} alt=""/>
+            </Link>
     )
 }
 

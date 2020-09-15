@@ -70,7 +70,7 @@ function Order({products}) {
                           <strong>$PRECIO TOTAL</strong>
                         </li>
                     </ul>
-                     <form className="card p-2">
+                     <form className={`card p-2 ${styles.promoCode}`}>
                         <div className="input-group">
                           <input type="text" className="form-control" placeholder="Promo code"/>
                           <div className="input-group-append">
@@ -85,14 +85,14 @@ function Order({products}) {
         <div className="row">
           <div className="col-md-6 mb-3">
             <label for="firstName">Nombre</label>
-            <input type="text" className="form-control" id="firstName" placeholder="ingresa tu nombre"  required />
+            <input type="text" className="form-control" id="firstName" placeholder="Ingresa tu nombre"  required />
             <div className="invalid-feedback">
               Ingresa tu nombre.
             </div>
           </div>
           <div className="col-md-6 mb-3">
             <label for="lastName">Apellido</label>
-            <input type="text" className="form-control" id="lastName" placeholder="ingresa tu apellido" required/>
+            <input type="text" className="form-control" id="lastName" placeholder="Ingresa tu apellido" required/>
             <div className="invalid-feedback">
               Tu apellido es necesario.
             </div>
@@ -106,14 +106,14 @@ function Order({products}) {
               <span className="input-group-text">@</span>
             </div>
             <input type="text" className="form-control" id="username" placeholder="Nombre de usuario" required/>
-            <div className="invalid-feedback" style={{"width": "100%;"}}>
+            <div className="invalid-feedback" >
               Tu nombre de usuario es importante!.
             </div>
           </div>
         </div>
 
         <div className="mb-3">
-          <label for="email">Email <span className="text-muted">(Opcional)</span></label>
+          <label for="email">Email </label>
           <input type="email" className="form-control" id="email" placeholder="herny@gmail.com"/>
           <div className="invalid-feedback">
             Ingresa una dirección de email válida.

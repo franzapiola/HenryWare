@@ -176,6 +176,7 @@ export default function Crud(props) {
         setIdCategoria(selectedOption.value);
         //console.log(`Option selected:`, selectedOption.value);
     }
+    
     const style = {
         img: {
             width: '80px',
