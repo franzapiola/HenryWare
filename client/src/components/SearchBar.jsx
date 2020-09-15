@@ -56,7 +56,7 @@ const SearchBar = (props) => {
 
             </div>
             <div className="down h-auto d-flex col-md-12">
-                <div className="catalogo col-md-10 align-items-center offset-1 d-flex justify-content-center">
+                <div className=" col-md-10 align-items-center offset-1 d-flex justify-content-center">
                     <Link to='/products' className={`navbutton ${styles.navbarLink}`}>Catálogo</Link>
                    
                     <NavDropdown title={<span className="navbutton" > Categorias </span>} >
@@ -77,7 +77,7 @@ const SearchBar = (props) => {
                                 <span> {localStorage.getItem('actualUserName')}</span>
                             </span>
 
-                        } className='navbutton' style={{ color: 'white' }}>
+                        } className='navbutton' >
                             <NavDropdown.Item>
 
                                 <span>Información Personal</span></NavDropdown.Item>
@@ -85,7 +85,7 @@ const SearchBar = (props) => {
                         : <Link className={`navbutton ${styles.navbarLink}`} to='/signin'>Registrarse</Link>}
 
 
-                    <Link className={`navbutton ${styles.navbarLink}`} style={{position: 'relative'}} to="/cart">
+                    <Link className={`navbutton ${styles.navbarLink}`}  to="/cart">
                         {articles!==0 && <span className={`${styles.numeroCarrito}`}>{articles}</span>}
                         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-cart4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />

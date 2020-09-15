@@ -11,13 +11,13 @@ const Card = props => {
 	return(
 
 		<div className={`card text-center h-100 w-100 d-flex`}>
-			<div className="">
+			<div >
 				<img src={props.imgsrc} alt="usersImg" className={`${styles.imgCard} card-img-top`}/>
 			</div>
 
 			<div className="card-body text-dark">
-				<h4 className="card-title"> {props.title}</h4>
-				<p className="card-text text-secondary">
+				<h4 className=""> {props.title}</h4>
+				<p className="card-text">
 					{props.text}
 				</p>
 				

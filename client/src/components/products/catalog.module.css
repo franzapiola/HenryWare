@@ -1,0 +1,13 @@
+.categoria{
+    width: '250px';
+    height: '100vh';
+}
+
+.category{
+    cursor: pointer;
+}
+
+.allProducts{
+    cursor: pointer;
+    font-weight: bold;
+}

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ProductCard from './ProductCard.jsx';
 import { Button } from 'react-bootstrap';
-import styles from './catalog.module.scss';
-
+import styles from './catalog.module.css'
 //Redux
 import store from '../../redux/store';
 import { selectAll, selectCategories, selectCategory } from '../../redux/actions/main'
@@ -14,15 +13,7 @@ function Catalogo(props) {
     //Redux
     const { selectAll, selectCategory, selectedCategory, view, searchInput } = props;
 
-    const style={
-        categoria: {
-            width: '250px',
-            height: '100vh',
-        },
-        category: {
-            cursor: 'pointer',
-        }
-    }
+
     useEffect(()=>{
         getProducts();
         getCategories();
@@ -31,7 +22,7 @@ function Catalogo(props) {
     return (
         <div className='container-fluid mt-2 pt-2 mb-2'>
         <div className='d-flex flex-row'>
-               <div className="categorias col-md-3" style={style.categoria}>
+               <div className={`${styles.categorias} col-md-3`} >
                 {/* <Button>Todos los productos</Button> */}
                 <ul className="list-group">
 
@@ -41,13 +32,13 @@ function Catalogo(props) {
                             getProducts();
                         }}
                         className={`list-group-item list-group-item-action ${view==='All' && 'active'}`}
-                        style={{cursor:'pointer', fontWeight: 'bold'}}>Todos los productos</li>
+                        >Todos los productos</li>
                     {/* Botón mostrar todos */}
 
                 { categories.map( cat => {
                   let categoryClass = 'list-group-item list-group-item-action'
                   if(selectedCategory===cat.name && view === 'Category') categoryClass += ' active'
-                  return <li key={cat.category_id} className={categoryClass} style={style.category} onClick={()=> {
+                  return <li key={cat.category_id} className={`${categoryClass} ${styles.category}`} onClick={()=> {
                     selectCategory(cat.name);
                     getProducts();
                     }}>{cat.name}</li>  

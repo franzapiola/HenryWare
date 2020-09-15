@@ -34,7 +34,7 @@ function Cart({products, isFetching}) {
                     </div>
                     <div className="descripcion col-md-5 d-flex flex-column">
                         <h4 className='font-weight-bold'>{product.name}</h4>
-                        <h5>{ `${product.description.substr(0,100)}...`}</h5>
+                        <h5 className={styles.description}>{ `${product.description.substr(0,100)}...`}</h5>
                     </div>
                     <div className="cantidad col-md-2 text-center" style={{padding:0}}>
                         <div className="col-md-12 mb-1">
@@ -47,6 +47,9 @@ function Cart({products, isFetching}) {
                         <Form.Text className="text-muted">Stock: {product.stock} </Form.Text>
                     </div>
                     <div className="precio col-md-2 d-flex align-items-center justify-content-center ">
+
+                        <h3 className={styles.price}>${product.price*product.LineaDeOrden.quantity}</h3>
+                    </div>                    
                         <h3>${product.price*product.LineaDeOrden.quantity}</h3>
                     </div>   
                     <div className='eliminar col-md-1 d-flex justify-content-center align-items-center'>
@@ -63,7 +66,7 @@ function Cart({products, isFetching}) {
                     </div> }            
                 </div> 
             )} 
-            <span class="badge badge-primary badge-pill" className={`d-flex justify-content-end`} >
+            <span  className={`d-flex justify-content-end`} >
                 <a href="/order" class="btn btn-warning font-weight-bold ">SIGUIENTE</a>            
             </span>
             
