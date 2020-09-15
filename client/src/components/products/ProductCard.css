@@ -40,7 +40,8 @@ p{
 
 
 .estrella{
-    color:#f0f009;
+    color:#dbbb06;
+    font-size: 20px;
 }
 .no-disponible{
     filter: brightness(0.6);
