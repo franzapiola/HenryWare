@@ -110,7 +110,6 @@ const SearchBar = (props) => {
 }
 
 const mapStateToProps = state => {
-    console.log('carrito',state.cart)
     const articles = state.cart.products.products ?  state.cart.products.products.length : null;
     return {
         searchInput: state.main.searchInput,
