@@ -200,8 +200,9 @@ function Order({products}) {
 
 
 const mapStateToProps = state => {
+  const products = state.cart.products.products || []
     return {
-        products: state.cart.products
+        products: products
     }
 }
   

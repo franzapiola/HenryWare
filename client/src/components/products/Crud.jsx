@@ -169,7 +169,7 @@ export default function Crud(props) {
         for (let i = 0; i < options.length; i++) {
             newOp.push({value:options[i].category_id,label:options[i].name})
         }
-        //console.log(newOp)
+        console.log(newOp)
         return newOp
     }
     const handleChangeCat = selectedOption => {

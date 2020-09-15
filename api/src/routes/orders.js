@@ -58,7 +58,7 @@ server.get('/:order_id', function(req, res){
 server.put('/:order_id', (req, res) => {
     const {order_id} = req.params;
     const {state} = req.body;
-
+    console.log('status', state)
     if(state !== 'Carrito' && state !== 'Creada' && state !== 'Procesando' && state !== 'Cancelada' && state !== 'Completa'){
         res.status(404).send('No es un estado válido')
     }
