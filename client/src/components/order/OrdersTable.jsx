@@ -21,6 +21,7 @@ function OrdersTable({ orders }) {
 
     ]
     return (
+
         <div className='col-md-10 offset-1 mt-3'>
             <div >
                 <table className='table table-striped table-hover table-collapse'>
