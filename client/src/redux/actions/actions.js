@@ -1,9 +1,43 @@
 export const REQUEST_PRODUCTS = 'REQUEST_PRODUCTS';
 export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 export const INVALID_REQUEST_PRODUCTS = 'INVALID_REQUEST_PRODUCTS';
+
 export const RECEIVE_USER_CART = "RECEIVE_USER_CART";
-export const REQUEST_QUANTITY = "REQUEST_QUANTITY"
-export const RECEIVE_QUANTITY = "RECEIVE_QUANTITY"
+
+export const REQUEST_QUANTITY = "REQUEST_QUANTITY";
+export const RECEIVE_QUANTITY = "RECEIVE_QUANTITY";
+
+export const REQUEST_DELETE = "REQUEST_DELETE";
+export const RECEIVE_DELETE = "RECEIVE_DELETE"
+
+
+/* Funciones para eliminar un producto de la db y del store  */
+export const deleteProduct = (userId, product_id)=>{
+	return dispatch => {
+		dispatch(requestDelete())
+		fetch(`http://localhost:3001/users/${userId}/deletecartproduct`, {
+			method: 'DELETE', //POST or 'PUT'
+            body: JSON.stringify({product_id}), // data can be `string` or {object}!
+            headers:{
+                'Content-Type': 'application/json'
+            }
+		})
+		.then( response => response.json())
+		.then( json => dispatch(receiveDelete(userId, product_id)))		
+	}
+}
+export const requestDelete = () => {
+	return {
+		type: REQUEST_DELETE,
+	}
+}
+
+export const receiveDelete = (user_id, product_id) => {
+	return {
+		type: RECEIVE_DELETE,
+		payload: {user_id, product_id},
+	}
+}
 
 export const setId = (id) => {
 	return{

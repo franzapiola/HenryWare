@@ -196,6 +196,32 @@ server.put('/:user_id/cart', function(req, res){
     })
 })
 
+/* Ruta para eliminar un producto del carrito */
+server.delete('/:user_id/deletecartproduct', (req, res) => {
+    const { user_id } = req.params;
+    const { product_id } = req.body;
+    
+    Order.findOne({        
+        where: {
+            user_id: user_id,            
+            state: 'Carrito'
+        }
+    })
+    .then( orden =>        
+        LineaDeOrden.destroy({
+            where: {
+                order_id: orden.order_id,
+                product_id: product_id,
+            }
+        })
+    )
+    .then( eliminado =>
+        res.send( {eliminado: eliminado, status: 200} )
+    )
+    .catch((error)=>{
+        res.send(error)
+    })    
+})
 
 //Ruta para eliminar linea de ordenl carrito de determinado usuario pasado por paramas user_id /users/user_id/cart
 
