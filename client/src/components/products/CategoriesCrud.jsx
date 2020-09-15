@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, Container } from 'react-bootstrap'
-//import AddCategory from './AddCategory';
 
 const CategoriesCrud = (props) => {
     const { categories, getCategories } = props;
@@ -66,13 +65,12 @@ const CategoriesCrud = (props) => {
         <div className='col-md-8 offset-2 pt-3 table-responsive'>
             <h2>Administrar categorías</h2>
             <br/>
-            {/* <AddCategory getCategories={getCategories}/> */}
-            <div >
+            <div>
                 <h4>Agregar nueva</h4>
                 <br />
                 <Form onSubmit = {(e)=>{handleSubmitAgregar(e);}}>
                     <Form.Group controlId="categoryName">
-                    <Form.Label>Ingresá el nombre deseado:</Form.Label>
+                        <Form.Label>Ingresá el nombre deseado:</Form.Label>
                         <Form.Control type="text" value={formAgregar.name} placeholder="Nueva categoría..." onChange={(e)=>{setFormAgregar({name: e.target.value})}}/>
                         <Form.Text className="text-muted">
                             Un ID único le será asignado automáticamente a la nueva categoría.
@@ -86,13 +84,13 @@ const CategoriesCrud = (props) => {
                 <h4 style={{marginLeft: 'auto', marginRight: 'auto'}}>Lista</h4>
                 <table style={{backgroundColor: 'whitesmoke', width: '400px'}} className='table table-striped table-collapse'>
                     <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Cantidad de productos</th>
-                        <th>Editar</th>
-                        <th>Borrar</th>
-                    </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Cantidad de productos</th>
+                            <th>Editar</th>
+                            <th>Borrar</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {categories.map( cat => {
