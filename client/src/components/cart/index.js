@@ -59,7 +59,7 @@ function Cart({products, isFetching}) {
                     
                     </div>    
                     {isFetching && <div className={`${styles.spinnerContainer}`}>
-                        <Spinner className={`${styles.spinnerCentrado}`} animation="border" variant="warning" />
+                        <Spinner className={`${styles.spinnerCentrado}`} animation="grow" variant="warning" />
                     </div> }            
                 </div> 
             )} 

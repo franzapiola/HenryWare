@@ -79,6 +79,7 @@ export default (state= initialState, action) => {
 		state.products.products = products
 			return{
 				...state,
+				isFetching: false,
 				//products: {products: products}
 		}
 		case(REQUEST_DELETE):
