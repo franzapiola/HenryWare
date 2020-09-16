@@ -358,8 +358,11 @@ export default function Crud(props) {
                     <p style={{fontSize:'12px'}}>Recuerde que los productos deben tener al menos una imagen</p>
                     <ul style={{listStyleType: 'none'}}>
                         {imgModalData.images.map(img=>{
+                            
                             const { img_url, img_id } = img;
                             const { product_id } = imgModalData;
+                            
+                            
                             return (
                             <li key={img_id}>
                                 <div style={{'margin': '7px'}}>

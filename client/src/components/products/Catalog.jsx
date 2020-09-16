@@ -7,6 +7,8 @@ import store from '../../redux/store';
 import { selectAll, selectCategories, selectCategory, changePage } from '../../redux/actions/main'
 import { connect } from 'react-redux';
 
+import {FaArrowCircleLeft,FaArrowCircleRight    } from 'react-icons/fa'
+
 function Catalogo(props) {
     const { categories, products, getProducts, getCategories } = props;
 
@@ -63,24 +65,30 @@ function Catalogo(props) {
                     <ProductCard key={prod.product_id} data={prod}/>
                     ) : <h4>{view === 'Search' ? `No se encontraron resultados para "${searchInput}"...` : `La categoría "${selectedCategory}" no contiene ningún producto...`}</h4>}
                </div>
-                   <h5>Página {currentPage}</h5>
-               </div>
-           </div>
+                   {/* NAVEGACIÓN DE PÁGINAS */}
 
-           {/* NAVEGACIÓN DE PÁGINAS */}
-           <div>
-                {currentPage > 1 && <Button onClick={()=>{
+           <div className={`d-flex justify-content-around ${styles.navigationPages}`}>
+
+                {currentPage > 1 && <Button className={styles.buttonPagination} onClick={()=>{
                     retrocederPagina();
                     }}
-                    >{`<`}</Button>}
-                    <p>{currentPage}</p>
-                {!(products.length < 12) && <Button onClick={()=>{
+                    ><FaArrowCircleLeft/></Button>}
+
+                    <span className={styles.currentPage}>{currentPage}</span>
+
+                {!(products.length < 12) && <Button className={styles.buttonPagination} onClick={()=>{
                     avanzarPagina();
-                    console.log(products);
                     }}
-                    >{`>`}</Button>}
+                    ><FaArrowCircleRight/></Button>}
+                    
            </div>
+
         </div>
+               </div>
+               
+           </div>
+
+           
     )
 }
 

@@ -74,7 +74,7 @@ const ProductCard = (props) =>{
 
 
         return(
-            <Link to={`/products/${props.data.product_id}`}  className={`${styles.linkProductCard} mr-4 mb-3 ${props.data.stock<=0?`${styles.noDisponible}`:null} `}>
+            <Link to={`/products/${props.data.product_id}`}  className={`${styles.linkProductCard} mr-4 mb-3  ${props.data.stock<=0?`${styles.noDisponible}`:null} `}>
 
             <div  className={`${styles.card} d-flex ${styles.productCard} mr-3 mx-auto ${styles.cardStyles}`} >               
                 <Carousel className={`${styles.carouselCard} ${styles.cardImg}`} controls={props.data.images.length >= 2 && 'true'} activeIndex={index} onSelect={handleSelect} >{props.data.images.map(function(image){
