@@ -46,13 +46,11 @@ function Cart({products, isFetching}) {
                         </div>
                         <Form.Text className="text-muted">Stock: {product.stock} </Form.Text>
                     </div>
-                    <div className="precio col-md-2 d-flex align-items-center justify-content-center ">
 
+                    <div className="precio col-md-2 d-flex align-items-center justify-content-center ">
                         <h3 className={styles.price}>${product.price*product.LineaDeOrden.quantity}</h3>
                     </div>
-                    <div>                    
-                        <h3>${product.price*product.LineaDeOrden.quantity}</h3>
-                    </div>   
+
                     <div className='eliminar col-md-1 d-flex justify-content-center align-items-center'>
                         <Button variant='danger' onClick={()=>dispatch(deleteProduct(localStorage.getItem('actualUserId'), product.product_id))}>
                         <svg width="2em" height="2em" viewBox="0 0 16 16" className="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
