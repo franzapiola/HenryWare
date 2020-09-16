@@ -23,10 +23,10 @@ server.get('/:product_id',function( req, res ){
 server.put('/:review_id', (req, res) => {
     const {review_id} = req.params;
 
-    const {raiting,description} = req.body
+    const {rating,description} = req.body
 
     Review.update({
-        rating:raiting,
+        rating:rating,
         description:description
     },{
         where:{
