@@ -1,6 +1,6 @@
 const server = require('express').Router()
 const bodyParser = require('body-parser')
-const { Review, Product } = require('../db.js')
+const { Review, Product, User } = require('../db.js')
 
 server.use(bodyParser.json());
 
@@ -9,10 +9,11 @@ server.use(bodyParser.json());
 server.get('/:product_id',function( req, res ){
     const { product_id } = req.params
     Review.findAll({
-        attributes: ['review_id', 'rating', 'description'],
+        
         where: {
             product_id
         },
+        include: [{model:User}]
     })
     .then( response => {res.status(200).json(response)})
     .catch(err => res.status(404).json(err))
