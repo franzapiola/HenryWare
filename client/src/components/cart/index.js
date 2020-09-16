@@ -16,7 +16,7 @@ function Cart({products, isFetching}) {
     }
     const idUser = localStorage.getItem("actualUserId");
 
-    axios.get(`http://localhost:3001/users/${idUser}/cart`).then(response => {
+    idUser!=='Guest' && axios.get(`http://localhost:3001/users/${idUser}/cart`).then(response => {
         setIdCarrito(response.data.order_id)
         })
 
