@@ -4,6 +4,7 @@ import styles from './producto.module.css'
 import Rating from './Rating'
 import { Button, Carousel } from 'react-bootstrap'
 import axios from "axios"
+import Reviews from '../reviews/reviews';
 
 
 export default function Producto (props) {
@@ -74,6 +75,7 @@ export default function Producto (props) {
                     </div>
                 </div>
             </div>
+            <Reviews id={id} />
             <div className="card-footer">                
             </div>
         </div>
