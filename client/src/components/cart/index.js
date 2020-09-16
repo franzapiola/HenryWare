@@ -16,7 +16,7 @@ function Cart({products, isFetching}) {
     }
     const idUser = localStorage.getItem("actualUserId");
 
-    axios.get(`http://localhost:3001/users/${idUser}/cart`).then(response => {
+    idUser!=='Guest' && axios.get(`http://localhost:3001/users/${idUser}/cart`).then(response => {
         setIdCarrito(response.data.order_id)
         })
 
@@ -34,7 +34,7 @@ function Cart({products, isFetching}) {
                     </div>
                     <div className="descripcion col-md-5 d-flex flex-column">
                         <h4 className='font-weight-bold'>{product.name}</h4>
-                        <h5>{ `${product.description.substr(0,100)}...`}</h5>
+                        <h5 className={styles.description}>{ `${product.description.substr(0,100)}...`}</h5>
                     </div>
                     <div className="cantidad col-md-2 text-center" style={{padding:0}}>
                         <div className="col-md-12 mb-1">
@@ -46,9 +46,11 @@ function Cart({products, isFetching}) {
                         </div>
                         <Form.Text className="text-muted">Stock: {product.stock} </Form.Text>
                     </div>
+
                     <div className="precio col-md-2 d-flex align-items-center justify-content-center ">
-                        <h3>${product.price*product.LineaDeOrden.quantity}</h3>
-                    </div>   
+                        <h3 className={styles.price}>${product.price*product.LineaDeOrden.quantity}</h3>
+                    </div>
+
                     <div className='eliminar col-md-1 d-flex justify-content-center align-items-center'>
                         <Button variant='danger' onClick={()=>dispatch(deleteProduct(localStorage.getItem('actualUserId'), product.product_id))}>
                         <svg width="2em" height="2em" viewBox="0 0 16 16" className="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -56,14 +58,13 @@ function Cart({products, isFetching}) {
                             <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                         </svg> 
                         </Button>
-                    
                     </div>    
                     {isFetching && <div className={`${styles.spinnerContainer}`}>
                         <Spinner className={`${styles.spinnerCentrado}`} animation="grow" variant="warning" />
                     </div> }            
                 </div> 
             )} 
-            <span class="badge badge-primary badge-pill" className={`d-flex justify-content-end`} >
+            <span  className={`d-flex justify-content-end`} >
                 <a href="/order" class="btn btn-warning font-weight-bold ">SIGUIENTE</a>            
             </span>
             

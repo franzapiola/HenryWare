@@ -8,6 +8,7 @@ body {
     margin-bottom: 40px;
     padding-bottom:25px;
   }
+  
 .footer{ 
     height: 80px;
     width: 100%;
@@ -16,6 +17,6 @@ body {
     bottom: -80px;
 }
 
-.footer-img{
+.footerImg{
     width: 80px;
 }

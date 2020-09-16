@@ -7,7 +7,7 @@ import Crud from '../components/products/Crud'
 import Catalog from '../components/products/Catalog';
 import SearchBar from '../components/SearchBar';
 import Producto from '../components/product-id/Producto';
-import AddCategory from '../components/products/AddCategory';
+import CategoriesCrud from '../components/products/CategoriesCrud';
 import Footer from '../components/Footer'
 import Register from '../components/users/Register';
 import Cart from '../components/cart/index'
@@ -15,6 +15,7 @@ import Order from '../components/order'
 import OrdersTable from '../components/order/OrdersTable';
 import Home from '../components/Home/Home'
 import Login from '../components/users/login'
+import OrderInfo from '../components/order/orderInfo'
 
 import ControlPanel from '../components/admin/controlPanel'
 
@@ -35,7 +36,7 @@ const App = (props) => {
   const [carouselIndex, setCarouselIndex] = useState(0);
 
   //Redux
-  const { view, searchInput, selectedCategory } = props;
+  const { view, searchInput, selectedCategory, currentPage } = props;
 
   const handleCarouselSelect = (selectedIndex, e) => {
     setCarouselIndex(selectedIndex);
@@ -61,19 +62,19 @@ const App = (props) => {
   const getProducts = ()=>{
     switch(view){
       case 'All':
-        fetch(`http://localhost:3001/products`)
+        fetch(`http://localhost:3001/products?offset=${currentPage == 1 ? 0 : (currentPage - 1) * 12}&limit=12`)
         .then(r=>r.json())
         .then(json=>setProducts(json))
         .catch(err => console.log(err));
         break;
       case 'Category':
-        fetch(`http://localhost:3001/products/categorias/${selectedCategory}`)
+        fetch(`http://localhost:3001/products/categorias/${selectedCategory}?offset=${currentPage == 1 ? 0 : (currentPage - 1) * 12}&limit=12`)
         .then(r => r.json())
         .then(json => setProducts(json))
         .catch(err => console.log(err));
         break;
       case 'Search':
-        fetch(`http://localhost:3001/products/search?product=${searchInput}`)
+        fetch(`http://localhost:3001/products/search?product=${searchInput}&offset=${currentPage == 1 ? 0 : (currentPage - 1) * 12}&limit=12`)
         .then(res=> res.json())
         .then(res=> setProducts(res))
         .catch(err => console.log(err));
@@ -112,13 +113,16 @@ const App = (props) => {
             categories={categories}
           />
         </Route>
-        <Route exact path='/products/categories/addcategory' component={AddCategory}/>
+        <Route exact path='/products/categories/edit' render = {()=><CategoriesCrud categories={categories} getCategories={getCategories}/>}/>
         <Route path='/products/:id' component={Producto}/>
         <Route path='/cart'>
           <Cart/>
         </Route>
-        <Route path='/order'>
+        <Route exact path='/order'>
           <Order/>
+        </Route>
+        <Route exact path='/orders/table/:id'>
+          <OrderInfo />
         </Route>
         <Route exact path='/login'>
           <Login/>
@@ -138,7 +142,8 @@ const mapStateToProps = state => {
   return {
     view: state.main.view,
     selectedCategory: state.main.selectedCategory,
-    searchInput: state.main.searchInput
+    searchInput: state.main.searchInput,
+    currentPage: state.main.currentPage
   }
 }
 

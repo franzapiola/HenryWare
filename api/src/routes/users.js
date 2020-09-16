@@ -106,6 +106,22 @@ server.get('/usersID/',(req,res) => {
     }))
 })
 
+// users/:id   ruta para traer un usuario por ID            NV.
+
+server.get('/:id', (req, res)=>{
+    User.findOne({
+        where: {
+            user_id: req.params.id
+        }
+    })
+    .then((user)=>{
+        res.status(200).json(user)
+    })
+    .catch((error) => {
+        res.status(404).send(error)
+    })
+});
+
 
 
 //-----------------------CARRITO---------------------------------------------------------------------

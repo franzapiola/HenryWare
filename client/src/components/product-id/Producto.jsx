@@ -1,9 +1,10 @@
 import React,{ useState, useEffect } from 'react';
 import {useParams}  from 'react-router-dom'
-import style from './producto.module.css'
+import styles from './producto.module.css'
 import Rating from './Rating'
 import { Button, Carousel } from 'react-bootstrap'
 import axios from "axios"
+import Reviews from '../reviews/reviews';
 
 
 export default function Producto (props) {
@@ -46,7 +47,6 @@ export default function Producto (props) {
     return (
 
         <div className='mt-4 col-md-12 '>
-            <div style={{maxHeight:'850px',maxWidth:'100%',margin:'auto'}} >
             <div className="card-header text-center">
                 <h3>{productData.name}</h3>
                 {/*<h3>actualID: {localStorage.getItem("actualUserId")}</h3>*/}
@@ -54,9 +54,9 @@ export default function Producto (props) {
             <div className="card-body">
                 <div className="row">
                     
-                    <Carousel style={{width:"50%"}}>
+                    <Carousel className={styles.carousel}>
                         {productData.images.map(function(imagen){
-                            return <Carousel.Item style={{textAlign:'center'}}><img style={{height:'100%'}}src={imagen.img_url}/></Carousel.Item>
+                            return <Carousel.Item className={styles.carouselItem}><img className={styles.carouselImg} src={imagen.img_url}/></Carousel.Item>
                         })}
                     </Carousel>
 
@@ -70,13 +70,13 @@ export default function Producto (props) {
                         <p>Garantía: {productData.warranty} días</p>
                         <h4>{productData.stock>0?'Stock Disponible': 'Sin Stock'}</h4>
                         {/*<Button className="col-md-5 col-12 mr-2" variant='comprar'  disabled={productData.stock<=0?'disabled':null}>Comprar</Button>*/}
-                        <Button className="col-md-5 col-12" variant='info'  disabled={productData.stock<=0?'disabled':null} onClick={ 
+                        <Button className={`col-md-5 col-12 ${styles.buttonCart}`} variant='info'  disabled={productData.stock<=0?'disabled':null} onClick={ 
                             () => enviarACarrito(userID,productData.product_id,1,productData.price)} >Añadir al Carrito</Button>
                     </div>
                 </div>
             </div>
+            <Reviews id={id} />
             <div className="card-footer">                
-            </div>
             </div>
         </div>
     )

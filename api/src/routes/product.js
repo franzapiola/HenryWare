@@ -5,11 +5,15 @@ const { Product, Categories, product_category, Image } = require('../db.js');
 
 //Trae *todos* los productos
 server.get('/', (req, res, next) => {
+    const { offset, limit } = req.query;
+    
 	Product.findAll({
         order:[
             ['product_id','ASC']
         ],
-        include:[{model:Categories,as:'categories'}, {model:Image}]
+        include:[{model:Categories,as:'categories'}, {model:Image}],
+        limit,
+        offset
     })
 		.then(products => {
 			res.status(200).send(products);
@@ -19,9 +23,14 @@ server.get('/', (req, res, next) => {
 
 //Ruta que devuleve todas las categorias
 server.get('/categories',function(req,res,next){
-    Categories.findAll().then( categories => {
-        res.status(200).send(categories);
-    }).catch(error => {
+    Categories.findAll({
+        //(fran)
+        //Agregué este include para poder calcular la cantidad de productos de una categoría con products.length
+        //Debe haber una mejor manera de hacerlo...
+        include: [{model: Product, as: 'products', attributes: ['product_id']}]
+    })
+    .then( categories => res.status(200).send(categories))
+    .catch( error => {
         console.log(error);
         res.send(error);
     })
@@ -30,13 +39,28 @@ server.get('/categories',function(req,res,next){
 
 //Ruta todos los productos según categoría --> me trae todos los products que tienen esa categoría
 server.get('/categorias/:categoria',function(req,res){
+    const { offset, limit } = req.query;
+
 	const {categoria} = req.params;
-	Categories.findAll({
-		where:{
-			name:categoria,
-		},
-		include:[{model:Product, as:"products", include:[{model:Image}]}]
-	}).then(response => res.status(200).send(response[0].products)).catch(err => res.status(404).send(err))
+    
+    Product.findAll({
+        include: [
+            {
+                model: Categories,
+                as: 'categories',
+                where:{
+                    name: categoria
+                }
+            },
+            {
+                model: Image
+            }
+        ],
+        limit,
+        offset
+    })
+    .then(r => res.status(200).send(r))
+    .catch(err => res.status(404).send(err));
 })
 
 
@@ -92,8 +116,9 @@ server.get('/:product_id/images', function(req, res){
 
 
 server.get('/search', (req, res, next) => {
-	// para buscar productos : /products/search?product={nombredeproducto} Jx
-    const {product} = req.query
+    // para buscar productos : /products/search?product={nombredeproducto} Jx
+    const { product, offset, limit } = req.query;
+
     //esta linea es para mostrar lo que buscamos en la consola del server, se puede comentar. JX
     //console.log("Searching ->",product)
     Product.findAll({
@@ -104,12 +129,14 @@ server.get('/search', (req, res, next) => {
         },
         include: [
             {all:true}
-        ]
+        ],
+        limit,
+        offset
     })
     .then( products => {
         res.status(200).send(products);
     })
-    .catch(next);
+    .catch( err => res.status(400).send(err));
 });
 
 
