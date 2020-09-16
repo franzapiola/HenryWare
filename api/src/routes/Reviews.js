@@ -6,19 +6,21 @@ server.use(bodyParser.json());
 
 
 //Ruta que devuelve todas las Reviews
-server.get('/',function( req, res ){
+server.get('/:product_id',function( req, res ){
+    const { product_id } = req.params
     Review.findAll({
         attributes: ['review_id', 'rating', 'description'],
-        include:[{ 
-            model: Product, 
-            as: 'product', 
-            attributes: ['product_id','name', 'description']
-        }]
+        where: {
+            product_id
+        },
     })
-    .then(response => {res.status(200).send(response)})
-    .catch(err => res.status(404).send(err))
+    .then( response => {res.status(200).json(response)})
+    .catch(err => res.status(404).json(err))
 });
-
+//Editar una Review
+server.put('/:review_id', (req, res) => {
+    
+})
 //Cargar un rating y descripcion a un producto
 server.post('/:product_id',(req, res) => {
     console.log('review router')
