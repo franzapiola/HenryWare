@@ -19,22 +19,6 @@ server.get('/:product_id',function( req, res ){
     .catch(err => res.status(404).json(err))
 });
 
-//Editar una Review
-server.put('/:review_id', (req, res) => {
-    const {review_id} = req.params;
-
-    const {rating,description} = req.body
-
-    Review.update({
-        rating:rating,
-        description:description
-    },{
-        where:{
-            review_id:review_id
-        }
-    }).then(res.status(200).send('Review modificado')).catch(err => res.status(400).send(err))
-    
-})
 //Cargar un rating y descripcion a un producto
 server.post('/:product_id',(req, res) => {
     console.log('review router')
@@ -60,5 +44,35 @@ server.post('/:product_id',(req, res) => {
         res.status(400).json({status: 400, message: error})
     })
 })
+
+//Editar una Review
+server.put('/:review_id', (req, res) => {
+    const {review_id} = req.params;
+
+    const {rating,description} = req.body
+
+    Review.update({
+        rating:rating,
+        description:description
+    },{
+        where:{
+            review_id:review_id
+        }
+    }).then(res.status(200).send('Review modificado')).catch(err => res.status(400).send(err))
+    
+})
+
+//Eliminar una Review
+
+server.delete('/:review_id',(req,res)=>{
+    const {review_id} = req.params
+
+    Review.destroy({
+        where:{
+            review_id:review_id
+        }
+    }).then(res.status(200).send('review eliminado')).catch(err=>res.status(400).send(err))
+})
+
 
 module.exports = server;
