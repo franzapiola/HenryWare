@@ -49,6 +49,7 @@ function Catalogo(props) {
                   if(selectedCategory===cat.name && view === 'Category') categoryClass += ' active'
                   return <li key={cat.category_id} className={`${categoryClass} ${styles.category}`} onClick={()=> {
                     selectCategory(cat.name);
+                    changePage(1);
                     getProducts();
                     }}>{cat.name}</li>  
                 })}
@@ -64,9 +65,9 @@ function Catalogo(props) {
                     {products.length ? products.map(prod => 
                     <ProductCard key={prod.product_id} data={prod}/>
                     ) : <h4>{view === 'Search' ? `No se encontraron resultados para "${searchInput}"...` : `La categoría "${selectedCategory}" no contiene ningún producto...`}</h4>}
-               </div>
-                   {/* NAVEGACIÓN DE PÁGINAS */}
+            </div>
 
+                   {/* NAVEGACIÓN DE PÁGINAS */}
            <div className={`d-flex justify-content-around ${styles.navigationPages}`}>
 
                 {currentPage > 1 && <Button className={styles.buttonPagination} onClick={()=>{
@@ -86,7 +87,7 @@ function Catalogo(props) {
         </div>
                </div>
                
-           </div>
+    </div>
 
            
     )
