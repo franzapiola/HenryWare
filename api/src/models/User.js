@@ -1,7 +1,9 @@
 const { DataTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
+
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
-module.exports = (sequelize) => {
+const User = (sequelize) => {
   // defino el modelo
   sequelize.define('user', {
     user_id:{
@@ -67,6 +69,22 @@ module.exports = (sequelize) => {
     role: {
         type: DataTypes.ENUM('user', 'admin'),
         defaultValue: 'user'
+    },
+    password: {
+        type: DataTypes.TEXT,
+        set(value){
+          bcrypt.hash(value, 10)
+          .then(hash => this.setDataValue('password', hash))
+          //No sé que otra cosa podria hacer con el error? mmm...
+          .catch(error => console.log('ERROR PASSWORD:', error));
+        }
     }
   });
 };
+
+User.prototype.checkPassword = function(password){
+  //Retorna una promesa
+  return bcrypt.compare(password, this.password);
+};
+
+module.exports = User;
