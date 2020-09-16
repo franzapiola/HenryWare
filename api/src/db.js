@@ -96,7 +96,7 @@ Product.hasMany(Review,{
   foreignKey: 'product_id'
 })
 
-Review.belongsTo(Producto,{
+Review.belongsTo(Product,{
   foreignKey:'product_id'
 })
 
