@@ -48,9 +48,6 @@ const SearchBar = (props) => {
                 <form onSubmit={(e) => { handleSubmit(e); }}>
                     <input value={searchInput} type='text' placeholder='Busca un producto...' onChange={(e) => {
                         search(e.target.value);
-                        getProducts();
-                        //Este getProducts hace que la búsqueda sea "instantánea" pero
-                        //es bastante pesado, quiza haya que sacarlo más adelante
                     }} />
                     <Button className="nav-submit" type='submit'>Buscar</Button>
                 </form>

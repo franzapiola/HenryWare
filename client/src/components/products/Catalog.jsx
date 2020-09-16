@@ -26,7 +26,7 @@ function Catalogo(props) {
     useEffect(()=>{
         getProducts();
         getCategories();
-    }, [view, selectedCategory, currentPage]);
+    }, [view, selectedCategory, searchInput, currentPage]);
     
     return (
         <div className='container-fluid mt-2 pt-2 mb-2'>
