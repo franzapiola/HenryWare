@@ -42,14 +42,25 @@ server.get('/categorias/:categoria',function(req,res){
     const { offset, limit } = req.query;
 
 	const {categoria} = req.params;
-	Categories.findAll({
-		where:{
-			name:categoria,
-		},
-        include:[{model:Product, as:"products", include:[{model:Image}]}],
-        offset,
-        limit
-	}).then(response => res.status(200).send(response[0].products)).catch(err => res.status(404).send(err))
+    
+    Product.findAll({
+        include: [
+            {
+                model: Categories,
+                as: 'categories',
+                where:{
+                    name: categoria
+                }
+            },
+            {
+                model: Image
+            }
+        ],
+        limit,
+        offset
+    })
+    .then(r => res.status(200).send(r))
+    .catch(err => res.status(404).send(err));
 })
 
 
@@ -105,10 +116,9 @@ server.get('/:product_id/images', function(req, res){
 
 
 server.get('/search', (req, res, next) => {
-    const { offset, limit } = req.query;
+    // para buscar productos : /products/search?product={nombredeproducto} Jx
+    const { product, offset, limit } = req.query;
 
-	// para buscar productos : /products/search?product={nombredeproducto} Jx
-    const {product} = req.query
     //esta linea es para mostrar lo que buscamos en la consola del server, se puede comentar. JX
     //console.log("Searching ->",product)
     Product.findAll({
@@ -126,7 +136,7 @@ server.get('/search', (req, res, next) => {
     .then( products => {
         res.status(200).send(products);
     })
-    .catch(next);
+    .catch( err => res.status(400).send(err));
 });
 
 

@@ -8,7 +8,7 @@ import styles from './searchBar.module.scss'
 //Redux
 import store from '../redux/store'
 import { connect, useDispatch } from 'react-redux';
-import { search, selectCategory, selectAll } from '../redux/actions/main'
+import { search, selectCategory, selectAll,changePage } from '../redux/actions/main'
 import { fetchUserCart } from '../redux/actions/actions'
 
 
@@ -17,13 +17,14 @@ const SearchBar = (props) => {
     const { getProducts, categories } = props;
 
     //Redux
-    const { searchInput, search, selectCategory, selectAll, articles } = props;
+    const { searchInput, search, selectCategory, selectAll, articles, changePage } = props;
     const dispatch = useDispatch()
     const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         search(searchInput);
+        changePage(1);
         getProducts();
         history.push('/products')
     }
@@ -122,7 +123,8 @@ const mapDispatchToProps = dispatch => {
         search: (input) => dispatch(search(input)),
         selectCategory: (category) => dispatch(selectCategory(category)),
         selectAll: () => dispatch(selectAll()),
-        fetchUserCart: () => dispatch(fetchUserCart())
+        fetchUserCart: () => dispatch(fetchUserCart()),
+        changePage: (num) => dispatch(changePage(num))
     }
 }
 
