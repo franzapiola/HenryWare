@@ -97,9 +97,9 @@ const SearchBar = (props) => {
                         </svg></span>
                     }>
                         <NavDropdown.Item><Link to="/profile"> Perfil </Link></NavDropdown.Item>
-                        <NavDropdown.Item><Link to="/products/edit">Crud de productos</Link></NavDropdown.Item>
-                        <NavDropdown.Item><Link to="/products/categories/addcategory">Crud de categorías</Link></NavDropdown.Item>
-                        <NavDropdown.Item><Link to="/orders/table">Listado de ordenes</Link></NavDropdown.Item>
+                        <NavDropdown.Item><Link to="/products/edit">Productos</Link></NavDropdown.Item>
+                        <NavDropdown.Item><Link to="/products/categories/edit">Categorías</Link></NavDropdown.Item>
+                        <NavDropdown.Item><Link to="/orders/table">Listado de órdenes</Link></NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item> <Link to="/disconnect">Cerrar Sesión</Link> </NavDropdown.Item>
                     </NavDropdown>

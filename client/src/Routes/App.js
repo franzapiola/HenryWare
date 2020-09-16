@@ -7,7 +7,7 @@ import Crud from '../components/products/Crud'
 import Catalog from '../components/products/Catalog';
 import SearchBar from '../components/SearchBar';
 import Producto from '../components/product-id/Producto';
-import AddCategory from '../components/products/AddCategory';
+import CategoriesCrud from '../components/products/CategoriesCrud';
 import Footer from '../components/Footer'
 import Register from '../components/users/Register';
 import Cart from '../components/cart/index'
@@ -112,7 +112,7 @@ const App = (props) => {
             categories={categories}
           />
         </Route>
-        <Route exact path='/products/categories/addcategory' component={AddCategory}/>
+        <Route exact path='/products/categories/edit' render = {()=><CategoriesCrud categories={categories} getCategories={getCategories}/>}/>
         <Route path='/products/:id' component={Producto}/>
         <Route path='/cart'>
           <Cart/>
