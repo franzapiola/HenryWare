@@ -6,33 +6,8 @@ import axios from "axios";
 
 export default function Review (props) {
 
-    const {updateAt, rating, description, user_id} = props;
-
-    const [idReview, setidReview] = useState();
-
-    //Buscamos los nombres del user_id que nos pasaron.     NV.
-
-    const getnames = (user_id) => {
-            
-        axios.get(`http://localhost:3001/users/${user_id}`) 
-        .then(response => {
-            const name = response.data.first_name.toUpperCase().toLowerCase().charAt(0).toUpperCase() + response.data.first_name.slice(1);
-            const apellido = response.data.last_name.toUpperCase().toLowerCase().charAt(0).toUpperCase() + response.data.last_name.slice(1);
-            const fullName = name + ' ' + apellido;
-            return fullName;
-        })
-        .then(response2 => {
-            setidReview(response2)
-        })
-        .catch(error => {
-            setidReview('User')
-            console.log(error);
-        })
-    }
-
-    useEffect(() => {
-        getnames(user_id)  
-    } ,[]) 
+    const {updateAt, rating, description, first_name, last_name } = props;
+    const fullName =  first_name + ' ' + last_name;
 
     return (
 
@@ -45,7 +20,7 @@ export default function Review (props) {
                                 <div className='comments-avatar' className={s.commentsAvatar}><img src={avatar} className={s.img}/></div>
                                 <div className='comment-box' className={s.commentsBox}>
                                     <div className='comment-head' className={s.commentsHead}>
-                                        <h6 className='comment-name-by-author' className={s.author}><a className={s.a}>{idReview}</a></h6>
+                                        <h6 className='comment-name-by-author' className={s.author}><a className={s.a}>{fullName}</a></h6>
                                         <span className={s.date}>{updateAt}</span>
                                         <i className={s.commentsIcons}><Rating rating={rating}/></i>
                                     </div>
