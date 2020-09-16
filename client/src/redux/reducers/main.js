@@ -1,4 +1,4 @@
-import { SEARCH, SELECT_CATEGORY, SELECT_ALL } from '../actions/main'
+import { SEARCH, SELECT_CATEGORY, SELECT_ALL, CHANGE_PAGE } from '../actions/main'
 //view determina qué se va a mostrar en el catálogo...
 //'All' : se muestran todos los productos (SELECT_ALL)
 //'Category': se muestran los productos de la categoría selectedCategory (SELECT_CATEGORY)
@@ -8,7 +8,8 @@ import { SEARCH, SELECT_CATEGORY, SELECT_ALL } from '../actions/main'
 const initialState = {
     searchInput: '',
     selectedCategory: null,
-    view: 'All'
+    view: 'All',
+    currentPage: 1
 }
 
 export default (state = initialState, action) => {
@@ -37,6 +38,11 @@ export default (state = initialState, action) => {
                 ...state,
                 selectedCategory: null,
                 view: 'All'
+            }
+        case CHANGE_PAGE:
+            return {
+                ...state,
+                currentPage: action.payload
             }
     }
     return state;

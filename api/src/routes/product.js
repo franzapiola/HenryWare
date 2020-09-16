@@ -5,11 +5,15 @@ const { Product, Categories, product_category, Image } = require('../db.js');
 
 //Trae *todos* los productos
 server.get('/', (req, res, next) => {
+    const { offset, limit } = req.query;
+    
 	Product.findAll({
         order:[
             ['product_id','ASC']
         ],
-        include:[{model:Categories,as:'categories'}, {model:Image}]
+        include:[{model:Categories,as:'categories'}, {model:Image}],
+        limit,
+        offset
     })
 		.then(products => {
 			res.status(200).send(products);
@@ -35,12 +39,16 @@ server.get('/categories',function(req,res,next){
 
 //Ruta todos los productos según categoría --> me trae todos los products que tienen esa categoría
 server.get('/categorias/:categoria',function(req,res){
+    const { offset, limit } = req.query;
+
 	const {categoria} = req.params;
 	Categories.findAll({
 		where:{
 			name:categoria,
 		},
-		include:[{model:Product, as:"products", include:[{model:Image}]}]
+        include:[{model:Product, as:"products", include:[{model:Image}]}],
+        offset,
+        limit
 	}).then(response => res.status(200).send(response[0].products)).catch(err => res.status(404).send(err))
 })
 
@@ -97,6 +105,8 @@ server.get('/:product_id/images', function(req, res){
 
 
 server.get('/search', (req, res, next) => {
+    const { offset, limit } = req.query;
+
 	// para buscar productos : /products/search?product={nombredeproducto} Jx
     const {product} = req.query
     //esta linea es para mostrar lo que buscamos en la consola del server, se puede comentar. JX
@@ -109,7 +119,9 @@ server.get('/search', (req, res, next) => {
         },
         include: [
             {all:true}
-        ]
+        ],
+        limit,
+        offset
     })
     .then( products => {
         res.status(200).send(products);
