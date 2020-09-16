@@ -5,6 +5,7 @@ import { useSelector, useDispatch, connect } from 'react-redux'
 import { fetchOrders, changeStatus } from '../../redux/actions/Orders'
 import { fetchUser } from '../../redux/actions/User'
 import Select from 'react-select'
+import { Button } from 'react-bootstrap'
 
 function OrdersTable({ orders }) {
 
@@ -32,6 +33,7 @@ function OrdersTable({ orders }) {
                             <th>Email</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
+                            <th>INFO</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,6 +55,7 @@ function OrdersTable({ orders }) {
                                 <td>{order.user.email}</td>
                                 <td>{order.user.first_name}</td>
                                 <td>{order.user.last_name}</td>
+                                <td><a href={`/orders/table/${order.order_id}`} class="btn btn-primary"> +</a></td>
                             </tr>
                         ))}
                     </tbody>

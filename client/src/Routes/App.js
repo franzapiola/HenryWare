@@ -15,6 +15,7 @@ import Order from '../components/order'
 import OrdersTable from '../components/order/OrdersTable';
 import Home from '../components/Home/Home'
 import Login from '../components/users/login'
+import OrderInfo from '../components/order/orderInfo'
 
 import ControlPanel from '../components/admin/controlPanel'
 
@@ -117,8 +118,11 @@ const App = (props) => {
         <Route path='/cart'>
           <Cart/>
         </Route>
-        <Route path='/order'>
+        <Route exact path='/order'>
           <Order/>
+        </Route>
+        <Route exact path='/orders/table/:id'>
+          <OrderInfo />
         </Route>
         <Route exact path='/login'>
           <Login/>
