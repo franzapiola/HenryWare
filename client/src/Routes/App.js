@@ -68,13 +68,13 @@ const App = (props) => {
         .catch(err => console.log(err));
         break;
       case 'Category':
-        fetch(`http://localhost:3001/products/categorias/${selectedCategory}?offset=${currentPage == 1 ? 0 : currentPage * 12}&limit=12`)
+        fetch(`http://localhost:3001/products/categorias/${selectedCategory}?offset=${currentPage == 1 ? 0 : (currentPage - 1) * 12}&limit=12`)
         .then(r => r.json())
         .then(json => setProducts(json))
         .catch(err => console.log(err));
         break;
       case 'Search':
-        fetch(`http://localhost:3001/products/search?product=${searchInput}?offset=${currentPage == 1 ? 0 : currentPage * 12}&limit=12`)
+        fetch(`http://localhost:3001/products/search?product=${searchInput}&offset=${currentPage == 1 ? 0 : (currentPage - 1) * 12}&limit=12`)
         .then(res=> res.json())
         .then(res=> setProducts(res))
         .catch(err => console.log(err));
