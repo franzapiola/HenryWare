@@ -14,7 +14,7 @@ server.get('/',function(req,res){
 
 //Ruta para crear un usuario    /user    NV.
 server.post('/',(req, res) => {
-    const { email, first_name, last_name, address, phone_number, role }= req.body
+    const { email, first_name, last_name, address, phone_number, role, password }= req.body
     //Hice algunas modificaciones para que maneje bien los datos recibidos. Ya que el formulario manda a veces strings vacios. y la respuesta no la podia manejar si no era un objeto. 
     User.create({
         email: email && email.length > 0 ? email : null,
@@ -23,6 +23,7 @@ server.post('/',(req, res) => {
         address: address && address.length > 0 ? address:null,
         phone_number: phone_number && phone_number.length > 0 ? phone_number : null,
         role: role?role:null,
+        password
     })
     .then((usuario) => {
         res.status(201).send({status: 201, message: usuario})        
