@@ -11,12 +11,14 @@ export function fetchUser(userId) {
         .then( json => dispatch(receiveUser(json)))        
     }
 }
+
 export const requestUser = () => {
 	return {
         type: REQUEST_USER,
         isFetching: true,
 	}
 }
+
 export const receiveUser = user => {
 	return {
         type: RECEIVE_USER,
