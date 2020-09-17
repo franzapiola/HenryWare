@@ -3,18 +3,20 @@ import {REQUEST_USER, RECEIVE_USER } from '../actions/User'
 const initialState = {
 	isFetching: false,
     didInvalidate: false,
-    user: {},
+    user: {
+        
+    },
 };
 
 export default (state= initialState, action) => {
 
 	switch(action.type){
-        case(REQUEST_USER):
+        case REQUEST_USER:
         return {
             ...state,
             isFetching: true,
         }
-        case(RECEIVE_USER):
+        case RECEIVE_USER :
             return {
                 ...state,
                 isFetching: false,
