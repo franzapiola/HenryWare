@@ -98,19 +98,44 @@ const User = (sequelize) => {
     },
     password: {
         type: DataTypes.TEXT,
+        allowNull:false,
         set(value){
-          bcrypt.hash(value, 10)
-          .then(hash => this.setDataValue('password', hash))
-          //No sé que otra cosa podria hacer con el error? mmm...
-          .catch(error => console.log('ERROR PASSWORD:', error));
+          const hash = bcrypt.hashSync(value, 10);
+          this.setDataValue('password', hash);
         }
     }
   });
 };
 
-User.prototype.checkPassword = function(password){
+User.checkPassword = function(password){
   //Retorna una promesa
   return bcrypt.compare(password, this.password);
 };
 
 module.exports = User;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

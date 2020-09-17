@@ -14,7 +14,8 @@ server.get('/',function(req,res){
 
 //Ruta para crear un usuario    /user    NV.
 server.post('/',(req, res) => {
-    const { email, first_name, last_name, address, phone_number, role }= req.body
+  
+    const { email, first_name, last_name, address, phone_number, role, password }= req.body;
     
     User.create({
         email, 
@@ -22,8 +23,8 @@ server.post('/',(req, res) => {
         last_name, 
         address, 
         phone_number, 
-        role
-
+        role,
+        password
     })
     .then((usuario) => {
         res.status(201).send({status: 201, message: usuario})        
