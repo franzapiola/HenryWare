@@ -15,6 +15,10 @@ const User = (sequelize) => {
     email: {
       type: DataTypes.STRING,
       validate: {
+          len: {
+            args: [4, 20],
+            msg: "No es un email valido"
+          },
           isEmail: {
             msg: "No es un email valido"
           },
@@ -30,6 +34,10 @@ const User = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        len: {
+          args: [2, 15],
+          msg: "No es nombre valido"
+        },
         notNull: {
           msg: 'Nombre obligatorio'
         }
@@ -39,6 +47,10 @@ const User = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        len: {
+          args: [2, 15],
+          msg: "No es apellido valido"
+        },
         notNull: {
           msg: 'Apellido obligatorio'
         }
@@ -48,6 +60,10 @@ const User = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
+          len: {
+            args: [5, 20],
+            msg: "No es apellido valido"
+          },
           notNull: {
             msg: 'Dirección obligatoria'
           }
@@ -57,6 +73,10 @@ const User = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
+          len: {
+            args: [7, 15],
+            msg: "No es un numero valido"
+          },
           isNumeric: true,
           isInt: {
             msg: "No es un numero"
@@ -68,7 +88,13 @@ const User = (sequelize) => {
     },
     role: {
         type: DataTypes.ENUM('user', 'admin'),
-        defaultValue: 'user'
+        defaultValue: 'user',
+        validate: {
+          len: {
+            args: [4, 5],
+            msg: "No es un role valido"
+          },
+        }
     },
     password: {
         type: DataTypes.TEXT,

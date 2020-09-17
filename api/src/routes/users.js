@@ -14,15 +14,16 @@ server.get('/',function(req,res){
 
 //Ruta para crear un usuario    /user    NV.
 server.post('/',(req, res) => {
-    const { email, first_name, last_name, address, phone_number, role, password }= req.body
-    //Hice algunas modificaciones para que maneje bien los datos recibidos. Ya que el formulario manda a veces strings vacios. y la respuesta no la podia manejar si no era un objeto. 
+  
+    const { email, first_name, last_name, address, phone_number, role, password }= req.body;
+    
     User.create({
-        email: email && email.length > 0 ? email : null,
-        first_name: first_name && first_name.length > 0 ? first_name : null,
-        last_name: last_name && last_name.length > 0 ? last_name : null,
-        address: address && address.length > 0 ? address:null,
-        phone_number: phone_number && phone_number.length > 0 ? phone_number : null,
-        role: role?role:null,
+        email, 
+        first_name, 
+        last_name, 
+        address, 
+        phone_number, 
+        role,
         password
     })
     .then((usuario) => {
