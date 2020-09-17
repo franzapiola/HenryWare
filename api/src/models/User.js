@@ -16,7 +16,7 @@ const User = (sequelize) => {
       type: DataTypes.STRING,
       validate: {
           len: {
-            args: [4, 20],
+            args: [4, 70],
             msg: "No es un email valido"
           },
           isEmail: {
@@ -35,7 +35,7 @@ const User = (sequelize) => {
       allowNull: false,
       validate: {
         len: {
-          args: [2, 15],
+          args: [2, 30],
           msg: "No es nombre valido"
         },
         notNull: {
@@ -48,7 +48,7 @@ const User = (sequelize) => {
       allowNull: false,
       validate: {
         len: {
-          args: [2, 15],
+          args: [2, 30],
           msg: "No es apellido valido"
         },
         notNull: {
@@ -61,8 +61,8 @@ const User = (sequelize) => {
         allowNull: false,
         validate: {
           len: {
-            args: [5, 20],
-            msg: "No es apellido valido"
+            args: [5, 30],
+            msg: "No es una dirección valida"
           },
           notNull: {
             msg: 'Dirección obligatoria'
@@ -74,7 +74,7 @@ const User = (sequelize) => {
         allowNull: false,
         validate: {
           len: {
-            args: [7, 15],
+            args: [7, 20],
             msg: "No es un numero valido"
           },
           isNumeric: true,
