@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
@@ -110,6 +111,10 @@ Review.belongsTo(User,{
   foreignKey:'user_id'
 })
 
+User.prototype.checkPassword = function(password){
+  
+  return bcrypt.compareSync(password, this.password);
+};
 
 module.exports = {
   ...sequelize.models,  // para poder importar los modelos así: const { Product, User } = require('./db.js');

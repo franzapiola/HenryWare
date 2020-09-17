@@ -16,7 +16,7 @@ const User = (sequelize) => {
       type: DataTypes.STRING,
       validate: {
           len: {
-            args: [4, 20],
+            args: [4, 80],
             msg: "No es un email valido"
           },
           isEmail: {
@@ -100,17 +100,15 @@ const User = (sequelize) => {
         type: DataTypes.TEXT,
         allowNull:false,
         set(value){
-          const hash = bcrypt.hashSync(value, 10);
+          const salt = bcrypt.genSaltSync(10)
+          const hash = bcrypt.hashSync(value, salt);
           this.setDataValue('password', hash);
         }
     }
   });
 };
 
-User.checkPassword = function(password){
-  //Retorna una promesa
-  return bcrypt.compare(password, this.password);
-};
+
 
 module.exports = User;
 
