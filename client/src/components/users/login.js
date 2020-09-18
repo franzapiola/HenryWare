@@ -11,56 +11,52 @@ import axios from "axios"
 
 export default function Login(){
 	const axios = require('axios');
+	const [ emailForm, setEmailForm ] = useState('');
+	const [ passForm, setPassForm ] = useState('');
 
 
-
-	const [idUser,setIdUser] = useState("Guest")
-	const [actualUserName,setActualUserName] = useState("guest")
-	localStorage.setItem("actualUserId",idUser)
-	localStorage.setItem("actualUserName",actualUserName)
-
-	
-
-	const cambiarLocalId =  async (email)=>{
+	// const [idUser,setIdUser] = useState("Guest")
+	// const [actualUserName,setActualUserName] = useState("guest")
+	// localStorage.setItem("actualUserId",idUser)
+	// localStorage.setItem("actualUserName",actualUserName)
+	// const cambiarLocalId =  async (email)=>{
 		 
-		 //const username = "juan@gmail.com";
+	// 	 //const username = "juan@gmail.com";
 		
-		 await axios({
-		 	url : `http://localhost:3001/users/usersID?email=${email}`,
-		 	method : "GET"
-		 }).then(response => {
-		 	setIdUser(response.data.id)
-		 	setActualUserName(response.data.name)
-		 	console.log(response.data.name)
-		 })
+	// 	 await axios({
+	// 	 	url : `http://localhost:3001/users/usersID?email=${email}`,
+	// 	 	method : "GET"
+	// 	 }).then(response => {
+	// 	 	setIdUser(response.data.id)
+	// 	 	setActualUserName(response.data.name)
+	// 	 	console.log(response.data.name)
+	// 	 })	
+	// }
 
 
-		 
-		 
-		 	
+	const handleSubmit = () => {
+		axios.post('http://localhost:3001/auth/login', {
+			email: emailForm,
+			password: passForm
+		})
 	}
-
 		
 	return(
 		<div className={`pt-3 mt-2 d-flex justify-content-center align-items-center w-100 mx-auto ${styles.container}`}>
 			<div class={`card ${styles.cardLogin}`}  >
-			{/*<span>Usuario actual : {localStorage.getItem("actualUserId")} </span>*/}
-				<form >
+				<form onSubmit={handleSubmit}>
 				 <div class="form-group">
 				    <label for="userInput">Correo Electronico</label>
-				    <input name="correo" type="text" class={`form-control ${styles.inputLogin}`} id="correo" />    
+				    <input name="correo" type="text" value={emailForm} class={`form-control ${styles.inputLogin}`} id="correo" onChange = {(e)=>{setEmailForm(e.target.value)}}/>    
 				  </div>
 				  <div class="form-group">
 				    <label for="exampleInputPassword1">Contraseña</label>
-				    <input type="password" class={`form-control ${styles.inputLogin}`} id="password"/>
+				    <input type="password" value={passForm} class={`form-control ${styles.inputLogin}`} id="password" onChange = {(e)=>{setPassForm(e.target.value)}}/>
 				  </div>
-				  <button  className={`${styles.henryColor} col-md-12`} onClick={ (e) => {
-				  	cambiarLocalId(document.getElementById("correo").value);
-				  	e.preventDefault();
-
-				  }}>Ingresar</button>
+				  <button type='submit'  className={`${styles.henryColor} col-md-12`}>Ingresar</button>
 				 {/*<span>ACTUAL STATUS : {idUser} </span>*/}
 				</form>
+				{/* <button onClick={()=>console.log('pass:', passForm, 'email:', emailForm)}>X</button> */}
 			</div>
 		</div>
 		)

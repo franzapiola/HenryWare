@@ -5,6 +5,9 @@ const { User,Order,LineaDeOrden,Product,Image } = require('../db.js')
 
 server.use(bodyParser.json());
 
+//Ruta de registrar y login están en Auth.js
+//      /auth/register
+//      /auth/login
 
 //Ruta para obtener todos los usuarios  /users
 
@@ -12,25 +15,6 @@ server.get('/',function(req,res){
     User.findAll({}).then(response => res.status(200).send(response))
 })
 
-//Ruta para crear un usuario    /user    NV.
-server.post('/',(req, res) => {
-    const { email, first_name, last_name, address, phone_number, role }= req.body
-    //Hice algunas modificaciones para que maneje bien los datos recibidos. Ya que el formulario manda a veces strings vacios. y la respuesta no la podia manejar si no era un objeto. 
-    User.create({
-        email: email && email.length > 0 ? email : null,
-        first_name: first_name && first_name.length > 0 ? first_name : null,
-        last_name: last_name && last_name.length > 0 ? last_name : null,
-        address: address && address.length > 0 ? address:null,
-        phone_number: phone_number && phone_number.length > 0 ? phone_number : null,
-        role: role?role:null,
-    })
-    .then((usuario) => {
-        res.status(201).send({status: 201, message: usuario})        
-    })
-    .catch((error) => {
-        res.status(400).send({status: 400, message: error})
-    })
-})
 
 //Ruta para modificar información de un usuario     /users/:user_id
 server.put('/:user_id', function(req, res){

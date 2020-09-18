@@ -8,7 +8,7 @@ const orderRouter = require('./orders.js');
 
 const reviewsRouter = require('./Reviews.js');
 
-const loginRouter = require('./Login');
+const authRouter = require('./Auth');
 
 
 const router = Router();
@@ -24,7 +24,7 @@ router.use('/users', userRouter);
 
 router.use('/orders', orderRouter);
 
-router.use('/login', loginRouter);
+router.use('/auth', authRouter);
 
 
 module.exports = router;

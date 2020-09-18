@@ -73,10 +73,9 @@ const User = (sequelize) => {
     password: {
         type: DataTypes.TEXT,
         set(value){
-          bcrypt.hash(value, 10)
-          .then(hash => this.setDataValue('password', hash))
-          //No sé que otra cosa podria hacer con el error? mmm...
-          .catch(error => console.log('ERROR PASSWORD:', error));
+          const salt = bcrypt.genSaltSync(10);
+          const hash = bcrypt.hashSync(value, salt);
+          this.setDataValue('password', hash);
         }
     }
   });
