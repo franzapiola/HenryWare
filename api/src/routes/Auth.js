@@ -34,16 +34,13 @@ if (process.env.NODE_ENV !== 'production') {
   server.use(methodOverride('_method'))
 
   // /auth/login
-  server.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: 'http://localhost:3001/',
-    failureRedirect: 'http://localhost:3001/login',
-  }))
+  server.post('/login', passport.authenticate('local'),
+   (req, res) => res.status(201).send('TODO OK'))
   
   
   //Ruta para crear un usuario    /auth/register
   server.post('/register', checkNotAuthenticated, (req, res) => {
     const { email, first_name, last_name, address, phone_number, role, password }= req.body;
-    //Hice algunas modificaciones para que maneje bien los datos recibidos. Ya que el formulario manda a veces strings vacios. y la respuesta no la podia manejar si no era un objeto. 
     User.create({
         email,
         first_name,

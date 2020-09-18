@@ -16,7 +16,7 @@ POST http://localhost:3001/auth/login
 content-type: application/json
 
 {
-    "email": "toninence@gmail.com",
+    "email": "franzapiola@gmail.com",
     "password": "12345"
 }
 
@@ -25,12 +25,12 @@ POST http://localhost:3001/auth/register
 content-type: application/json
 
 {
-    "first_name": "toninence@gmail.com",
+    "first_name": "franzapiola@gmail.com",
     "last_name": "123456",
     "address": "calle falsa 123",
     "phone_number": "1234567",
     "role": "admin",
-    "email": "toninence@gmail.com",
+    "email": "franzapiola@gmail.com",
     "password": "12345"
 }
 
