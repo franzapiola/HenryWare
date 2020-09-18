@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from 'react';
-import {useParams}  from 'react-router-dom'
+import {useParams, useHistory}  from 'react-router-dom'
 import styles from './register.module.scss'
 import { FormControl, TextField, Button } from '@material-ui/core';
 import GoogleButton from 'react-google-button'
@@ -11,6 +11,9 @@ import axios from "axios"
 
 export default function Login(){
 	const axios = require('axios');
+
+	const history = useHistory();
+
 	const [ emailForm, setEmailForm ] = useState('');
 	const [ passForm, setPassForm ] = useState('');
 
@@ -34,11 +37,18 @@ export default function Login(){
 	// }
 
 
-	const handleSubmit = () => {
+	const handleSubmit = (e) => {
+		e.preventDefault();
 		axios.post('http://localhost:3001/auth/login', {
 			email: emailForm,
 			password: passForm
 		})
+		.then(res => {
+			const { status } = res;
+			console.log(res)
+			if(status === '201') return history.push('/');
+		} )
+		.catch(err => console.log(err));
 	}
 		
 	return(
