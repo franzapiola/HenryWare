@@ -15,6 +15,7 @@ import Order from '../components/order'
 import OrdersTable from '../components/order/OrdersTable';
 import Home from '../components/Home/Home'
 import Login from '../components/users/login'
+import LoginToken from '../components/users/loginv2'
 import OrderInfo from '../components/order/orderInfo'
 
 import ControlPanel from '../components/admin/controlPanel'
@@ -120,6 +121,9 @@ const App = (props) => {
         </Route>
         <Route exact path='/order'>
           <Order/>
+        </Route>
+        <Route exact path="/loginToken">
+          <LoginToken />
         </Route>
         <Route exact path='/orders/table/:id'>
           <OrderInfo />
