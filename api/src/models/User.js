@@ -82,9 +82,4 @@ const User = (sequelize) => {
   });
 };
 
-User.prototype.checkPassword = function(password){
-  //Retorna una promesa
-  return bcrypt.compare(password, this.password);
-};
-
 module.exports = User;
