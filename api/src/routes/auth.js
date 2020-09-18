@@ -34,32 +34,32 @@ server.post("/login",(req,res,next) => {
 	})
 	.then(user => {
 		//si no encontramos el email devolvemos error
-		if(!user) return res.json({Error: "usuario no encontrado"})
+		if(!user) return res.json({error: 'Esta dirección de correo no se encuentra registrada'})
 		// si lo encontramos, controlamos que la contraseñas sean iguales
 		checkPassword(user,password)
 		.then((data) =>{
 			if(data){//si lo son, devolvemos token
 				const userData = { user}
-				
-				const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET)
+				//
+				const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET);
+
 				return res.status(200).json({accessToken , user : {
 					id : user.user_id,
 					name : user.first_name,					
 					last_name : user.last_name,
 					role : user.role,
 					email : email
-
 				}})
 			}else{
 				//si no, mandamos error
-				res.status(400).json({accessToken : null})
+				res.json({accessToken : null, error: 'Contraseña incorrecta'})
 			}
 		})
 
 		
 
 	})
-	.catch((err) => res.json({error:"ERRRO"}))
+	.catch((err) => res.status(400).json({error:"ERROR!!!!!!!!!!!!!!"}))
 	
 
 })

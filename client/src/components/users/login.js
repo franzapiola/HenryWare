@@ -21,7 +21,9 @@ function Login(props){
 	const [ form, setForm ] = useState({
 		email: '',
 		password: ''
-	})
+	});
+
+	const [ errorMsg, setErrorMsg ] = useState('');
 
 	//localStorage.setItem("actualToken",null)
 	//localStorage.setItem("actualUserName",actualUserName)
@@ -42,7 +44,7 @@ function Login(props){
 		.then(response =>{
 			// el objeto user tiene los datos relevantes del usuario ( id, nombre, apellido,rol)
 			// el objeto accessToken es el token de sesion
-			if(response.status === 200){
+			if(response.data.user){
 				//Sacamos el accessToken y la información del usuario de la respuesta
 				const { user, accessToken } = response.data
 				//Llamando a signIn, mandamos el usuario recibido como respuesta a la store de Redux
@@ -51,8 +53,16 @@ function Login(props){
 				localStorage.setItem("actualToken", accessToken);
 				//Redireccionamos a la homepage
 				history.push('/');
-			} else //Acá falta manejar los posibles errores de autenticación!
-			return localStorage.setItem("actualToken",null);
+				return;
+			}
+			if(!response.data.user){
+				const { error } = response.data
+				setErrorMsg(error);
+				setTimeout(()=>{
+					setErrorMsg('');
+				}, 4000)
+				return localStorage.setItem("actualToken",null);
+			}
 		})
 		.catch( (err) => console.log(err) )
 
@@ -77,7 +87,6 @@ function Login(props){
 		
 	return(
 		<div className={`pt-3 mt-2 d-flex justify-content-center align-items-center w-100 mx-auto ${styles.container}`}>
-			<button onClick={()=>console.log(form)}>X</button>
 			<div class={`card ${styles.cardLogin}`}  >
 			{/* <span>TOKEN actual : {localStorage.getItem("actualToken")} </span> */}
 			<form onSubmit={handleSubmit}>
@@ -87,7 +96,7 @@ function Login(props){
 					onChange={(e)=>setForm({
 						...form,
 						email: e.target.value
-					})}/>    
+					})}/>
 				  </div>
 				  <div class="form-group">
 				    <label for="exampleInputPassword1">Contraseña</label>
@@ -97,9 +106,8 @@ function Login(props){
 						password: e.target.value
 					})}/>
 				  </div>
-				  
+					{errorMsg && <span>{errorMsg}</span>}
 				  <input  type='submit' className={`${styles.henryColor} col-md-12`} value='Ingresar' />
-				 
 				</form>
 			</div>
 		</div>
