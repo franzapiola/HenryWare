@@ -17,24 +17,6 @@ const checkPassword = async(user,password) => {
 
 
 
-
-const posts = [
-	{
-		email : "juan@gmail.com",
-		carrito : "CARRITO 1",
-	},
-	{
-		email : "pepe@gmail.com",
-		description : "Hola soy pepe"
-	},{
-		email : "juan@gmail.com",
-		carrito : "CARRITO 2",
-	},
-
-
-]
-
-
 server.get('/',authenticateToken,(req,res) => {
 	console.log("usuario autorizado bro")
 	res.status(200).json({usuario:" Autorizado"})
@@ -57,13 +39,20 @@ server.post("/login",(req,res,next) => {
 		checkPassword(user,password)
 		.then((data) =>{
 			if(data){//si lo son, devolvemos token
-				const userData = { user }
+				const userData = { user}
 				
 				const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET)
-				res.json({accessToken : accessToken})
+				return res.status(200).json({accessToken , user : {
+					id : user.user_id,
+					name : user.first_name,					
+					last_name : user.last_name,
+					role : user.role,
+					email : email
+
+				}})
 			}else{
 				//si no, mandamos error
-				res.json({Error:"contraseña invalida"})
+				res.status(400).json({accessToken : null})
 			}
 		})
 
@@ -77,12 +66,13 @@ server.post("/login",(req,res,next) => {
 
 
 function authenticateToken(req,res,next){
+	console.log(req.headers)
 	const authHeader = req.headers['authorization']
 	const token = authHeader && authHeader.split(' ')[1]
 	if ( token == null) return res.sendStatus(401)
 	jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,email) =>{
 		if(err) return res.sendStatus(403)
-		req.email = email
+		//req.email = email
 		next()
 	})
 	
