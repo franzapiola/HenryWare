@@ -4,14 +4,15 @@ const passport = require('passport');
 
 
 server.post('/login',
-
     //Primero pasa por el middleware de autenticación
-    passport.authenticate('local', { failureRedirect: '/login' }),
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/login'
+    }),
 
     //Si la autenticación es exitosa, se ejecuta esta siguiente función
     function(req,res) {
-        res.redirect('/');
-        //res.send('Autenticación exitosa wachitoooowww')
+        console.log('Autenticación exitosaa!')
     }
 );
 

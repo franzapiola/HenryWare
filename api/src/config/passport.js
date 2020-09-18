@@ -1,40 +1,46 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { User } = require('../db.js');
+const bcrypt = require('bcrypt');
 
 
 
 passport.use(new LocalStrategy(
     {
-    usernameField: 'email'
+        usernameField: 'email'
     },
     //Este es el famoso 'verify callback'
-    function(email, password, done) {
-        User.findOne({
+    function (email, password, done) {
+        console.log('Ejecutando estrategia')
+        return User.findOne({
             where: {
                 email
             }
-        }, 
-        function (err, user) {
-            if (err) { 
-                console.log(err);
-                return done(err); }
-            if (!user) { return done(null, false); }
-            if (!user.checkPassword(password, user.password)) { return done(null, false); }
-            return done(null, user);
-        });
+        })
+        .then((user) => {
+            if (!user) { return done(null, false) }
+            
+            const isValid = user.checkPassword(password, user.password);
+            
+            if (isValid) {
+                return done(null, user);
+            } else {
+                return done(null, false);
+            }
+        })
+        .catch(err => done(err));
     }
-  )
+)
 );
 
 passport.serializeUser(function(user, done) {
-    done(null, user.id);
+    done(null, user.user_id);
 });
 
-passport.deserializeUser(function (id, done) {
+passport.deserializeUser(function (user_id, done) {
     User.findOne({
       where: {
-        id
+        user_id
       }
     }).then(user => {
       done(null, user);

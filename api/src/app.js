@@ -3,12 +3,15 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
+require('dotenv').config();
 //Express session
 const session = require('express-session');
-
+//La store de sequelize para la session
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
+//Importo la db
+const { conn } = require('./db.js');
 //Passport
 const passport = require('passport');
-require('./config/passport');
 
 require('./db.js');
 
@@ -18,11 +21,15 @@ server.name = 'API';
 
 
 //Express session
-//adjunta una sesión a la request. La sesión contiene una cookie.
+//adjunta una sesión a todas las request. La sesión contiene una cookie.
 server.use(session({
   resave: false,
   saveUninitialized: false,
-  secret: 'henryware'
+  //Usamos connect-session-sequelize para la store
+  store: new SequelizeStore({
+    db: conn
+  }),
+  secret: process.env.secret
 }));
 
 
@@ -40,17 +47,20 @@ server.use((req, res, next) => {
 });
 
 //Inicializo passport y passport session
+require('./config/passport');
 server.use(passport.initialize());
 server.use(passport.session());
+//Este middleware console.loguea la session y el user
+server.use((req, res, next) => {
+  console.log('SESION:', req.session);
+  console.log('USER:', req.user);
+  next();
+});
 
+//Rutas
 server.use('/', routes);
 
-server.get('/testean2', (req, res) => {
-  const { session } = req;
-  
-  console.log(req._passport.instance._strategies)
-  res.send(session)
-})
+
 
 // Error catching endware.
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
