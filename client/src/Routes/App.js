@@ -95,7 +95,7 @@ const App = (props) => {
           return <Home products={products}/>
         }}/>
           
-        <Route exact path='/signin'>
+        <Route exact path='/signup'>
               <Register/>
         </Route>
         
