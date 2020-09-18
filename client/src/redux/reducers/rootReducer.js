@@ -6,8 +6,9 @@ import Orders from './Orders';
 import User from './User';
 import order from './order';
 import orderInfo from './orderInfo';
+import auth from './auth';
 
 export default combineReducers({
 
-  cart, Orders, User,order,main,orderInfo
+  cart, Orders, User,order,main,orderInfo, auth
 })

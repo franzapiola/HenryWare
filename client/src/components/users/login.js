@@ -1,67 +1,119 @@
 import React,{ useState, useEffect } from 'react';
-import {useParams}  from 'react-router-dom'
+import { useParams, useHistory }  from 'react-router-dom'
 import styles from './register.module.scss'
 import { FormControl, TextField, Button } from '@material-ui/core';
 import GoogleButton from 'react-google-button'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from "axios"
+import axios from "axios";
+
+//Redux
+import { signIn } from '../../redux/actions/auth';
+import { connect } from 'react-redux';
 
 
+//localhost:3000/loginToken
 
-export default function Login(){
-	const axios = require('axios');
+function Login(props){
+	const history = useHistory();
+	const { signIn } = props;
 
+	const [ form, setForm ] = useState({
+		email: '',
+		password: ''
+	})
 
+	//localStorage.setItem("actualToken",null)
+	//localStorage.setItem("actualUserName",actualUserName)
 
-	const [idUser,setIdUser] = useState("Guest")
-	const [actualUserName,setActualUserName] = useState("guest")
-	localStorage.setItem("actualUserId",idUser)
-	localStorage.setItem("actualUserName",actualUserName)
-
+/*	axios.post(url, {
+	  //...data
+	}, {
+	  headers: {
+	    'Authorization': `Basic ${token}` 
+	  }
+	})
+*/
 	
+	const handleSubmit =  (e) => {
+		e.preventDefault();
+		//Autenticamos con el contenido del form a la ruta de login
+		axios.post("http://localhost:3001/auth/login", form)
+		.then(response =>{
+			// el objeto user tiene los datos relevantes del usuario ( id, nombre, apellido,rol)
+			// el objeto accessToken es el token de sesion
+			if(response.status === 200){
+				//Sacamos el accessToken y la información del usuario de la respuesta
+				const { user, accessToken } = response.data
+				//Llamando a signIn, mandamos el usuario recibido como respuesta a la store de Redux
+				signIn(user);
+				//El accessToken, por otro lado, lo guardamos en el Local storage
+				localStorage.setItem("actualToken", accessToken);
+				//Redireccionamos a la homepage
+				history.push('/');
+			} else //Acá falta manejar los posibles errores de autenticación!
+			return localStorage.setItem("actualToken",null);
+		})
+		.catch( (err) => console.log(err) )
 
-	const cambiarLocalId =  async (email)=>{
-		 
-		 //const username = "juan@gmail.com";
-		
-		 await axios({
-		 	url : `http://localhost:3001/users/usersID?email=${email}`,
-		 	method : "GET"
-		 }).then(response => {
-		 	setIdUser(response.data.id)
-		 	setActualUserName(response.data.name)
-		 	console.log(response.data.name)
-		 })
-
-
-		 
-		 
-		 	
 	}
+
+	/*const getToken = (email,passwd) => {
+		console.log(email)
+		 axios.get("http://localhost:3001/auth",
+
+		 	headers: {
+				'Authorization' : `Beared ${localStorage.getItem("actualToken")}`
+			}
+		})
+		.then(response =>{
+			console.log(response.data)
+			//localStorage.setItem("actualToken",response.data.accessToken)
+		})
+		.catch( (err) => console.log(err) )
+
+	}*/
 
 		
 	return(
 		<div className={`pt-3 mt-2 d-flex justify-content-center align-items-center w-100 mx-auto ${styles.container}`}>
+			<button onClick={()=>console.log(form)}>X</button>
 			<div class={`card ${styles.cardLogin}`}  >
-			{/*<span>Usuario actual : {localStorage.getItem("actualUserId")} </span>*/}
-				<form >
+			{/* <span>TOKEN actual : {localStorage.getItem("actualToken")} </span> */}
+			<form onSubmit={handleSubmit}>
 				 <div class="form-group">
 				    <label for="userInput">Correo Electronico</label>
-				    <input name="correo" type="text" class={`form-control ${styles.inputLogin}`} id="correo" />    
+					<input name="correo" value={form.email}type="text" class={`form-control ${styles.inputLogin}`} id="correo" 
+					onChange={(e)=>setForm({
+						...form,
+						email: e.target.value
+					})}/>    
 				  </div>
 				  <div class="form-group">
 				    <label for="exampleInputPassword1">Contraseña</label>
-				    <input type="password" class={`form-control ${styles.inputLogin}`} id="password"/>
+				    <input type="password" value={form.password} class={`form-control ${styles.inputLogin}`} id="password"
+					onChange={(e) => setForm({
+						...form,
+						password: e.target.value
+					})}/>
 				  </div>
-				  <button  className={`${styles.henryColor} col-md-12`} onClick={ (e) => {
-				  	cambiarLocalId(document.getElementById("correo").value);
-				  	e.preventDefault();
-
-				  }}>Ingresar</button>
-				 {/*<span>ACTUAL STATUS : {idUser} </span>*/}
+				  
+				  <input  type='submit' className={`${styles.henryColor} col-md-12`} value='Ingresar' />
+				 
 				</form>
 			</div>
 		</div>
 		)
 }
+
+const mapStateToProps = state => {
+	return {}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		signIn: userData => dispatch(signIn(userData))
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

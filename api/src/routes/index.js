@@ -8,7 +8,7 @@ const orderRouter = require('./orders.js');
 
 const reviewsRouter = require('./Reviews.js');
 
-const authRouter = require('./login')
+const authRouter = require('./auth')
 
 
 const router = Router();
