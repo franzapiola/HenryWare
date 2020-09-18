@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 
 //Redux
-import { signIn } from '../../redux/actions/auth';
+import { loadUserData } from '../../redux/actions/auth';
 import { connect } from 'react-redux';
 
 
@@ -16,17 +16,17 @@ import { connect } from 'react-redux';
 
 function Login(props){
 	const history = useHistory();
-	const { signIn } = props;
+	
+	//Redux
+	const { loadUserData } = props;
 
 	const [ form, setForm ] = useState({
 		email: '',
 		password: ''
 	});
 
+	//Mensaje de error ante un fallo en la autenticacion
 	const [ errorMsg, setErrorMsg ] = useState('');
-
-	//localStorage.setItem("actualToken",null)
-	//localStorage.setItem("actualUserName",actualUserName)
 
 /*	axios.post(url, {
 	  //...data
@@ -47,8 +47,8 @@ function Login(props){
 			if(response.data.user){
 				//Sacamos el accessToken y la información del usuario de la respuesta
 				const { user, accessToken } = response.data
-				//Llamando a signIn, mandamos el usuario recibido como respuesta a la store de Redux
-				signIn(user);
+				//Llamando a loadUserData, mandamos el usuario recibido como respuesta a la store de Redux
+				loadUserData(user);
 				//El accessToken, por otro lado, lo guardamos en el Local storage
 				localStorage.setItem("actualToken", accessToken);
 				//Redireccionamos a la homepage
@@ -120,7 +120,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		signIn: userData => dispatch(signIn(userData))
+		loadUserData: userData => dispatch(loadUserData(userData))
 	}
 }
 
