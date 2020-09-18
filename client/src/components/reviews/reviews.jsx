@@ -30,7 +30,7 @@ export default function Reviews (props) {
 
     return (
             <div className={s.caja}>
-                <h1 className={s.titulo}>{productReview.length ? 'Comentarios': 'Sin comentarios'}</h1>
+                <h2 className={s.titulo}>{productReview.length ? 'Comentarios': 'Sin comentarios'}</h2>
                 <hr/>
                 {/* x es cada review del producto traido de back */}
                     {productReview.map( x => <Review 

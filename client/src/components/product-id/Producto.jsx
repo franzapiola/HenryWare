@@ -11,6 +11,8 @@ export default function Producto (props) {
     const [ productData, setProductData ] = useState({
         images:[]
     })
+
+    const [updateStars, setupdateStars] = useState();
     
     const { id } = useParams()
     const getIdProduct = async (id) =>{
@@ -23,7 +25,8 @@ export default function Producto (props) {
         }}
         
     useEffect(() => {
-        getIdProduct(id)  
+        getIdProduct(id)
+        getStars(id)
      } ,[]) 
     
     const userID = localStorage.getItem("actualUserId");
@@ -42,7 +45,29 @@ export default function Producto (props) {
           });
         
     }
-    
+
+    const getStars = (id) => {
+            
+        axios.get(`http://localhost:3001/reviews/${id}`) 
+        .then(response => {
+
+            const sumaRating = response.data.map(x => {
+                return x.rating})
+            const suma = sumaRating.reduce((a, b) => {
+                return a+b}) 
+            const stars = Math.round(suma / response.data.length);
+            setupdateStars(stars)   
+            return stars
+        })
+        .then(stars => {
+            axios.put(`http://localhost:3001/products/${id}`,{
+                rating: stars
+            })
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
 
     return (
 
@@ -66,7 +91,7 @@ export default function Producto (props) {
                         <div>
                             <h2>${productData.price}</h2>
                         </div>
-                        <p className='text-primary'><Rating rating={productData.rating}/> </p>
+                        <i className='text-primary'><Rating rating={updateStars}/> </i>
                         <p>Garantía: {productData.warranty} días</p>
                         <h4>{productData.stock>0?'Stock Disponible': 'Sin Stock'}</h4>
                         {/*<Button className="col-md-5 col-12 mr-2" variant='comprar'  disabled={productData.stock<=0?'disabled':null}>Comprar</Button>*/}
