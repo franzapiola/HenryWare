@@ -1,0 +1,15 @@
+.div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+input[type= 'radio'] {
+    display: none;
+}
+
+.enviar{
+
+   size: 50px;
+}

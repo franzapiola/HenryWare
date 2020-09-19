@@ -2,12 +2,17 @@ import React,{ useState, useEffect} from 'react';
 import s from './reviews.module.css';
 import Review from './review';
 import axios from "axios";
+import Stars from './stars';
+
+
+
 
 export default function Reviews (props) {
     
     const { id } = props;
     
     const [productReview, setproductReview] = useState([]);
+
 
 // Llamamos a back por los review de determinado producto pasado por id del componente product. NV
 
@@ -32,6 +37,9 @@ export default function Reviews (props) {
             <div className={s.caja}>
                 <h2 className={s.titulo}>{productReview.length ? 'Comentarios': 'Sin comentarios'}</h2>
                 <hr/>
+                <div> <Stars/> </div>
+                
+
                 {/* x es cada review del producto traido de back */}
                     {productReview.map( x => <Review 
                             review_id={x.review_id}
@@ -40,7 +48,7 @@ export default function Reviews (props) {
                             description={x.description}
                             first_name={x.user.first_name}
                             last_name={x.user.last_name}
-                            updateAt={x.updateAt}
+                            updatedAt={x.updatedAt}
                             />
                     )}          
             </div>
