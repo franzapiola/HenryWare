@@ -12,7 +12,7 @@ function StarRating (props) {
 
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null);
-    const [input, setInput] = useState();
+    const [input, setInput] = useState('');
 
     const handleonChange = (e) => {
         setInput(e)
@@ -26,13 +26,15 @@ function StarRating (props) {
             description: input,
             user_id         
         })
-        .then(response => {
-            console.log(response)
+        .then((response) => {
+           setRating(null);
+           setInput('');
           })
         .catch(error => {
             console.log(error);
         });
     }
+
 
     return (
             <div className={s.div}>
@@ -43,6 +45,7 @@ function StarRating (props) {
                     multiline
                     rowsMax={4}
                     className={s.input}
+                    value={input}
                     onChange={(e) => handleonChange(e.target.value)}
                     />                
                 </div>
