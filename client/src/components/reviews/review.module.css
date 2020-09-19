@@ -56,8 +56,8 @@ body {
 /* avatar */
 
 .commentsAvatar {
-    width: 65px;
-    height: 65px;
+    width: 50px;
+    height: 50px;
     position: relative;
     z-index: 99;
     float: left;

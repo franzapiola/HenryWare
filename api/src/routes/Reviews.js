@@ -21,15 +21,17 @@ server.get('/:product_id',function( req, res ){
 
 //Cargar un rating y descripcion a un producto
 server.post('/:product_id',(req, res) => {
-    console.log('review router')
+
     const { product_id } = req.params;
     const { rating, description, user_id } = req.body;
+
+    console.log(req.body)
     
     Review.create({
-        rating: rating && rating.length > 0 ? rating : null,
-        description: description && description.length > 0 ? description : null,
-        user_id: user_id && user_id.length > 0 ? user_id : null,
-        product_id: product_id && product_id.length > 0 ? product_id : null
+        rating,
+        description,
+        user_id,
+        product_id,
     })
     .then((rating) => {
         res.status(201).send({status: 201, message: {
