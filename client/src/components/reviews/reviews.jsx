@@ -37,7 +37,7 @@ export default function Reviews (props) {
             <div className={s.caja}>
                 <h2 className={s.titulo}>{productReview.length ? 'Comentarios': 'Sin comentarios'}</h2>
                 <hr/>
-                <div> <Stars/> </div>
+                <div> <Stars product_id={id}/> </div>
                 
 
                 {/* x es cada review del producto traido de back */}

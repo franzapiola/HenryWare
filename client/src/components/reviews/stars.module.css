@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    margin: 10px 50px 10px 50px;
 }
 
 input[type= 'radio'] {
@@ -12,4 +12,12 @@ input[type= 'radio'] {
 .enviar{
 
    size: 50px;
+}
+
+.input {
+    width: 500px;
+}
+
+.button {
+    width: 150px;
 }
