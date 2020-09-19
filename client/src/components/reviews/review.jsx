@@ -6,7 +6,7 @@ import axios from "axios";
 
 export default function Review (props) {
 
-    const {updateAt, rating, description, first_name, last_name } = props;
+    const {updatedAt, rating, description, first_name, last_name } = props;
     const fullName =  first_name + ' ' + last_name;
 
     return (
@@ -21,7 +21,7 @@ export default function Review (props) {
                                 <div className='comment-box' className={s.commentsBox}>
                                     <div className='comment-head' className={s.commentsHead}>
                                         <h6 className='comment-name-by-author' className={s.author}><a className={s.a}>{fullName}</a></h6>
-                                        <span className={s.date}>{updateAt}</span>
+                                        <span className={s.date}>{updatedAt}</span>
                                         <i className={s.commentsIcons}><Rating rating={rating}/></i>
                                     </div>
                                     <div className='comment-content' className={s.commentsContent}>{description}</div>
