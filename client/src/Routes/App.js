@@ -1,8 +1,13 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
-import './App.css'
+import {BrowserRouter,Route,Switch} from 'react-router-dom';
+import axios from "axios";
+
+//Estilo
+import './App.css';
 import './App.scss'; 
-import {BrowserRouter,Route,Switch} from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+//Componentes
 import Crud from '../components/products/Crud'
 import Catalog from '../components/products/Catalog';
 import SearchBar from '../components/SearchBar';
@@ -15,16 +20,14 @@ import Order from '../components/order'
 import OrdersTable from '../components/order/OrdersTable';
 import Home from '../components/Home/Home'
 import Login from '../components/users/login'
-import LoginToken from '../components/users/loginv2'
 import OrderInfo from '../components/order/orderInfo'
-
 import ControlPanel from '../components/admin/controlPanel'
-
-
 import NotFound from  '../components/NotFound'
+
 //Redux
 import { connect } from 'react-redux';
 //import store from '../redux/store';
+import { loadUserData } from '../redux/actions/auth';
 
 
 const App = (props) => {
@@ -37,11 +40,43 @@ const App = (props) => {
   const [carouselIndex, setCarouselIndex] = useState(0);
 
   //Redux
-  const { view, searchInput, selectedCategory, currentPage } = props;
+  const { view, searchInput, selectedCategory, currentPage, loadUserData } = props;
 
   const handleCarouselSelect = (selectedIndex, e) => {
     setCarouselIndex(selectedIndex);
   }
+
+  //Hacemos *siempre* un axios a /auth/me para que, si hay una sesión activa (es decir, hay un accessToken presente en localStorage),
+  //ésta se mantenga vigente a través de recargas de la página, o salir y volver a entrar. Hasta que el usuario haga logout.
+  const actualToken = localStorage.getItem('actualToken');
+  axios.get('http://localhost:3001/auth/me', 
+    {
+      headers: {
+        'Authorization': `Bearer ${actualToken}`
+      }
+    }
+  )
+  .then(response => {
+    console.log('RESPUESTA:',response)
+    const { user } = response.data
+    if (user) {
+      //Si devuelve un usuario, cargamos sus datos al store de redux
+      const { user_id, first_name, last_name, email, role} = user;
+      return loadUserData({
+        user_id,
+        first_name,
+        last_name,
+        email,
+        role
+      });
+    }
+    //El axios a /auth/me no devolvió ningun usuario, por ende no hay usuario logeado
+    loadUserData({
+      role: 'Guest'
+    })
+  })
+  .catch(err => console.log('ERROR:', err));
+
 
   //Traer lista entera actualizada de categorías de la base de datos
   const getCategories = async ()=>{
@@ -54,7 +89,6 @@ const App = (props) => {
     }
   }
 
-  //fusioné getProducts, categoryFilter y parte de onSearch en una sola función
   //getProducts: trae productos de la BD y setea el estado local products DEPENDIENDO del estado global 'view'.
   //El valor de este estado se modifica en ocasiones específicas y va a determinar si getProducts:||||
   //  -trae *todos* los productos (view === 'All')
@@ -96,7 +130,7 @@ const App = (props) => {
           return <Home products={products}/>
         }}/>
           
-        <Route exact path='/signin'>
+        <Route exact path='/signup'>
               <Register/>
         </Route>
         
@@ -122,15 +156,12 @@ const App = (props) => {
         <Route exact path='/order'>
           <Order/>
         </Route>
-        <Route exact path="/loginToken">
-          <LoginToken />
+        <Route exact path="/login">
+          <Login />
         </Route>
         <Route exact path='/orders/table/:id'>
           <OrderInfo />
         </Route>
-        <Route exact path='/login'>
-          <Login/>
-          </Route>
          <Route exact path="/admin"> <ControlPanel/></Route> 
         <Route exact path='/orders/table'>
           <OrdersTable/>
@@ -152,7 +183,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  return {
+    loadUserData: (userData) => dispatch(loadUserData(userData))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

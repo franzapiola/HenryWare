@@ -16,12 +16,6 @@ const checkPassword = async(user,password) => {
 };
 
 
-
-server.get('/',authenticateToken,(req,res) => {
-	console.log("usuario autorizado bro")
-	res.status(200).json({usuario:" Autorizado"})
-})
-
 server.post("/login",(req,res,next) => {
 
 	//authenticate with email
@@ -30,39 +24,43 @@ server.post("/login",(req,res,next) => {
 	
 	//buscamos usuario con ese email
 	User.findOne({
-		where:{ email : email}
+		where:{ email }
 	})
 	.then(user => {
 		//si no encontramos el email devolvemos error
-		if(!user) return res.json({Error: "usuario no encontrado"})
+		if(!user) return res.json({error: 'Esta dirección de correo no se encuentra registrada'})
 		// si lo encontramos, controlamos que la contraseñas sean iguales
 		checkPassword(user,password)
-		.then((data) =>{
-			if(data){//si lo son, devolvemos token
-				const userData = { user}
-				
-				const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET)
+		.then( match => {
+			if(match){//si lo son, devolvemos token
+				const userData = { user }
+				//Creamos el token pasándole la información del usuario y el ACCES_TOKEN_SECRET declarado en .env
+				const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET);
+
+				//Mandamos al front la info del usuario y el token
 				return res.status(200).json({accessToken , user : {
-					id : user.user_id,
-					name : user.first_name,					
+					user_id : user.user_id,
+					first_name : user.first_name,					
 					last_name : user.last_name,
 					role : user.role,
 					email : email
-
 				}})
 			}else{
 				//si no, mandamos error
-				res.status(400).json({accessToken : null})
+				res.json({accessToken : null, error: 'Contraseña incorrecta'})
 			}
 		})
 
 		
 
 	})
-	.catch((err) => res.json({error:"ERRRO"}))
+	.catch((err) => res.status(400).json({error:"ERROR!!!!!!!!!!!!!!"}))
 	
 
-})
+});
+
+server.post('/logout', ()=>{});
+
 
 
 function authenticateToken(req,res,next){
@@ -70,14 +68,31 @@ function authenticateToken(req,res,next){
 	const authHeader = req.headers['authorization']
 	const token = authHeader && authHeader.split(' ')[1]
 	if ( token == null) return res.sendStatus(401)
-	jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,email) =>{
+	jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err, user) =>{
 		if(err) return res.sendStatus(403)
 		//req.email = email
-		next()
+		res.send(user);
 	})
 	
 
 }
 
+//		/auth/me
+server.get('/me', authenticateToken)
+
+//Promover un usuario a admin
+server.post('/promote/:user_id', (req, res) => {
+	const { user_id } = req.params;
+
+	User.update({
+		role: 'admin'
+	}, {
+		where: {
+			user_id
+		}
+	})
+	.then(() => res.send('Este usuario ahora es admin!'))
+	.catch(err => res.send(err));
+});
 
 module.exports = server;
