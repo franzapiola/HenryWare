@@ -55,7 +55,7 @@ function OrdersTable({ orders }) {
                                 <td>{order.user.email}</td>
                                 <td>{order.user.first_name}</td>
                                 <td>{order.user.last_name}</td>
-                                <td><a href={`/orders/table/${order.order_id}`} class="btn btn-primary"> +</a></td>
+                                <td><a href={`/orders/table/${order.order_id}`} className="btn btn-primary"> +</a></td>
                             </tr>
                         ))}
                     </tbody>
