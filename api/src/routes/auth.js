@@ -80,4 +80,19 @@ function authenticateToken(req,res,next){
 //		/auth/me
 server.get('/me', authenticateToken)
 
+//Promover un usuario a admin
+server.post('/promote/:user_id', (req, res) => {
+	const { user_id } = req.params;
+
+	User.update({
+		role: 'admin'
+	}, {
+		where: {
+			user_id
+		}
+	})
+	.then(() => res.send('Este usuario ahora es admin!'))
+	.catch(err => res.send(err));
+});
+
 module.exports = server;
