@@ -35,11 +35,11 @@ function OrderInfo(props){
 	return(
 		<div className='col-md-10 offset-1 mt-3'>>
 
-			<div class="card container" style={{width: 50+'rem'}}>
-			  <div class="card-body">
-			    <h5 class="card-title">ORDEN ID: {id} </h5>
-			    <h5 class="card-title"> Productos:  </h5>
-			    <p class="card-text ">
+			<div className="card container" style={{width: 50+'rem'}}>
+			  <div className="card-body">
+			    <h5 className="card-title">ORDEN ID: {id} </h5>
+			    <h5 className="card-title"> Productos:  </h5>
+			    <p className="card-text ">
 			    <ul>
 			   		{ props.products_order.map(product => 
 			   			<li>
@@ -48,13 +48,13 @@ function OrderInfo(props){
 			    	)}
 			    </ul> 
 			    </p>
-			    <p class="card-text">{
+			    <p className="card-text">{
 			    	
 			    	"TOTAL: $" + sumaTotal()
 			    	
 
 			    }  </p>
-			    <span><a href="/orders/table/" class="btn btn-primary"> BACK</a></span>
+			    <span><a href="/orders/table/" className="btn btn-primary"> BACK</a></span>
 			  </div>
 			</div>
 		</div>

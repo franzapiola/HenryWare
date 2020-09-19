@@ -87,20 +87,20 @@ function Login(props){
 		
 	return(
 		<div className={`pt-3 mt-2 d-flex justify-content-center align-items-center w-100 mx-auto ${styles.container}`}>
-			<div class={`card ${styles.cardLogin}`}  >
+			<div className={`card ${styles.cardLogin}`}  >
 			{/* <span>TOKEN actual : {localStorage.getItem("actualToken")} </span> */}
 			<form onSubmit={handleSubmit}>
-				 <div class="form-group">
+				 <div className="form-group">
 				    <label for="userInput">Correo Electronico</label>
-					<input name="correo" value={form.email}type="text" class={`form-control ${styles.inputLogin}`} id="correo" 
+					<input name="correo" value={form.email}type="text" className={`form-control ${styles.inputLogin}`} id="correo" 
 					onChange={(e)=>setForm({
 						...form,
 						email: e.target.value
 					})}/>
 				  </div>
-				  <div class="form-group">
+				  <div className="form-group">
 				    <label for="exampleInputPassword1">Contraseña</label>
-				    <input type="password" value={form.password} class={`form-control ${styles.inputLogin}`} id="password"
+				    <input type="password" value={form.password} className={`form-control ${styles.inputLogin}`} id="password"
 					onChange={(e) => setForm({
 						...form,
 						password: e.target.value

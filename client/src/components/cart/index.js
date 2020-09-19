@@ -80,7 +80,7 @@ function Cart({products, isFetching,userInfo}) {
                 </div> 
             )} 
             <span  className={`d-flex justify-content-end`} >
-                <a href="/order" class="btn btn-warning font-weight-bold ">SIGUIENTE</a>            
+                <a href="/order" className="btn btn-warning font-weight-bold ">SIGUIENTE</a>            
             </span>
             
         </div>
