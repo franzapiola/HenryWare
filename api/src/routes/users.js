@@ -2,13 +2,15 @@ const server = require('express').Router()
 const { json } = require('body-parser');
 const bodyParser = require('body-parser')
 const { User,Order,LineaDeOrden,Product,Image } = require('../db.js')
+//Middlewares de checkeo de usuario
+const { checkIsAdmin, checkIsUser, checkIsAuthenticated } = require('../authMiddlewares')
 
 server.use(bodyParser.json());
 
 
 //Ruta para obtener todos los usuarios  /users
 
-server.get('/',function(req,res){
+server.get('/', checkIsAdmin, function(req,res){
     User.findAll({}).then(response => res.status(200).send(response))
 })
 
@@ -35,7 +37,7 @@ server.post('/',(req, res) => {
 })
 
 //Ruta para modificar información de un usuario     /users/:user_id
-server.put('/:user_id', function(req, res){
+server.put('/:user_id', checkIsAuthenticated, function(req, res){
     const user_id = req.params.user_id;
 
     //Array con todas las keys que contenga req.body
@@ -73,7 +75,7 @@ server.put('/:user_id', function(req, res){
 
 // users/:id   ruta para eliminar usuario            NV.
 
-server.delete('/:id', (req, res)=>{
+server.delete('/:id', checkIsAdmin, (req, res)=>{
     User.destroy({
         where: {
             user_id: req.params.id
@@ -129,7 +131,7 @@ server.get('/:id', (req, res)=>{
 //-----------------------CARRITO---------------------------------------------------------------------
 
 //Agregar producto al carrito de un usuario en particular       /users/:user_id/cart
-server.post('/:user_id/cart',function(req,res){
+server.post('/:user_id/cart', checkIsAuthenticated, function(req,res){
 
     console.log(req.body);
     const {user_id} = req.params;
@@ -162,7 +164,7 @@ server.post('/:user_id/cart',function(req,res){
 });
 
 //Traer todos los items del carrito de un usuario en particular         /users/:user_id/cart
-server.get('/:user_id/cart', (req, res) => {
+server.get('/:user_id/cart', checkIsAuthenticated, (req, res) => {
     const { user_id } = req.params;
 
     Order.findOne({
@@ -277,7 +279,7 @@ server.delete('/:user_id/cart', (req, res) => {
 
 
 // Ruta que trae todas las ordenes de un usuario en particular (Por ID (params) )    /users/iduser/orders
-server.get('/:user_id/orders',function(req,res){
+server.get('/:user_id/orders', checkIsAuthenticated, function(req,res){
 
     const {user_id} = req.params
 
