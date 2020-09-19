@@ -64,7 +64,7 @@ function Catalogo(props) {
                <div className="main d-flex flex-wrap align-content-start">
                     {products.length ? products.map(prod => 
                     <ProductCard key={prod.product_id} data={prod}/>
-                    ) : <h4>{view === 'Search' ? `No se encontraron resultados para "${searchInput}"...` : `La categoría "${selectedCategory}" no contiene ningún producto...`}</h4>}
+                    ) : <h4>{view === 'Search' ? `No se encontraron resultados para "${searchInput}"...` : (selectedCategory!==null? `La categoría "${selectedCategory}" no contiene ningún producto...`:'No hay productos cargados')}</h4>}
             </div>
 
                    {/* NAVEGACIÓN DE PÁGINAS */}
