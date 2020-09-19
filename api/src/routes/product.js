@@ -3,7 +3,7 @@ const {Op} = require('sequelize')
 const bodyParser = require('body-parser')
 const { Product, Categories, product_category, Image } = require('../db.js');
 //Middlewares de checkeo de usuario
-const { checkIsAdmin, checkIsUser, checkIsAuthenticated } = require('../authMiddlewares')
+const { checkIsAdmin } = require('../authMiddlewares')
 
 //Trae *todos* los productos
 server.get('/', (req, res, next) => {

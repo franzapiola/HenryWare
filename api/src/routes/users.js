@@ -3,7 +3,7 @@ const { json } = require('body-parser');
 const bodyParser = require('body-parser')
 const { User,Order,LineaDeOrden,Product,Image } = require('../db.js')
 //Middlewares de checkeo de usuario
-const { checkIsAdmin, checkIsUser, checkIsAuthenticated } = require('../authMiddlewares')
+const { checkIsAdmin } = require('../authMiddlewares')
 
 server.use(bodyParser.json());
 
@@ -37,7 +37,7 @@ server.post('/',(req, res) => {
 })
 
 //Ruta para modificar información de un usuario     /users/:user_id
-server.put('/:user_id', checkIsAuthenticated, function(req, res){
+server.put('/:user_id', function(req, res){
     const user_id = req.params.user_id;
 
     //Array con todas las keys que contenga req.body
@@ -131,7 +131,7 @@ server.get('/:id', (req, res)=>{
 //-----------------------CARRITO---------------------------------------------------------------------
 
 //Agregar producto al carrito de un usuario en particular       /users/:user_id/cart
-server.post('/:user_id/cart', checkIsAuthenticated, function(req,res){
+server.post('/:user_id/cart', function(req,res){
 
     console.log(req.body);
     const {user_id} = req.params;
@@ -164,7 +164,7 @@ server.post('/:user_id/cart', checkIsAuthenticated, function(req,res){
 });
 
 //Traer todos los items del carrito de un usuario en particular         /users/:user_id/cart
-server.get('/:user_id/cart', checkIsAuthenticated, (req, res) => {
+server.get('/:user_id/cart', (req, res) => {
     const { user_id } = req.params;
 
     Order.findOne({
@@ -279,7 +279,7 @@ server.delete('/:user_id/cart', (req, res) => {
 
 
 // Ruta que trae todas las ordenes de un usuario en particular (Por ID (params) )    /users/iduser/orders
-server.get('/:user_id/orders', checkIsAuthenticated, function(req,res){
+server.get('/:user_id/orders', function(req,res){
 
     const {user_id} = req.params
 

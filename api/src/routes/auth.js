@@ -9,6 +9,9 @@ const bcrypt = require('bcrypt');
 
 const jwt = require("jsonwebtoken")
 
+//Middlewares de checkeo de usuario
+const { checkIsAdmin } = require('../authMiddlewares')
+
 const checkPassword = async(user,password) => {
 	const comparacion = await bcrypt.compare(password, user.password)
 	
@@ -78,10 +81,11 @@ function authenticateToken(req,res,next){
 }
 
 //		/auth/me
+//Devuelve el usuario que está logeado
 server.get('/me', authenticateToken)
 
 //Promover un usuario a admin
-server.post('/promote/:user_id', (req, res) => {
+server.post('/promote/:user_id', checkIsAdmin, (req, res) => {
 	const { user_id } = req.params;
 
 	User.update({
