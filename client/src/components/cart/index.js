@@ -3,22 +3,37 @@ import { Form, Button, Spinner } from 'react-bootstrap'
 import styles from './index.module.scss'
 import { useSelector, useDispatch, connect } from 'react-redux'
 import { fetchProducts, fetchUserCart, setId, changeQuantity, deleteProduct } from '../../redux/actions/actions'
+import {loadUserData} from '../../redux/actions/auth'
 import axios from "axios";
 
 
-function Cart({products, isFetching}) {
+function Cart({products, isFetching,userInfo}) {
     const dispatch = useDispatch()
     const [cant, setCant] = useState(1)
     const [idCarrito,setIdCarrito] = useState()
+
+    /*if(userInfo.role != "Guest"){
+        console.log("USER INFO: ",userInfo.user_id)
+        console.log("USER NAME: ",userInfo.first_name)
+    }*/
+    
     
     const modificarCantidad = (cantidad, product_id) => {
-        dispatch(changeQuantity(localStorage.getItem('actualUserId'), product_id, cantidad))
+        //usamos el user_id que está guardado en redux y no el que estaba
+        // en el localStorage
+        dispatch(changeQuantity(userInfo.user_id, product_id, cantidad));
     }
-    const idUser = localStorage.getItem("actualUserId");
+    //const idUser = localStorage.getItem("actualUserId"); --->
+    // el idUser lo sacamos del store de redux 
+    const idUser = userInfo.user_id;
 
-    idUser!=='Guest' && axios.get(`http://localhost:3001/users/${idUser}/cart`).then(response => {
+    const traerDatosCarrito = async() =>{
+        axios.get(`http://localhost:3001/users/${idUser}/cart`).then(response => {
         setIdCarrito(response.data.order_id)
         })
+    }
+
+    idUser!=='Guest' && traerDatosCarrito()
 
     useEffect(() => {
         dispatch(fetchUserCart())
@@ -26,7 +41,7 @@ function Cart({products, isFetching}) {
     }, [])
     return (
     <div className={`${styles.card} offset-1 col-md-10 col-12 mt-3 pt-4 pb-4`}>
-            <h4 className='text-center pb-3'>{ localStorage.getItem("actualUserName")}</h4>
+            <h4 className='text-center pb-3'>Carrito de { userInfo.first_name } {userInfo.last_name} </h4>
             {products.length && products.map( product =>                 
                <div className='d-flex mb-4'>
                     <div className="imagen col-md-2 text-center d-flex align-items-center justify-content-center">
@@ -75,14 +90,16 @@ function Cart({products, isFetching}) {
 const mapStateToProps = state => {
     return {
         isFetching: state.cart.isFetching,
-        products: state.cart.products.products || []
+        products: state.cart.products.products || [],
+        userInfo : state.auth
     }
 }
   
 const mapDispatchToProps = (dispatch, props) => {
 return {
     fetchProducts: () => dispatch(fetchProducts()),
-    fetchUserCart: () => dispatch(fetchUserCart())
+    fetchUserCart: () => dispatch(fetchUserCart()),
+    loadUserData: () =>dispatch(loadUserData())
 }
 }
     
