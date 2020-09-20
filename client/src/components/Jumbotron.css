@@ -1,11 +1,8 @@
-.jumbotron{
-	height: 100%;
-	margin-top : 3px;
-	background-image: url("https://www.pixelstalk.net/wp-content/uploads/2016/01/Call-of-Duty-Backgrounds-1.jpg");
-	background-size : cover;
-	color : white;
-}
 
-.container{
-	height: 300px;
+
+.jumbotron{
+	padding: 0;
+	max-height: 60%;
+	margin:auto;
+	width: 90%;
 }
