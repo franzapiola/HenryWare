@@ -71,17 +71,17 @@ function Catalogo(props) {
                    {/* NAVEGACIÓN DE PÁGINAS */}
            <div className={`d-flex justify-content-around ${styles.navigationPages}`}>
 
-                {currentPage > 1 && <Button className={styles.buttonPagination} onClick={()=>{
+                {currentPage > 1 ? <Button className={styles.buttonPagination} onClick={()=>{
                     retrocederPagina();
                     }}
-                    ><FaArrowCircleLeft/></Button>}
+                    ><FaArrowCircleLeft/></Button> : <FaArrowCircleLeft/>}
 
                     <span className={styles.currentPage}>{currentPage}</span>
 
-                {!(products.length < 12) && <Button className={styles.buttonPagination} onClick={()=>{
+                {!(products.length < 12) ? <Button className={styles.buttonPagination} onClick={()=>{
                     avanzarPagina();
                     }}
-                    ><FaArrowCircleRight/></Button>}
+                    ><FaArrowCircleRight/></Button> : <FaArrowCircleRight/>}
                     
            </div>
 
