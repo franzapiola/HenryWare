@@ -1,0 +1,21 @@
+
+
+.jumbotron{
+	padding: 0;
+	margin:auto;
+	width: 100%;
+}
+
+.jumbotronImg{
+	max-height: 700px;
+}
+
+.toProducts{
+	background-color: red;
+	width: 400px;
+	height: 75px;
+	border-radius: 10px;
+	position: absolute;
+	top:645px;
+	left: 750px;
+}
