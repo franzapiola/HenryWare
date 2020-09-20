@@ -1,10 +1,11 @@
-import React, {useState}from 'react'
+import React, {useState, useEffect}from 'react'
 import { FaStar }from 'react-icons/fa';
 import s from './stars.module.css';
 import { TextField, Button } from '@material-ui/core';
 import axios from 'axios';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { useHistory }  from 'react-router-dom'
+import { allReview, averageReview } from '../../redux/actions/review';
 
 function StarRating (props) {
 
@@ -20,6 +21,8 @@ function StarRating (props) {
         setInput(e)
     }
 
+    const dispatch = useDispatch();
+
     const createReview = async (e) => {
         e.preventDefault();
         if(user_id){ 
@@ -31,6 +34,8 @@ function StarRating (props) {
             .then((response) => {
             setRating(null);
             setInput('');
+            dispatch(allReview(response.data.message.product_id))
+            dispatch(averageReview(response.data.message.product_id))
             })
             .catch(error => {
                 console.log(error);
@@ -92,5 +97,12 @@ const mapStateToProps = (state) => {
         auth: state.auth
     };
 };
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        allReview: () => dispatch(allReview()),
+        averageReview: () => dispatch(averageReview())
+    };
+}
         
-export default connect(mapStateToProps)(StarRating)
+export default connect(mapStateToProps, mapDispatchToProps)(StarRating)

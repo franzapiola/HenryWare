@@ -3,7 +3,7 @@ import { ALL_REVIEW, AVERAGE_REVIEW } from '../actions/review';
 
 const initialState = {
     reviewsProduct: [],
-    averageReview: '',
+    averageReview: null,
 }
 
 export default (state = initialState, action) => {
