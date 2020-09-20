@@ -87,10 +87,10 @@ export default function Producto (props) {
 
                     <div className='product-data col-md-5 col-4'>
                         <div className="vertical-line"></div>
-                        <p>{productData.description}</p>
                         <div>
                             <h2>${productData.price}</h2>
                         </div>
+                        <p>{productData.description}</p>
                         <i className='text-primary'><Rating rating={updateStars}/> </i>
                         <p>Garantía: {productData.warranty} días</p>
                         <h4>{productData.stock>0?'Stock Disponible': 'Sin Stock'}</h4>
