@@ -22,6 +22,7 @@ function Catalogo(props) {
         changePage(currentPage + 1);
     };
 
+    const active = styles.activo
 
     useEffect(()=>{
         getProducts();
@@ -40,13 +41,13 @@ function Catalogo(props) {
                             selectAll();
                             getProducts();
                         }}
-                        className={`list-group-item list-group-item-action ${view==='All' && 'active'}`}
+                        className={`list-group-item list-group-item-action ${view==='All' && active}`}
                         >Todos los productos</li>
                     {/* Botón mostrar todos */}
 
                 { categories.map( cat => {
-                  let categoryClass = 'list-group-item list-group-item-action'
-                  if(selectedCategory===cat.name && view === 'Category') categoryClass += ' active'
+                  let categoryClass = 'list-group-item list-group-item-action '
+                  if(selectedCategory===cat.name && view === 'Category') categoryClass += active
                   return <li key={cat.category_id} className={`${categoryClass} ${styles.category}`} onClick={()=> {
                     selectCategory(cat.name);
                     changePage(1);

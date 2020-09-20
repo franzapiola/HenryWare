@@ -89,10 +89,31 @@ a:hover{
     background-color: rgb(255, 232, 24);
     color:black;
     margin-bottom: 10px;
-    border:none
+    border:none;
+    width:100%;
+    font-weight: bold;
 }
 
 .btnComprar:hover{
+    box-shadow: none !important;
     background-color:  rgb(255, 213, 24);
+    color:black
+}
+
+.btnComprar:focus{
+    box-shadow: none !important;
+    background-color:  rgb(255, 213, 24);
+    color:black
+}
+
+.btnComprar:visited{
+    box-shadow: none !important;
+    background-color:  rgb(255, 213, 24);
+    color:black
+}
+
+.btnComprar:active{
+    background-color:  rgb(255, 213, 24) !important;
+    box-shadow: none !important;
     color:black
 }

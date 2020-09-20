@@ -66,3 +66,13 @@
 .buttonPagination:active{
     background-color:rgb(255,208,0) !important;
 }
+
+.activo{
+    color:black;
+    background-color:rgb(255, 238, 0);
+}
+
+.activo:hover{
+    color:black;
+    background-color: rgb(255,220,0);
+}

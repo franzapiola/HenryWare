@@ -114,6 +114,7 @@ form input::placeholder{
 .navbarCart{
     display: flex;
     align-items: center;
+    padding: 0;
 }
 .navbarCartAdmin{
     display: flex;
@@ -151,7 +152,7 @@ form input::placeholder{
 
 .navbuttonCart{
     color:white;
-    padding:10px;
+    padding: 0 -10px 0 5px !important
 }
 
 .navbuttonCartAdmin{
