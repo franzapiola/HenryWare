@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Carousel } from 'react-bootstrap'
-import Jumbotron from '../Jumbotron';
+import Jumbotron from './Jumbotron';
 import {Link} from 'react-router-dom'
-import image from './Jumbotron.svg'
-
 import styles from './home.module.css'
-
+import image from './Jumbotron.svg'
+import './home .css'
 const Home = (props) => {
 
 const {products} = props
@@ -16,14 +15,13 @@ const [carouselIndex, setCarouselIndex] = useState(0);
     setCarouselIndex(selectedIndex);
   }
 
-
     return (
         <>
-            <Carousel className={`carousel ${styles.carousel}`} activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
-                    <Carousel.Item className={styles.carouselItemedit}>
-		  	            <img className={styles.sliderImage} src={image} alt=""/>
+            <Jumbotron/>
 
-                    </Carousel.Item>
+            <Carousel className={`carousel ${styles.carousel}`} activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
+
+
                 {products.map(prod => 
                     <Carousel.Item>
                         <Link to={`/products/${prod.product_id}`}>
