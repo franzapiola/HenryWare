@@ -1,0 +1,15 @@
+.sliderImage{
+    height: 100%;
+    margin:auto;
+    background-color:transparent
+
+}
+
+.carouselItemedit{
+    text-align: center;
+}
+
+.carousel{
+    width: 70%;
+    box-shadow: none;
+}
