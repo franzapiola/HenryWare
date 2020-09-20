@@ -5,7 +5,7 @@ import { useSelector, useDispatch, connect } from 'react-redux'
 import { receiveProducts,fetchProducts, fetchUserCart, setId, changeQuantity, deleteProduct } from '../../redux/actions/actions'
 import {loadUserData} from '../../redux/actions/auth'
 import axios from "axios";
-
+import {Link} from 'react-router-dom'
 
 function Cart({products,isFetching,userInfo}) {
     const dispatch = useDispatch()
@@ -70,8 +70,7 @@ function Cart({products,isFetching,userInfo}) {
     return (
     <div className={`${styles.card} offset-1 col-md-10 col-12 mt-3 pt-4 pb-4`}>
             <h4 className='text-center pb-3'>Carrito de { userInfo.first_name } {userInfo.last_name} </h4>
-            <span>Carrito ID:{idCarrito} </span>
-            {products.length && products.map( product =>                 
+            {products.length ? products.map( product =>                 
                <div className='d-flex mb-4'>
                     <div className="imagen col-md-2 text-center d-flex align-items-center justify-content-center">
                         <img src={product.images[0].img_url} style={{height: '60px'}}/>
@@ -103,11 +102,9 @@ function Cart({products,isFetching,userInfo}) {
                         </svg> 
                         </Button>
                     </div>    
-                    {isFetching && <div className={`${styles.spinnerContainer}`}>
-                        <Spinner className={`${styles.spinnerCentrado}`} animation="grow" variant="warning" />
-                    </div> }            
+                   
                 </div> 
-            )} 
+            ):<h3 style={{margin:'auto'}}>No hay productos en tu carrito, hace click <Link to='/products'>acá</Link> para continuar tu compra</h3>} 
             <span  className={`d-flex justify-content-end`} >
                 <a href="/order" className="btn btn-warning font-weight-bold ">SIGUIENTE</a>            
             </span>
