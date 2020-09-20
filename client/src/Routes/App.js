@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //Componentes
 import Crud from '../components/products/Crud'
 import Catalog from '../components/products/Catalog';
-import SearchBar from '../components/SearchBar';
+import NavBar from '../components/navbar/navbar';
 import Producto from '../components/product-id/Producto';
 import CategoriesCrud from '../components/products/CategoriesCrud';
 import Footer from '../components/Footer'
@@ -124,7 +124,7 @@ const App = (props) => {
 
   return(
     <BrowserRouter>
-      <Route path ='/' render={ ()=><SearchBar getProducts = {getProducts} categories={categories} getCategories={getCategories}/> }/>
+      <Route path ='/' render={ ()=><NavBar getProducts = {getProducts} categories={categories} getCategories={getCategories}/> }/>
       <Switch>
         <Route exact path='/' render={()=>{
           return <Home products={products}/>
