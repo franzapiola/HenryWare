@@ -140,6 +140,7 @@ import { useHistory } from 'react-router-dom';
                                     type='password'
                                     id="password"
                                     label="Contraseña"
+                                    value={form.password ? form.password : ''}
                                     onChange={updateField} />
                             </FormControl>
                         </div>
