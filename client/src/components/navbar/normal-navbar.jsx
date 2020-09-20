@@ -53,12 +53,6 @@ const NormalNavBar = (props) => {
                 <div className="col-md-10 align-items-center offset-1 d-flex justify-content-center">
                     <Link to='/products' className={`${styles.navbutton} ${styles.navbarLink}`}>Catálogo</Link>
                    
-                    <NavDropdown title={<span className={styles.navbutton} > Categorias </span>} >
-                    {categories.length>0?categories.map(c => <NavDropdown.Item onClick={() => {
-                        selectCategory(c.name);
-                        history.push('/products');
-                    }} style={{ color: 'white' }}> {c.name} </NavDropdown.Item>):<h6 className={styles.navbarLink}>No hay categorías creadas</h6>}
-                    </NavDropdown>
                     {user.first_name ? null : <Link className={`${styles.navbutton} ${styles.navbarLink}`} to='/login'>Iniciar Sesion</Link>}
                     {user.first_name ?
                         <NavDropdown title={
