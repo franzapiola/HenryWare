@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Navbar, Button, NavDropdown, Nav } from 'react-bootstrap'
-import './navbar.css'
+import './normal-navbar.css'
 import img from './Logo largo.svg'
-import styles from './searchBar.module.scss'
+import styles from './normal-navbar.module.scss'
 
 //Redux
-import store from '../redux/store'
+import store from '../../redux/store'
 import { connect, useDispatch } from 'react-redux';
-import { search, selectCategory, selectAll,changePage } from '../redux/actions/main'
-import { fetchUserCart } from '../redux/actions/actions'
+import { search, selectCategory, selectAll,changePage } from '../../redux/actions/main'
+import { fetchUserCart } from '../../redux/actions/actions'
 
 
-const SearchBar = (props) => {
+const AdminNavBar = (props) => {
 
     const { getProducts, categories } = props;
 
     //Redux
-    const { searchInput, search, selectCategory, selectAll, articles, changePage } = props;
+    const { searchInput, search, selectCategory, selectAll, articles, changePage, user } = props;
     const dispatch = useDispatch()
     const history = useHistory();
 
@@ -37,7 +37,7 @@ const SearchBar = (props) => {
     }, [])
     return (
 
-        <Navbar className="navbar d-flex flex-wrap h-auto " >
+        <Navbar className="navbar d-flex flex-wrap h-auto ">
             <Link to='/'><img className="brand" src={img} /></Link>
 
 
@@ -63,8 +63,7 @@ const SearchBar = (props) => {
                         history.push('/products');
                     }} style={{ color: 'white' }}> {c.name} </NavDropdown.Item>):<h6 className={styles.navbarLink}>No hay categorías creadas</h6>}
                     </NavDropdown>
-                    {localStorage.getItem('actualUserId') && localStorage.getItem('actualUserId') !== 'Guest' ? null : <Link className={`navbutton ${styles.navbarLink}`} to='/login'>Iniciar Sesion</Link>}
-                    {localStorage.getItem('actualUserId')  && localStorage.getItem('actualUserId') !== 'Guest' ?
+                    
                         <NavDropdown title={
                             <span className={styles.dropdownWhite}>
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-person-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -72,19 +71,19 @@ const SearchBar = (props) => {
                                     <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                                     <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z" />
                                 </svg>
-                                <span> {localStorage.getItem('actualUserName')}</span>
+                                <span> {user.first_name}</span>
                             </span>
 
                         } className='navbutton' >
-                            <NavDropdown.Item>
-
-                                <span>Información Personal</span></NavDropdown.Item>
-                                <NavDropdown.Item><Link to="/profile"> Perfil </Link></NavDropdown.Item>
+                                <NavDropdown.Item>
+                                    <span>Información Personal</span>
+                                </NavDropdown.Item>
+                                <NavDropdown.Item><Link to="/profile"> Perfil de administrador</Link></NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item> <Link to="/disconnect">Cerrar Sesión</Link> </NavDropdown.Item>
                                 
                         </NavDropdown>
-                        : <Link className={`navbutton ${styles.navbarLink}`} to='/signup'>Registrarse</Link>}
+                        
 
 
                     <Link className={`navbutton ${styles.navbarLink}`}  to="/cart">
@@ -106,18 +105,19 @@ const mapStateToProps = state => {
     const articles = state.cart.products.products ?  state.cart.products.products.length : null;
     return {
         searchInput: state.main.searchInput,
-        articles
+        articles,
+        user: state.auth
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        search: (input) => dispatch(search(input)),
-        selectCategory: (category) => dispatch(selectCategory(category)),
+        search: input => dispatch(search(input)),
+        selectCategory: category => dispatch(selectCategory(category)),
         selectAll: () => dispatch(selectAll()),
         fetchUserCart: () => dispatch(fetchUserCart()),
-        changePage: (num) => dispatch(changePage(num))
+        changePage: num => dispatch(changePage(num))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminNavBar);
