@@ -7,7 +7,7 @@ import './normal-navbar.css'
 //Redux
 import { connect, useDispatch } from 'react-redux';
 import { search, selectCategory, selectAll,changePage } from '../../redux/actions/main'
-import { fetchUserCart } from '../../redux/actions/actions'
+import { fetchUserCart } from '../../redux/actions/cart'
 import { loadUserData } from '../../redux/actions/auth';
 
 

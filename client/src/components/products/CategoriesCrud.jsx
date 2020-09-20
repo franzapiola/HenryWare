@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, Container } from 'react-bootstrap'
+import {connect} from 'react-redux'
+import {useHistory} from 'react-router-dom'
+
 
 const CategoriesCrud = (props) => {
+    const {user} = props
+    const history = useHistory()
+    if(user.role != "admin"){
+         history.push("/404")
+    }
     const { categories, getCategories } = props;
 
     //Contiene la información de la categoría seleccionada, ya sea para modificarla o eliminarla
@@ -175,4 +183,10 @@ const CategoriesCrud = (props) => {
     )
 }
 
-export default CategoriesCrud
+const mapStateToProps = state => {
+    return{
+        user : state.auth
+    }
+}
+
+export default connect(mapStateToProps)(CategoriesCrud)

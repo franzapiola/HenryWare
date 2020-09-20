@@ -3,14 +3,16 @@ import { Form, Button, Spinner } from 'react-bootstrap'
 import styles from './index.module.scss'
 import { useSelector, useDispatch, connect } from 'react-redux'
 //import { receiveProducts,fetchProducts, fetchUserCart, setId, changeQuantity, deleteProduct } from '../../redux/actions/actions'
-import {changeQuantity,deleteProduct,fetchUserCart} from '../../redux/actions/cart'
+import {receiveCartData,changeQuantity,deleteProduct,fetchUserCart} from '../../redux/actions/cart'
+import {fillOrderData} from '../../redux/actions/order'
 
 import {loadUserData} from '../../redux/actions/auth'
 import axios from "axios";
-import {Link} from 'react-router-dom'
+import {Link,useHistory} from 'react-router-dom'
 
-function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQuantity}) {
+function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQuantity,fillOrderData,emptyCart}) {
     const dispatch = useDispatch()
+    const history =useHistory()
     const [cant, setCant] = useState(1)
     const [idCarrito,setIdCarrito] = useState()
     console.log(cartData)
@@ -50,6 +52,17 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
     }
     
     */
+
+    const checkout= (orderId) =>{
+        fillOrderData(cartData)
+
+        axios.put(`http://localhost:3001/orders/${orderId}`,{
+            state : "Creada"
+        })
+        .then(() => emptyCart() )
+        .then(() => history.push('/order'))
+        
+    }
 
     const sumarCantidad = (e,product) =>{
         e.preventDefault()
@@ -127,7 +140,7 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
                 </div> 
             ):<h3 style={{margin:'auto'}}>No hay productos en tu carrito, hace click <Link to='/products'>acá</Link> para continuar tu compra</h3>} 
             <span  className={`d-flex justify-content-end`} >
-                <a href="/order" className="btn btn-warning font-weight-bold ">SIGUIENTE</a>            
+                <Button className="btn btn-warning font-weight-bold " onClick={() => checkout(cartData.order_id)} >SIGUIENTE</Button>            
             </span>
             
         </div>
@@ -144,11 +157,18 @@ const mapStateToProps = state => {
 }
   
 const mapDispatchToProps = (dispatch, props) => {
+    const emptyCartData =  {
+            products : []
+        }
+    
     
     return {
         deleteProduct: (userId, product_id) => dispatch(deleteProduct(userId, product_id)),
         fetchUserCart: (userId) => dispatch(fetchUserCart(userId)),
-        changeQuantity: (userId, product_id, quantity) => dispatch(changeQuantity(userId, product_id, quantity))
+        changeQuantity: (userId, product_id, quantity) => dispatch(changeQuantity(userId, product_id, quantity)),
+        fillOrderData: (data) => dispatch(fillOrderData(data)),
+        emptyCart : () => dispatch(receiveCartData(emptyCartData))
+        
         //loadUserDataProps: (data) => dispatch(loadUserData(data)),
     }
 }

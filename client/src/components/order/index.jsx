@@ -2,55 +2,26 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './orderStyle.module.css'
 import { useSelector, useDispatch, connect } from 'react-redux'
-import {receiveProducts, fetchProducts,fetchUserCart,setId} from '../../redux/actions/actions'
-import {loadUserData} from '../../redux/actions/auth'
 import axios from "axios"
 import { Link,useHistory } from 'react-router-dom';
 
 
-function Order({products,userInfo}) {
+
+function Order({orderData,userInfo}) {
     const dispatch = useDispatch()
     const history = useHistory()
-    //const [cant, setCant] = useState(1)
     
-    const [idCarrito,setIdCarrito] = useState()
-    //const idUser = userInfo.user_id
-//    console.log("USERINFO ORDER: ",idUser)
+   
+    const {products} = orderData
 
-    const traerDatosCarrito = async() =>{
-        userInfo.user_id && await axios.get(`http://localhost:3001/users/${userInfo.user_id}/cart`)
-        .then(response => {
-            
-            setIdCarrito(response.data.order_id)
+    const funcionSuma = (products) => {
+      var total = 0
+      products.map(product => {
+        total += (product.LineaDeOrden.price * product.LineaDeOrden.quantity)
+      })
 
-        })
-        .catch(err => console.log(err))
+      return total
     }
-
-    const traerCarrito = async(id) =>{
-        axios.get(`http://localhost:3001/users/${id}/cart`)
-        .then(response => {
-          setIdCarrito(response.data.order_id)
-          console.log("[+]id carrito: " +idCarrito)
- 
-        })
-        .catch(err => console.log(err))
-    }
-    
-    useEffect(() => {
-      dispatch(setId(idCarrito)) 
-      traerCarrito(userInfo.user_id)
-      traerDatosCarrito()
-
-      //ESTE ESTÄ MAL. No me toma fectchUserCart(userInfo.user_id)
-      //HAY QUE CORREGIRLO
-      dispatch(fetchUserCart(1))
-        
-    }, [])
-
-
-
-
 
 
 
@@ -59,9 +30,9 @@ function Order({products,userInfo}) {
     function handleSubmit(e) {
       e.preventDefault()
       
-       axios.put(`http://localhost:3001/orders/${idCarrito}`,{
-          state : "Completa"
-        }).then(() => history.push("/"))
+      axios.put(`http://localhost:3001/orders/${orderData.order_id}`,{
+        state : "Completa"
+      }).then(() => history.push("/"))
 
     }
 
@@ -76,6 +47,7 @@ function Order({products,userInfo}) {
             <div className="row">
                 <div className="col-md-4 order-md-2 mb-4">
                     <h4 className="d-flex justify-content-between align-items-center mb-3">
+                        <span className="text-muted">Tu id de orden es:{orderData.order_id} </span>
                         <span className="text-muted">Tus productos</span>
                         <span className="badge badge-secondary badge-warning">{products.length} </span>
                     </h4>
@@ -87,7 +59,7 @@ function Order({products,userInfo}) {
                                 <h6 className="my-0">{product.name}</h6>
                                 
                               </div>
-                              <span className="text-muted">${product.price}</span>
+                              <span className="text-muted">${product.LineaDeOrden.price} x {product.LineaDeOrden.quantity} </span>
                             </li>
                         )}
                         
@@ -96,7 +68,9 @@ function Order({products,userInfo}) {
 
                         <li className="list-group-item d-flex justify-content-between">
                           <span>Total (pesos)</span>
-                          <strong>$PRECIO TOTAL</strong>
+                          <strong>$ {
+                            funcionSuma(products)
+                         } </strong>
                         </li>
                     </ul>
                      <form className={`card p-2 ${styles.promoCode}`}>
@@ -229,17 +203,16 @@ function Order({products,userInfo}) {
 
 
 const mapStateToProps = state => {
-  const products = state.cart.products.products || []
     return {
-        products: products,
-        userInfo : state.auth
+        userInfo : state.auth,
+        orderData: state.order.orderData
     }
 }
   
 const mapDispatchToProps = (dispatch, props) => {
     return {
         //fetchProducts: () => dispatch(fetchProducts()),
-        loadUserData: () =>dispatch(loadUserData())
+        //loadUserData: () =>dispatch(loadUserData())
     }
 }
     
