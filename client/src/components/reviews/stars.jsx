@@ -4,11 +4,13 @@ import s from './stars.module.css';
 import { TextField, Button } from '@material-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { useHistory }  from 'react-router-dom'
 
 function StarRating (props) {
 
    let { user_id } = props.auth;
    let { product_id } = props;
+   const history = useHistory();
 
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null);
@@ -20,19 +22,22 @@ function StarRating (props) {
 
     const createReview = async (e) => {
         e.preventDefault();
-
-        await axios.post(`http://localhost:3001/reviews/${product_id}`, {
-            rating,  
-            description: input,
-            user_id         
-        })
-        .then((response) => {
-           setRating(null);
-           setInput('');
-          })
-        .catch(error => {
-            console.log(error);
-        });
+        if(user_id){ 
+                await axios.post(`http://localhost:3001/reviews/${product_id}`, {
+                rating,  
+                description: input,
+                user_id         
+            })
+            .then((response) => {
+            setRating(null);
+            setInput('');
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        } else {
+            history.push('/login');
+        }
     }
 
 
