@@ -27,7 +27,7 @@ const NormalNavBar = (props) => {
     }
     // console.log(props)
     useEffect(() => {
-        dispatch(fetchUserCart())
+        fetchUserCart(user.user_id)
     }, [])
     return (
         <Navbar className={`${styles.navbar} d-flex flex-wrap h-auto `} >
@@ -93,7 +93,7 @@ const NormalNavBar = (props) => {
 }
 
 const mapStateToProps = state => {
-    const articles = state.cart.products.products ?  state.cart.products.products.length : null;
+    const articles = state.cart.cartData.products ?  state.cart.cartData.products.length : null;
     return {
         searchInput: state.main.searchInput,
         articles,
@@ -106,7 +106,7 @@ const mapDispatchToProps = dispatch => {
         search: input => dispatch(search(input)),
         selectCategory: category => dispatch(selectCategory(category)),
         selectAll: () => dispatch(selectAll()),
-        fetchUserCart: () => dispatch(fetchUserCart()),
+        fetchUserCart: (id) => dispatch(fetchUserCart(id)),
         changePage: num => dispatch(changePage(num)),
         loadUserData: userData => dispatch(loadUserData(userData))
     }

@@ -7,8 +7,9 @@ import axios from "axios"
 import Reviews from '../reviews/reviews';
 import {loadUserData} from '../../redux/actions/auth'
 import { useSelector, useDispatch, connect } from 'react-redux'
+import {fetchUserCart} from '../../redux/actions/cart'
 
-function Producto ({userInfo}) {
+function Producto ({userInfo,fetchUserCart}) {
     const [ productData, setProductData ] = useState({
         images:[]
     })
@@ -39,8 +40,8 @@ function Producto ({userInfo}) {
             quantity : quantity, 
             price : price,
           })
-          .then(function (response) {
-            console.log(response);
+          .then( () => {
+            fetchUserCart(userID)
           })
           .catch(function (error) {
             console.log(error);
@@ -120,7 +121,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, props) => {
     return {
         
-        loadUserData: () =>dispatch(loadUserData())
+        loadUserData: () =>dispatch(loadUserData()),
+        fetchUserCart:(userId) => dispatch(fetchUserCart(userId))
     }
 }
 
