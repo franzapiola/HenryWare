@@ -11,31 +11,32 @@ class ControlPanel extends Component{
 	
 	render(){
 		return(
-			<div className="container-fluid d-flex mt-4 justify-content-center">
+			<div className="container-fluid  d-flex mt-4 justify-content-around">
 				<div className="row">
-					<div className="col-md-4">
+					<div className="col-md-4 pt-4">
 						<Card
 						imgsrc={imgAdd}
 						title="Administrar Productos"
-						text={`Agregar/editar productos, administrar imágenes`}
+						text={`Agregar/editar productos y administrar imágenes`}
 						linkto="/products/edit"
 						/>
 					</div>
-					<div className="col-md-4">
+					<div className="col-md-4  pt-4">
 						<Card
 						imgsrc={imgCats}
 						title="Administrar Categorías"
+						text={`Agregar o editar categorías`}
 						linkto='/products/categories/edit'
 						/>
 					</div>
-					<div className="col-md-4">
+					<div className="col-md-4  pt-4">
 						<Card imgsrc={imgOrders}
 						title="Órdenes"
 						text="Listado completo"
 						linkto = "/orders/table"
 						/>
 					</div>
-					<div className="col-md-4">
+					<div className="col-md-4  pt-4">
 						<Card imgsrc={imgUsers}
 						title="Gente"
 						text="Listado de staff y de usuarios registrados"
