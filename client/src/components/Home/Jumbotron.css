@@ -2,20 +2,23 @@
 
 .jumbotron{
 	padding: 0;
-	margin:auto;
 	width: 100%;
+	text-align: center;
+	position: relative;
+	top:0;
+	left:0
 }
 
 .jumbotronImg{
-	max-height: 700px;
+	position: relative;
+	top: 0;
+	left: 0;
 }
 
-.toProducts{
-	background-color: red;
-	width: 400px;
-	height: 75px;
-	border-radius: 10px;
+.jumbotronButton{
+	width: 25%;
 	position: absolute;
-	top:645px;
-	left: 750px;
+	z-index: 999;
+	bottom: 15%;
+	right: 38%;
 }
