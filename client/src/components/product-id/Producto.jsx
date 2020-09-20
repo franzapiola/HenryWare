@@ -5,9 +5,10 @@ import Rating from './Rating'
 import { Button, Carousel } from 'react-bootstrap'
 import axios from "axios"
 import Reviews from '../reviews/reviews';
+import {loadUserData} from '../../redux/actions/auth'
+import { useSelector, useDispatch, connect } from 'react-redux'
 
-
-export default function Producto (props) {
+function Producto ({userInfo}) {
     const [ productData, setProductData ] = useState({
         images:[]
     })
@@ -29,10 +30,11 @@ export default function Producto (props) {
         getStars(id)
      } ,[]) 
     
-    const userID = localStorage.getItem("actualUserId");
+    //Recibimos el id del usuario actual a  través del store
+    const userID = userInfo.user_id
     
     const enviarACarrito = async (id,product_id,quantity,price) => { 
-        axios.post(`http://localhost:3001/users/${id}/cart`, {
+        await axios.post(`http://localhost:3001/users/${userID}/cart`, {
             product_id : product_id,
             quantity : quantity, 
             price : price,
@@ -106,3 +108,21 @@ export default function Producto (props) {
         </div>
     )
 }
+
+const mapStateToProps = state => {
+  
+    return {
+        
+        userInfo : state.auth
+    }
+}
+  
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        
+        loadUserData: () =>dispatch(loadUserData())
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Producto)

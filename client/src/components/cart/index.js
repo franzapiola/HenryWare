@@ -2,20 +2,47 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button, Spinner } from 'react-bootstrap'
 import styles from './index.module.scss'
 import { useSelector, useDispatch, connect } from 'react-redux'
-import { fetchProducts, fetchUserCart, setId, changeQuantity, deleteProduct } from '../../redux/actions/actions'
+import { receiveProducts,fetchProducts, fetchUserCart, setId, changeQuantity, deleteProduct } from '../../redux/actions/actions'
 import {loadUserData} from '../../redux/actions/auth'
 import axios from "axios";
 
 
-function Cart({products, isFetching,userInfo}) {
+function Cart({products,isFetching,userInfo}) {
     const dispatch = useDispatch()
     const [cant, setCant] = useState(1)
     const [idCarrito,setIdCarrito] = useState()
+    //var products = []
+    //console.log(products)
 
     /*if(userInfo.role != "Guest"){
         console.log("USER INFO: ",userInfo.user_id)
         console.log("USER NAME: ",userInfo.first_name)
     }*/
+
+   // const idUser = userInfo.user_id;
+   // console.log("ID USERRRRRRRRRRRRRRRRR:"+idUser)
+
+    
+    const traerDatosCarrito = async() =>{
+        userInfo.user_id && await axios.get(`http://localhost:3001/users/${userInfo.user_id}/cart`)
+        .then(response => {
+            
+            setIdCarrito(response.data.order_id)
+
+        })
+        .catch(err => console.log(err))
+    }
+
+    const traerProductosCarrito = async(id) =>{
+        await axios.get(`http://localhost:3001/users/${id}/cart`)
+        .then(response => {
+            products = response.data.products
+            
+            receiveProducts(products)
+        })
+        .catch(err => console.log(err))
+
+    }
     
     
     const modificarCantidad = (cantidad, product_id) => {
@@ -25,23 +52,25 @@ function Cart({products, isFetching,userInfo}) {
     }
     //const idUser = localStorage.getItem("actualUserId"); --->
     // el idUser lo sacamos del store de redux 
-    const idUser = userInfo.user_id;
 
-    const traerDatosCarrito = async() =>{
-        axios.get(`http://localhost:3001/users/${idUser}/cart`).then(response => {
-        setIdCarrito(response.data.order_id)
-        })
-    }
+    
 
-    idUser!=='Guest' && traerDatosCarrito()
+    //idUser!=='Guest'  && traerDatosCarrito() && traerProductosCarrito(idUser)
 
     useEffect(() => {
-        dispatch(fetchUserCart())
         dispatch(setId(idCarrito))
+        traerProductosCarrito(userInfo.user_id)
+        traerDatosCarrito()
+        //dispatch(loadUserData())
+        dispatch(fetchUserCart(userInfo.user_id))
+        
+
     }, [])
+
     return (
     <div className={`${styles.card} offset-1 col-md-10 col-12 mt-3 pt-4 pb-4`}>
             <h4 className='text-center pb-3'>Carrito de { userInfo.first_name } {userInfo.last_name} </h4>
+            <span>Carrito ID:{idCarrito} </span>
             {products.length && products.map( product =>                 
                <div className='d-flex mb-4'>
                     <div className="imagen col-md-2 text-center d-flex align-items-center justify-content-center">
@@ -56,8 +85,8 @@ function Cart({products, isFetching,userInfo}) {
                             <Form.Control type="text" value={product.LineaDeOrden.quantity} className='m-auto col-md-4 text-center' />
                         </div>
                         <div className="buttons">
-                            <Button className={`${styles.masMenos}`} onClick={ e => product.LineaDeOrden.quantity > 1 && dispatch(changeQuantity(localStorage.getItem('actualUserId'), product.product_id, product.LineaDeOrden.quantity-1))}>-</Button>
-                            <Button className={`${styles.masMenos}`} onClick={ e => dispatch(changeQuantity(localStorage.getItem('actualUserId'), product.product_id, product.LineaDeOrden.quantity+1))}>+</Button>
+                            <Button className={`${styles.masMenos}`} onClick={ e => product.LineaDeOrden.quantity > 1 && dispatch(changeQuantity(userInfo.user_id, product.product_id, product.LineaDeOrden.quantity-1))}>-</Button>
+                            <Button className={`${styles.masMenos}`} onClick={ e => dispatch(changeQuantity(userInfo.user_id, product.product_id, product.LineaDeOrden.quantity+1))}>+</Button>
                         </div>
                         <Form.Text className="text-muted">Stock: {product.stock} </Form.Text>
                     </div>
@@ -96,11 +125,12 @@ const mapStateToProps = state => {
 }
   
 const mapDispatchToProps = (dispatch, props) => {
-return {
-    fetchProducts: () => dispatch(fetchProducts()),
-    fetchUserCart: () => dispatch(fetchUserCart()),
-    loadUserData: () =>dispatch(loadUserData())
-}
+    
+    return {
+        //fetchProducts: () => dispatch(fetchProducts()),
+        //fetchUserCart: () => dispatch(fetchUserCart()),
+        loadUserData: () => dispatch(loadUserData())
+    }
 }
     
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

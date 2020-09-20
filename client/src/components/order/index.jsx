@@ -2,30 +2,59 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './orderStyle.module.css'
 import { useSelector, useDispatch, connect } from 'react-redux'
-import { fetchProducts,fetchUserCart,setId} from '../../redux/actions/actions'
+import {receiveProducts, fetchProducts,fetchUserCart,setId} from '../../redux/actions/actions'
+import {loadUserData} from '../../redux/actions/auth'
 import axios from "axios"
 import { Link,useHistory } from 'react-router-dom';
 
 
-function Order({products}) {
+function Order({products,userInfo}) {
     const dispatch = useDispatch()
     const history = useHistory()
-    const [cant, setCant] = useState(1)
+    //const [cant, setCant] = useState(1)
     
     const [idCarrito,setIdCarrito] = useState()
-    const idUser = localStorage.getItem("actualUserId");
+    //const idUser = userInfo.user_id
+//    console.log("USERINFO ORDER: ",idUser)
 
-    axios.get(`http://localhost:3001/users/${idUser}/cart`)
-    .then(response => {
+    const traerDatosCarrito = async() =>{
+        userInfo.user_id && await axios.get(`http://localhost:3001/users/${userInfo.user_id}/cart`)
+        .then(response => {
+            
             setIdCarrito(response.data.order_id)
-         })
 
-    console.log("[+]id carrito: " +idCarrito)
+        })
+        .catch(err => console.log(err))
+    }
+
+    const traerCarrito = async(id) =>{
+        axios.get(`http://localhost:3001/users/${id}/cart`)
+        .then(response => {
+          setIdCarrito(response.data.order_id)
+          console.log("[+]id carrito: " +idCarrito)
  
+        })
+        .catch(err => console.log(err))
+    }
+    
     useEffect(() => {
-        dispatch(fetchUserCart())
-        dispatch(setId(idCarrito)) 
+      dispatch(setId(idCarrito)) 
+      traerCarrito(userInfo.user_id)
+      traerDatosCarrito()
+
+      //ESTE ESTÄ MAL. No me toma fectchUserCart(userInfo.user_id)
+      //HAY QUE CORREGIRLO
+      dispatch(fetchUserCart(1))
+        
     }, [])
+
+
+
+
+
+
+
+    /////////////ESTA FUNCION ESTA BIEN
 
     function handleSubmit(e) {
       e.preventDefault()
@@ -202,13 +231,15 @@ function Order({products}) {
 const mapStateToProps = state => {
   const products = state.cart.products.products || []
     return {
-        products: products
+        products: products,
+        userInfo : state.auth
     }
 }
   
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        fetchProducts: () => dispatch(fetchProducts())
+        //fetchProducts: () => dispatch(fetchProducts()),
+        loadUserData: () =>dispatch(loadUserData())
     }
 }
     

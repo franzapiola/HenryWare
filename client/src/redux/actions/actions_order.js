@@ -43,6 +43,11 @@ export function fetchProducts() {
 		
 	}
 }
+
+
+
+
+
 export const receiveProducts = products => {
 	console.log('receiveProducts')
 	return {
