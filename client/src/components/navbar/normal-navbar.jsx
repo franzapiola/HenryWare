@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Navbar, Button, NavDropdown, Nav } from 'react-bootstrap'
-import './normal-navbar.css'
 import img from './Logo largo.svg'
-import styles from './normal-navbar.module.scss'
-
+import styles from './normal-navbar.module.css'
+import './normal-navbar.css'
 //Redux
 import store from '../../redux/store'
 import { connect, useDispatch } from 'react-redux';
@@ -33,11 +32,12 @@ const NormalNavBar = (props) => {
         dispatch(fetchUserCart())
     }, [])
     return (
-        <Navbar className="navbar d-flex flex-wrap h-auto " >
-            <Link to='/'><img className="brand" src={img} /></Link>
+        <Navbar className={`${styles.navbar} d-flex flex-wrap h-auto `} >
+
+            <Link to='/'><img className={styles.brand} src={img} /></Link>
 
 
-            <div className="search-bar">
+            <div className={styles.searchBar}>
                
 
                 
@@ -45,22 +45,22 @@ const NormalNavBar = (props) => {
                     <input value={searchInput} type='text' placeholder='Busca un producto...' onChange={(e) => {
                         search(e.target.value);
                     }} />
-                    <Button className="nav-submit" type='submit'>Buscar</Button>
+                    <Button className={styles.navSubmit} type='submit'>Buscar</Button>
                 </form>
 
             </div>
             <div className="down h-auto d-flex col-md-12">
-                <div className=" col-md-10 align-items-center offset-1 d-flex justify-content-center">
-                    <Link to='/products' className={`navbutton ${styles.navbarLink}`}>Catálogo</Link>
+                <div className="col-md-10 align-items-center offset-1 d-flex justify-content-center">
+                    <Link to='/products' className={`${styles.navbutton} ${styles.navbarLink}`}>Catálogo</Link>
                    
-                    <NavDropdown title={<span className="navbutton" > Categorias </span>} >
+                    <NavDropdown title={<span className={styles.navbutton} > Categorias </span>} >
                     {categories.length>0?categories.map(c => <NavDropdown.Item onClick={() => {
                         selectCategory(c.name);
                         history.push('/products');
                     }} style={{ color: 'white' }}> {c.name} </NavDropdown.Item>):<h6 className={styles.navbarLink}>No hay categorías creadas</h6>}
                     </NavDropdown>
-                    {localStorage.getItem('actualUserId') && localStorage.getItem('actualUserId') !== 'Guest' ? null : <Link className={`navbutton ${styles.navbarLink}`} to='/login'>Iniciar Sesion</Link>}
-                    {localStorage.getItem('actualUserId')  && localStorage.getItem('actualUserId') !== 'Guest' ?
+                    {user.first_name ? null : <Link className={`${styles.navbutton} ${styles.navbarLink}`} to='/login'>Iniciar Sesion</Link>}
+                    {user.first_name ?
                         <NavDropdown title={
                             <span className={styles.dropdownWhite}>
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-person-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -68,30 +68,26 @@ const NormalNavBar = (props) => {
                                     <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                                     <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z" />
                                 </svg>
-                                <span> {localStorage.getItem('actualUserName')}</span>
+                                <span> {user.first_name}</span>
                             </span>
 
-                        } className='navbutton' >
-                            <NavDropdown.Item>
-
-                                <span>Información Personal</span></NavDropdown.Item>
+                        } className={styles.navbutton} >
+                            
                                 <NavDropdown.Item><Link to="/profile"> Perfil </Link></NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item> <Link to="/disconnect">Cerrar Sesión</Link> </NavDropdown.Item>
                                 
                         </NavDropdown>
-                        : <Link className={`navbutton ${styles.navbarLink}`} to='/signup'>Registrarse</Link>}
+                        : <Link className={`${styles.navbutton} ${styles.navbarLink}`} to='/signup'>Registrarse</Link>}
 
 
-                    <Link className={`navbutton ${styles.navbarLink}`}  to="/cart">
+                    <Link className={`${styles.navbutton} ${styles.navbuttonCart} ${styles.navbarLink}`} to="/cart">
                         {articles!==0 && <span className={`${styles.numeroCarrito}`}>{articles}</span>}
                         <svg width="2em" height="2em" viewBox="0 0 16 16" className="bi bi-cart4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
                         </svg>
                     </Link>
-                    <Link to='/admin' className={styles.navbarLink}>
-                        Administrar
-                    </Link>
+
                 </div>
             </div>
         </Navbar>
