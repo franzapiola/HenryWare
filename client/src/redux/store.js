@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from './reducers/rootReducer';
-import { fetchProducts } from './actions/actions'
 import thunkMiddleware from 'redux-thunk'
 
 //import { createLogger } from 'redux-logger'

@@ -6,8 +6,16 @@ import { fetchOrders, changeStatus } from '../../redux/actions/Orders'
 import { fetchUser } from '../../redux/actions/User'
 import Select from 'react-select'
 import { Button } from 'react-bootstrap'
+import {useHistory} from 'react-router-dom'
 
-function OrdersTable({ orders }) {
+
+function OrdersTable(props) {
+
+    const {user,orders} = props
+    const history = useHistory()
+    if(user.role != "admin"){
+         history.push("/404")
+    }   
 
     const dispatch = useDispatch()
     useEffect(() => {

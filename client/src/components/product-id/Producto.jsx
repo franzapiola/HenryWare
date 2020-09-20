@@ -6,11 +6,14 @@ import { Button, Carousel } from 'react-bootstrap'
 import axios from "axios"
 import Reviews from '../reviews/reviews';
 import {loadUserData} from '../../redux/actions/auth'
-import { useSelector, useDispatch, connect } from 'react-redux';
+
+import { useSelector, useDispatch, connect } from 'react-redux'
+import {fetchUserCart} from '../../redux/actions/cart'
 
 function Producto (props) {
 
-    const { userInfo, averageReview } = props;
+    const { userInfo, averageReview,fetchUserCart} = props;
+
     const [ productData, setProductData ] = useState({
         images:[]
     })
@@ -38,8 +41,8 @@ function Producto (props) {
             quantity : quantity, 
             price : price,
           })
-          .then(function (response) {
-            console.log(response);
+          .then( () => {
+            fetchUserCart(userID)
           })
           .catch(function (error) {
             console.log(error);
@@ -96,7 +99,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, props) => {
     return {
         
-        loadUserData: () =>dispatch(loadUserData())
+        loadUserData: () =>dispatch(loadUserData()),
+        fetchUserCart:(userId) => dispatch(fetchUserCart(userId))
     }
 }
 

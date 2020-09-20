@@ -2,9 +2,17 @@ import React, { useState, useEffect } from 'react'
 import { Button, Modal, Form } from 'react-bootstrap'
 import bsCustomFileInput from 'bs-custom-file-input'
 import Select from 'react-select'
+import {connect} from 'react-redux'
+import {useHistory} from 'react-router-dom'
 
 
-export default function Crud(props) {
+
+const Crud =(props)=> {
+    const {user} = props
+    const history = useHistory()
+    if(user.role != "admin"){
+         history.push("/404")
+    }
 
     //Estado local de categorías
     const [categories, setCategories] = useState([]);
@@ -385,3 +393,14 @@ export default function Crud(props) {
         </div>
     )
 }
+
+
+
+
+const mapStateToProps = state => {
+    return{
+        user : state.auth
+    }
+}
+
+export default connect(mapStateToProps)(Crud);
