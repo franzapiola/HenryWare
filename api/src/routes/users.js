@@ -12,7 +12,7 @@ server.get('/',function(req,res){
     User.findAll({}).then(response => res.status(200).send(response))
 })
 
-//Ruta para crear un usuario    /user    NV.
+//Ruta para crear un usuario    /users    NV.
 server.post('/',(req, res) => {
   
     const { email, first_name, last_name, address, phone_number, role, password }= req.body;

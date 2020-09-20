@@ -6,14 +6,14 @@ import { Button, Carousel } from 'react-bootstrap'
 import axios from "axios"
 import Reviews from '../reviews/reviews';
 import {loadUserData} from '../../redux/actions/auth'
-import { useSelector, useDispatch, connect } from 'react-redux'
+import { useSelector, useDispatch, connect } from 'react-redux';
 
-function Producto ({userInfo}) {
+function Producto (props) {
+
+    const { userInfo, averageReview } = props;
     const [ productData, setProductData ] = useState({
         images:[]
     })
-
-    const [updateStars, setupdateStars] = useState();
     
     const { id } = useParams()
     const getIdProduct = async (id) =>{
@@ -26,8 +26,7 @@ function Producto ({userInfo}) {
         }}
         
     useEffect(() => {
-        getIdProduct(id)
-        getStars(id)
+        getIdProduct(id) 
      } ,[]) 
     
     //Recibimos el id del usuario actual a  través del store
@@ -46,29 +45,6 @@ function Producto ({userInfo}) {
             console.log(error);
           });
         
-    }
-
-    const getStars = (id) => {
-            
-        axios.get(`http://localhost:3001/reviews/${id}`) 
-        .then(response => {
-
-            const sumaRating = response.data.map(x => {
-                return x.rating})
-            const suma = sumaRating.reduce((a, b) => {
-                return a+b}) 
-            const stars = Math.round(suma / response.data.length);
-            setupdateStars(stars)   
-            return stars
-        })
-        .then(stars => {
-            axios.put(`http://localhost:3001/products/${id}`,{
-                rating: stars
-            })
-        })
-        .catch(error => {
-            console.log(error);
-        })
     }
 
     return (
@@ -93,7 +69,7 @@ function Producto ({userInfo}) {
                             <h2>${productData.price}</h2>
                         </div>
                         <p>{productData.description}</p>
-                        <i className='text-primary'><Rating rating={updateStars}/> </i>
+                        <i className='text-primary'><Rating rating={productData.rating}/> </i>
                         <p>Garantía: {productData.warranty} días</p>
                         <h4>{productData.stock>0?'Stock Disponible': 'Sin Stock'}</h4>
                         {/*<Button className="col-md-5 col-12 mr-2" variant='comprar'  disabled={productData.stock<=0?'disabled':null}>Comprar</Button>*/}
@@ -112,7 +88,7 @@ function Producto ({userInfo}) {
 const mapStateToProps = state => {
   
     return {
-        
+        averageReview: state.review.averageReview,
         userInfo : state.auth
     }
 }
