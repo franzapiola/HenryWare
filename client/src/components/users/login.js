@@ -18,7 +18,7 @@ function Login(props){
 	const history = useHistory();
 	
 	//Redux
-	const { loadUserData } = props;
+	const { user, loadUserData } = props;
 
 	const [ form, setForm ] = useState({
 		email: '',
@@ -36,7 +36,11 @@ function Login(props){
 	  }
 	})
 */
-	
+	//Si ya hay un usuario loggeado, redirigirlo automáticamente al home
+	if(user.role != 'Guest'){
+		history.push('/');
+	}
+
 	const handleSubmit =  (e) => {
 		e.preventDefault();
 		//Autenticamos con el contenido del form a la ruta de login
@@ -115,7 +119,9 @@ function Login(props){
 }
 
 const mapStateToProps = state => {
-	return {}
+	return {
+		user: state.auth
+	}
 }
 
 const mapDispatchToProps = dispatch => {

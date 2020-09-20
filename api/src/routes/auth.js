@@ -64,7 +64,7 @@ server.post('/logout', ()=>{});
 
 
 function authenticateToken(req,res,next){
-	console.log(req.headers)
+	//console.log(req.headers)
 	const authHeader = req.headers['authorization']
 	const token = authHeader && authHeader.split(' ')[1]
 	if ( token == null) return res.sendStatus(401)

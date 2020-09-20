@@ -9,14 +9,11 @@ import store from '../../redux/store'
 import { connect, useDispatch } from 'react-redux';
 import { search, selectCategory, selectAll,changePage } from '../../redux/actions/main'
 import { fetchUserCart } from '../../redux/actions/actions'
-
+import { loadUserData } from '../../redux/actions/auth';
 
 const NormalNavBar = (props) => {
-
-    const { getProducts, categories } = props;
-
     //Redux
-    const { searchInput, search, selectCategory, selectAll, articles, changePage, user } = props;
+    const { searchInput, search, selectCategory, selectAll, articles, changePage, user, loadUserData } = props;
     const dispatch = useDispatch()
     const history = useHistory();
 
@@ -24,7 +21,6 @@ const NormalNavBar = (props) => {
         e.preventDefault();
         search(searchInput);
         changePage(1);
-        getProducts();
         history.push('/products')
     }
     // console.log(props)
@@ -70,8 +66,15 @@ const NormalNavBar = (props) => {
                             
                                 <NavDropdown.Item><Link to="/profile"> Perfil </Link></NavDropdown.Item>
                                 <NavDropdown.Divider />
-                                <NavDropdown.Item> <Link to="/disconnect">Cerrar Sesión</Link> </NavDropdown.Item>
-                                
+                                <NavDropdown.Item 
+                                    onClick={()=>{
+                                        //Logout
+                                        localStorage.removeItem('actualToken');
+                                        loadUserData({
+                                            role: 'Guest'
+                                        });
+                                        history.push('/');
+                                }}> <Link>Cerrar Sesión</Link> </NavDropdown.Item>
                         </NavDropdown>
                         : <Link className={`${styles.navbuttonAdmin} ${styles.navbarLinkAdmin}`} to='/signup'>Registrarse</Link>}
 
@@ -106,7 +109,8 @@ const mapDispatchToProps = dispatch => {
         selectCategory: category => dispatch(selectCategory(category)),
         selectAll: () => dispatch(selectAll()),
         fetchUserCart: () => dispatch(fetchUserCart()),
-        changePage: num => dispatch(changePage(num))
+        changePage: num => dispatch(changePage(num)),
+        loadUserData: userData => dispatch(loadUserData(userData))
     }
 }
 

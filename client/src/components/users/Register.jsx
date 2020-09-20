@@ -4,8 +4,13 @@ import { FormControl, TextField, Button } from '@material-ui/core';
 import GoogleButton from 'react-google-button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-export default function Register() {
+ function Register (props) {
+    //Redux
+    const { user } = props;
+    const history = useHistory();
     //form carga los datos del formulario
     const [form, setForm] = useState({})
     //errors carga los errores que devuelve la api
@@ -60,6 +65,11 @@ export default function Register() {
 
     const notify = (message = 'Usuario creado con exito', type = 'success') => toast[type](message, { position: toast.POSITION.TOP_CENTER });
 
+    	//Si ya hay un usuario loggeado, redirigirlo automáticamente al home
+	if(user.role != 'Guest'){
+		history.push('/');
+    }
+    
     return (
         <div className={`pt-3 mt-5 d-flex align-items-center w-75 mx-auto ${styles.container} position-relative`}>
             <h1 className={`${styles.titulo}`}>Abrir una Cuenta</h1>
@@ -151,3 +161,11 @@ export default function Register() {
         </div>
     )
 }
+
+const mapStateToProps = state => {
+    return {
+        user: state.auth
+    }
+}
+
+export default connect(mapStateToProps)(Register);

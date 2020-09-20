@@ -42,12 +42,8 @@ const App = (props) => {
   //Redux
   const { view, searchInput, selectedCategory, currentPage, loadUserData } = props;
 
-  const handleCarouselSelect = (selectedIndex, e) => {
-    setCarouselIndex(selectedIndex);
-  }
-
   //Hacemos *siempre* un axios a /auth/me para que, si hay una sesión activa (es decir, hay un accessToken presente en localStorage),
-  //ésta se mantenga vigente a través de recargas de la página, o salir y volver a entrar. Hasta que el usuario haga logout.
+  //ésta se mantenga vigente a través de recargas de la página, o salir y volver a entrar. Hasta que el usuario haga logout. (y ponerle un tiempo de expiracion al token?)
   const actualToken = localStorage.getItem('actualToken');
   axios.get('http://localhost:3001/auth/me', 
     {
@@ -124,7 +120,7 @@ const App = (props) => {
 
   return(
     <BrowserRouter>
-      <Route path ='/' render={ ()=><NavBar getProducts = {getProducts} categories={categories} getCategories={getCategories}/> }/>
+      <Route path ='/' render={ ()=><NavBar/> }/>
       <Switch>
         <Route exact path='/' render={()=>{
           return <Home products={products}/>
