@@ -53,10 +53,7 @@ function Producto (props) {
     return (
 
         <div className='mt-4 col-md-12 '>
-            <div className="card-header text-center">
-                <h3><b>  {productData.name} </b></h3>
-                {/*<h3>actualID: {localStorage.getItem("actualUserId")}</h3>*/}
-            </div>
+
             <div className="card-body">
                 <div className="row" className={styles.container}>
                     
@@ -67,6 +64,8 @@ function Producto (props) {
                     </Carousel>
 
                     <div className='product-data col-md-5 col-4' className={styles.caja}>
+                        <h3><b>  {productData.name} </b></h3>
+
                         {/* <div className="vertical-line"></div> */}
                         <i className='text-primary' className={styles.r}>Calificación: <Rating rating={productData.rating} className={styles.rating}/> </i>
                         <div className={styles.cajaPrice}>
