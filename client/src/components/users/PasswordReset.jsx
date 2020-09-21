@@ -9,6 +9,10 @@ import { connect } from 'react-redux';
 const PasswordReset = props => {
     const history = useHistory();
     const { user, loadUserData } = props;
+
+    if(user.role === 'Guest'){
+        history.push('/login');
+    }
     
     const [form, setForm] = useState('');
 
