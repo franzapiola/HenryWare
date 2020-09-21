@@ -41,7 +41,7 @@ const Profile = (props)=>{
             <div className={`${styles.cardProfileBody} card-body`}>
                 <div className='row'>
                     <div className='col-6'>
-                        <img className={styles.imgProfile} src="https://www.placecage.com/640/360"/>
+                        <img className={styles.imgProfile} src={fullUser && fullUser.role=='admin'?"https://www.placecage.com/c/640/360":"https://www.placecage.com/640/360"}/>
                     </div>
 
                     <div className='col-6'>
