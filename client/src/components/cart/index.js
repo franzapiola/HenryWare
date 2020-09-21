@@ -79,7 +79,7 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
         fetchUserCart(userInfo.user_id)
 
         if(productos.length !== products.length) setProductos(products);
-    }, [userInfo, productos])
+    }, [userInfo, productos,products])
   
     //Si no hay usuario logeado, retorna carrito de guest que saca sus productos de localStorage, en vez del carrito normal
     if(userInfo.role === 'Guest') return <GuestCart products = {localStorageCart.products}/>
