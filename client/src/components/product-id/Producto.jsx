@@ -54,11 +54,11 @@ function Producto (props) {
 
         <div className='mt-4 col-md-12 '>
             <div className="card-header text-center">
-                <h3>{productData.name}</h3>
+                <h3><b>  {productData.name} </b></h3>
                 {/*<h3>actualID: {localStorage.getItem("actualUserId")}</h3>*/}
             </div>
             <div className="card-body">
-                <div className="row">
+                <div className="row" className={styles.container}>
                     
                     <Carousel className={styles.carousel}>
                         {productData.images.map(function(imagen){
@@ -66,18 +66,19 @@ function Producto (props) {
                         })}
                     </Carousel>
 
-                    <div className='product-data col-md-5 col-4'>
-                        <div className="vertical-line"></div>
-                        <div>
-                            <h2>${productData.price}</h2>
+                    <div className='product-data col-md-5 col-4' className={styles.caja}>
+                        {/* <div className="vertical-line"></div> */}
+                        <i className='text-primary' className={styles.r}>Calificación: <Rating rating={productData.rating} className={styles.rating}/> </i>
+                        <div className={styles.cajaPrice}>
+                            <h2 className={styles.price}>${productData.price}</h2> <span className={styles.ars}>ARS</span>
                         </div>
-                        <p>{productData.description}</p>
-                        <i className='text-primary'><Rating rating={productData.rating}/> </i>
-                        <p>Garantía: {productData.warranty} días</p>
-                        <h4>{productData.stock>0?'Stock Disponible': 'Sin Stock'}</h4>
+                        <p className={styles.description}>{productData.description}</p>
+                        
+                        <p className={styles.garantia}>Garantía | {productData.warranty} días</p>
+                        <h4 className={styles.stock}>{productData.stock>0?'Stock Disponible': 'Sin Stock'}</h4>
                         {/*<Button className="col-md-5 col-12 mr-2" variant='comprar'  disabled={productData.stock<=0?'disabled':null}>Comprar</Button>*/}
                         <Button className={`col-md-5 col-12 ${styles.buttonCart}`} variant='info'  disabled={productData.stock<=0?'disabled':null} onClick={ 
-                            () => enviarACarrito(userID,productData.product_id,1,productData.price)} >Añadir al Carrito</Button>
+                            () => enviarACarrito(userID,productData.product_id,1,productData.price)} className={styles.button}>Añadir al Carrito</Button>
                     </div>
                 </div>
             </div>
