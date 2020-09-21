@@ -68,6 +68,9 @@ function Producto (props) {
     return (
 
         <div className='mt-4 col-md-12 '>
+            <div className="card-header text-center">
+                {/*<h3>actualID: {localStorage.getItem("actualUserId")}</h3>*/}
+            </div>
 
             <div className="card-body">
                 <div className="row" className={styles.container}>
@@ -97,8 +100,7 @@ function Producto (props) {
                 </div>
             </div>
             <Reviews id={id} />
-            <div className="card-footer">                
-            </div>
+            
         </div>
     )
 }
