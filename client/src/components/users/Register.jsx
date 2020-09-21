@@ -149,7 +149,7 @@ import { useHistory } from 'react-router-dom';
                                     type='password'
                                     id="confirmPassword"
                                     label="Confirme su contraseña"
-                                    onChange={} />
+                                    onChange={'ola'} />
                             </FormControl>
                         </div>
                         <div className="col-md-4 offset-4 mb-4">
