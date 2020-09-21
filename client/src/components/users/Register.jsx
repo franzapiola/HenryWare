@@ -18,7 +18,7 @@ import { useHistory } from 'react-router-dom';
     //update field va a gregando al form los datos cargados en el formulario 
     const updateField = async e => {
         const { id, value } = e.target
-        await setForm({
+        await setForm({ 
             ...form,
             [id]: value
         })
@@ -71,7 +71,7 @@ import { useHistory } from 'react-router-dom';
     }
     
     return (
-        <div className={`pt-3 mt-5 d-flex align-items-center w-75 mx-auto ${styles.container} position-relative`}>
+        <div className={`pt-3 mt-5 d-flex align-items-center w-75 mx-auto ${styles.container2} position-relative`}>
             <h1 className={`${styles.titulo}`}>Abrir una Cuenta</h1>
 
             <div className="d-flex align-items-center  h-75 col-md-6 border-right">
@@ -141,6 +141,15 @@ import { useHistory } from 'react-router-dom';
                                     id="password"
                                     label="Contraseña"
                                     onChange={updateField} />
+                            </FormControl>
+                        </div>
+                        <div className="col-md-8 offset-2 mb-4">
+                            <FormControl className='col-md-12'>
+                                <TextField
+                                    type='password'
+                                    id="confirmPassword"
+                                    label="Confirme su contraseña"
+                                    onChange={'ola'} />
                             </FormControl>
                         </div>
                         <div className="col-md-4 offset-4 mb-4">

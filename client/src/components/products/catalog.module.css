@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap');
+
+body{
+  font-family: 'Montserrat', sans-serif;
+}
+
+
 .categoria{
     width: '250px';
     height: '100vh';
