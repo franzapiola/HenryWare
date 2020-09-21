@@ -22,12 +22,12 @@ const initialState = {
 export default (state= initialState, action) => {
 
 	switch(action.type){
-		case(REQUEST_QUANTITY):
+		case REQUEST_QUANTITY:
 		return {
 			...state,
 			isFetching: true,
 		}
-		case(RECEIVE_QUANTITY):
+		case RECEIVE_QUANTITY:
 		const products = state.cartData.products.map(prod => {
 			if(prod.product_id === action.payload.product_id) prod.quantity = action.payload.quantity
 			return prod
@@ -37,25 +37,25 @@ export default (state= initialState, action) => {
 			...state,			
 			isFetching: false,
 		}
-		case(REQUEST_CART_DATA):
+		case REQUEST_CART_DATA:
 			return{
 				...state,
 				isFetching: true,
 		}
-		case(RECEIVE_CART_DATA):
+		case RECEIVE_CART_DATA:
 			return{
 				...state,
 				isFetching: false,
 				cartData: action.cartData
 			}
 		
-		case(REQUEST_DELETE):
+		case REQUEST_DELETE:
 			return {
 				...state,
 				isFetching: true,
 			}
 
-		case(RECEIVE_DELETE):
+		case RECEIVE_DELETE:
 			
 			return {
 				...state,

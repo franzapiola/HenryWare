@@ -51,7 +51,7 @@ function GuestCart(props) {
             ):<h3 style={{margin:'auto'}}>No hay productos en tu carrito, hace click <Link to='/products'>acá</Link> para continuar tu compra</h3>}
 
             {products.length ?
-            <span>Precio total: {products.reduce((acc, p) => acc + 0, 0)}</span>
+            <span>Precio total: {products.reduce((acc, p) => acc + p.price, 0)}</span>
              : null}
              <br></br>
              <h5 className='text-center pb-3'>Para concretar la compra y/o modificar cantidades, <a href='/login'>inicia sesión</a></h5>

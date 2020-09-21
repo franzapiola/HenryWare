@@ -81,6 +81,23 @@ const ProductCard = (props) =>{
         };
 
     const enviarACarrito = async (product_id,quantity,price) => { 
+        if(user.role === 'Guest'){
+            const lStorCart = localStorage.getItem('guestCart');
+            
+            if (lStorCart == null){
+                console.log('caca')
+                let currentCart = {
+                    products: []
+                }
+                currentCart.products.push(props.data);
+                return localStorage.setItem('guestCart', JSON.stringify(currentCart));    
+            } else {
+                let currentCart = JSON.parse(lStorCart);
+                currentCart.products.push(props.data);
+                return localStorage.setItem('guestCart', JSON.stringify(currentCart));    
+                }
+        }
+
         await axios.post(`http://localhost:3001/users/${user.user_id}/cart`, {
             product_id : product_id,
             quantity : quantity, 

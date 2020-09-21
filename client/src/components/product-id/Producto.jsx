@@ -40,6 +40,7 @@ function Producto (props) {
             const lStorCart = localStorage.getItem('guestCart');
             
             if (lStorCart == null){
+                console.log('caca')
                 let currentCart = {
                     products: []
                 }
