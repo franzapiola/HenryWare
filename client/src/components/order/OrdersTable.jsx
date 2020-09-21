@@ -74,7 +74,7 @@ function OrdersTable(props) {
 const mapStateToProps = state => {
     return {
         orders: state.Orders,
-        user: state.User
+        user: state.auth
     }
 }
 

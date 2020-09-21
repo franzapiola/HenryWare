@@ -41,12 +41,15 @@ const Profile = (props)=>{
             <div className={`${styles.cardProfileBody} card-body`}>
                 <div className='row'>
                     <div className='col-6'>
-                        <img className={styles.imgProfile} src="https://www.placecage.com/640/360"/>
+                        <img className={styles.imgProfile} src={fullUser&&fullUser.role=='admin'?"https://www.placecage.com/c/640/360":"https://www.placecage.com/640/360"}/>
                     </div>
 
                     <div className='col-6'>
                     <h4 className={styles.cardLabel}>Nombre y apellido</h4>
                     <h6 className={styles.cardText}>{fullUser?fullUser.first_name:null} {fullUser?fullUser.last_name:null}</h6>
+
+                    {fullUser && fullUser.role == 'admin'?<div><h4 className={styles.cardLabel}>Tipo de usuario</h4>
+                    <h6 className={styles.cardText}>{fullUser?fullUser.role:null}</h6></div>:null}
 
                     <h4 className={styles.cardLabel}>Dirección</h4>
                     <h6 className={styles.cardText}>{fullUser?fullUser.address:null}</h6>

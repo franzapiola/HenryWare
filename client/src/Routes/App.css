@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap');
+
+body{
+  font-family: 'Montserrat', sans-serif;
+}
+
 .carousel{
   margin: 10px auto;
   width: 90%;
