@@ -14,7 +14,6 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
     const history =useHistory()
     const [cant, setCant] = useState(1)
     const [idCarrito,setIdCarrito] = useState()
-    console.log(cartData)
     const products = cartData.products || []
 
 
@@ -28,15 +27,25 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
         .then(() => history.push('/order'))
         
     }
-
+    
     const sumarCantidad = (e,product) =>{
         e.preventDefault()
-        changeQuantity(userInfo.user_id, product.product_id, product.LineaDeOrden.quantity+1)
+        const newQuantity = product.LineaDeOrden.quantity+1
+        changeQuantity(userInfo.user_id, product.product_id, newQuantity)
+        setProductos(productos.map( producto => {
+            if(producto.product_id === product.product_id) producto.LineaDeOrden.quantity = newQuantity;
+            return producto;
+        } ))
 
     }
     const restarCantidad = (e,product) =>{
-       e.preventDefault()
-       changeQuantity(userInfo.user_id, product.product_id, product.LineaDeOrden.quantity-1)
+       e.preventDefault();
+       const newQuantity = product.LineaDeOrden.quantity - 1
+       changeQuantity(userInfo.user_id, product.product_id, newQuantity)
+       setProductos(productos.map( producto => {
+        if(producto.product_id === product.product_id) producto.LineaDeOrden.quantity = newQuantity;
+        return producto;
+        } ))
 
     }
 /*
@@ -55,22 +64,22 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
     
 
     //idUser!=='Guest'  && traerDatosCarrito() && traerProductosCarrito(idUser)
-
-    useEffect(() => {
+    
+    const [ productos, setProductos ] = useState([]);
+    useEffect( () => {
         //dispatch(setId(idCarrito))
         //traerProductosCarrito(userInfo.user_id)
         //traerDatosCarrito()
         //dispatch(loadUserData())
         fetchUserCart(userInfo.user_id)
-        
-
-    }, [userInfo])
+        if(productos.length !== products.length) setProductos(products);
+    }, [userInfo, productos])
 
     return (
     <div className={`${styles.card} offset-1 col-md-10 col-12 mt-3 pt-4 pb-4`}>
             <h4 className='text-center pb-3'>Carrito de { userInfo.first_name } {userInfo.last_name} </h4>
-            {products.length ? products.map( product =>                 
-               <div className='d-flex mb-4'>
+            {productos.length ? productos.map( product =>                 
+               <div key={product.product_id} className='d-flex mb-4'>
                     <div className="imagen col-md-2 text-center d-flex align-items-center justify-content-center">
                         <img src={product.images[0].img_url} style={{height: '60px'}}/>
                     </div>
@@ -118,7 +127,6 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
 }
 
 const mapStateToProps = state => {
-    console.log(state.cart.cartData)
     return {
         isFetching: state.cart.isFetching,
         cartData: state.cart.cartData,
