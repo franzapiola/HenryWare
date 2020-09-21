@@ -56,6 +56,7 @@ function Producto (props) {
             <div className="card-header text-center">
                 {/*<h3>actualID: {localStorage.getItem("actualUserId")}</h3>*/}
             </div>
+
             <div className="card-body">
                 <div className="row" className={styles.container}>
                     
