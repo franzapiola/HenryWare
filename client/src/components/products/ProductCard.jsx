@@ -70,17 +70,32 @@ const HowManyStars = (review) => {
         </span> //estrellas vacias
       }
 }
-// props.data.images.length && <img src={props.data.images && props.data.images[0].img_url} className="card-img" alt={`Imagen ${props.data.name}`}/>
+// product.images.length && <img src={product.images && product.images[0].img_url} className="card-img" alt={`Imagen ${product.name}`}/>
 const ProductCard = (props) =>{
     const { user, fetchUserCart } = props;
-
+    const  product  = props.data;
 
     const [index,setIndex] = useState(0)
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
         };
 
-    const enviarACarrito = async (product_id,quantity,price) => { 
+    const enviarACarrito = async (product_id,quantity,price) => {
+        if(user.role === 'Guest'){
+            const lStorCart = localStorage.getItem('guestCart');
+            
+            if (lStorCart == null){
+                let currentCart = {
+                    products: []
+                }
+                currentCart.products.push(product);
+                return localStorage.setItem('guestCart', JSON.stringify(currentCart));    
+            } else {
+                let currentCart = JSON.parse(lStorCart);
+                currentCart.products.push(product);
+                return localStorage.setItem('guestCart', JSON.stringify(currentCart));    
+                }
+        }
         await axios.post(`http://localhost:3001/users/${user.user_id}/cart`, {
             product_id : product_id,
             quantity : quantity, 
@@ -95,25 +110,25 @@ const ProductCard = (props) =>{
     }
 
     return(
-        <div className={`${styles.linkProductCard} mr-4 mb-3  ${props.data.stock<=0?`${styles.noDisponible}`:null} `}>
+        <div className={`${styles.linkProductCard} mr-4 mb-3  ${product.stock<=0?`${styles.noDisponible}`:null} `}>
         <div  className={`${styles.card} d-flex ${styles.productCard} mr-3 mx-auto ${styles.cardStyles}`} >               
-            <Carousel className={`${styles.carouselCard} ${styles.cardImg}`} controls={props.data.images.length >= 2 && 'true'} activeIndex={index} onSelect={handleSelect} >{props.data.images.map(function(image){
+            <Carousel className={`${styles.carouselCard} ${styles.cardImg}`} controls={product.images.length >= 2 && 'true'} activeIndex={index} onSelect={handleSelect} >{product.images.map(function(image){
                 return <Carousel.Item ><img className={`d-block w-100 `} controls={false} src={image.img_url}/></Carousel.Item>
             })}
             </Carousel>
 
             <div className="info-card">
-                <h5 className={`card-title ${styles.productTitle}`}>{props.data.name}</h5>
-                <p className={`card-star ${styles.estrella}`}>{HowManyStars(props.data.rating)}</p>
-                <p className="card-text font-weight-bold">$ {Number.parseFloat(props.data.price).toFixed(2)}</p>
+                <h5 className={`card-title ${styles.productTitle}`}>{product.name}</h5>
+                <p className={`card-star ${styles.estrella}`}>{HowManyStars(product.rating)}</p>
+                <p className="card-text font-weight-bold">$ {Number.parseFloat(product.price).toFixed(2)}</p>
             </div>
             <hr className="hr"/>
             
-            <Link to={`/products/${props.data.product_id}`}  >
+            <Link to={`/products/${product.product_id}`}  >
                 <Button className={`mt-2 w-75 align-self-center nodisplay`} className={`${styles.btnComprar}`} >Ver detalles</Button>
             </Link>
             
-                <Button className={`mt-2 w-75 align-self-center nodisplay`} className={`${styles.btnComprar}`} onClick={()=>enviarACarrito(props.data.product_id, 1, props.data.price)} >Agregar al carrito</Button>
+                <Button className={`mt-2 w-75 align-self-center nodisplay`} className={`${styles.btnComprar}`} onClick={()=>enviarACarrito(product.product_id, 1, product.price)} >Agregar al carrito</Button>
 
         </div>
         </div>

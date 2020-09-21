@@ -11,11 +11,9 @@ import {Link,useHistory} from 'react-router-dom'
 
 function GuestCart(props) {
     const dispatch = useDispatch()
-    const history =useHistory()
+    const history = useHistory()
 
-    const { userInfo } = props;
     let products = props.products || [];
-
 
     const deleteProduct = (pId) => {
         const lStorCart = JSON.parse(localStorage.getItem('guestCart'));
@@ -51,7 +49,7 @@ function GuestCart(props) {
             ):<h3 style={{margin:'auto'}}>No hay productos en tu carrito, hace click <Link to='/products'>acá</Link> para continuar tu compra</h3>}
 
             {products.length ?
-            <span>Precio total: {products.reduce((acc, p) => acc + 0, 0)}</span>
+            <span>Precio total: {products.reduce((acc, p) => acc + p.price, 0).toString()}</span>
              : null}
              <br></br>
              <h5 className='text-center pb-3'>Para concretar la compra y/o modificar cantidades, <a href='/login'>inicia sesión</a></h5>
@@ -60,17 +58,4 @@ function GuestCart(props) {
     )
 }
 
-const mapStateToProps = state => {
-
-    return {
-
-        userInfo : state.auth
-    }
-}
-  
-const mapDispatchToProps = (dispatch, props) => {
-
-    return {}
-}
-    
-export default connect(mapStateToProps, mapDispatchToProps)(GuestCart);
+export default GuestCart;
