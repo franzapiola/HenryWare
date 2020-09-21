@@ -7,7 +7,7 @@ import axios from "axios"
 import Reviews from '../reviews/reviews';
 import {loadUserData} from '../../redux/actions/auth'
 
-import { useSelector, useDispatch, connect } from 'react-redux'
+import { connect } from 'react-redux'
 import {fetchUserCart} from '../../redux/actions/cart'
 
 function Producto (props) {

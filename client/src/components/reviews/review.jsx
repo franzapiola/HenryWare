@@ -1,8 +1,7 @@
-import React,{ useState, useEffect} from 'react';
+import React from 'react';
 import s from './review.module.css';
 import Rating from '../product-id/Rating';
 import avatar from './avatar.png';
-import axios from "axios";
 
 export default function Review (props) {
 

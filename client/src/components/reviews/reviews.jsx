@@ -1,4 +1,4 @@
-import React,{ useState, useEffect} from 'react';
+import React,{  useEffect} from 'react';
 import s from './reviews.module.css';
 import Review from './review';
 import Stars from './stars';

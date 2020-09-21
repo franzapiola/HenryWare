@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Modal, Form } from 'react-bootstrap'
-import bsCustomFileInput from 'bs-custom-file-input'
 import Select from 'react-select'
 import {connect} from 'react-redux'
 import {useHistory} from 'react-router-dom'
@@ -10,7 +9,7 @@ import {useHistory} from 'react-router-dom'
 const Crud =(props)=> {
     const {user} = props
     const history = useHistory()
-    if(user.role != "admin"){
+    if(user.role !== "admin"){
          history.push("/404")
     }
 

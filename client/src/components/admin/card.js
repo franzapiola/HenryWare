@@ -1,6 +1,6 @@
 import React from 'react';
-import { Navbar, Button, NavDropdown } from 'react-bootstrap'
-import { withRouter, Link } from 'react-router-dom';
+
+import {  Link } from 'react-router-dom';
 import styles from "./card-style.module.css";
 
 

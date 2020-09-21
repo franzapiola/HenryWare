@@ -1,9 +1,6 @@
-import React,{ useState, useEffect } from 'react';
-import { useParams, useHistory }  from 'react-router-dom'
+import React,{ useState } from 'react';
+import { useHistory }  from 'react-router-dom'
 import styles from './register.module.scss'
-import { FormControl, TextField, Button } from '@material-ui/core';
-import GoogleButton from 'react-google-button'
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 

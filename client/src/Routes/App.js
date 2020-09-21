@@ -23,6 +23,7 @@ import Login from '../components/users/login'
 import OrderInfo from '../components/order/orderInfo'
 import ControlPanel from '../components/admin/controlPanel'
 import NotFound from  '../components/NotFound'
+import Profile from '../components/users/profile'
 
 //Redux
 import { connect } from 'react-redux';
@@ -53,7 +54,6 @@ const App = (props) => {
     }
   )
   .then(response => {
-    console.log('RESPUESTA:',response)
     const { user } = response.data
     if (user) {
       //Si devuelve un usuario, cargamos sus datos al store de redux
@@ -158,9 +158,12 @@ const App = (props) => {
         <Route exact path='/orders/table/:id'>
           <OrderInfo />
         </Route>
-         <Route exact path="/admin"> <ControlPanel/></Route> 
+         <Route exact path="/admin"> <ControlPanel/> </Route> 
         <Route exact path='/orders/table'>
           <OrdersTable/>
+        </Route>
+        <Route exact path='/profile'>
+          <Profile/>
         </Route>
         <Route component={NotFound} />
       </Switch>

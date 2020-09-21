@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, {  useEffect } from 'react'
 import ProductCard from './ProductCard.jsx';
 import { Button } from 'react-bootstrap';
 import styles from './catalog.module.css'
 //Redux
 import store from '../../redux/store';
-import { selectAll, selectCategories, selectCategory, changePage } from '../../redux/actions/main'
+import { selectAll, selectCategory, changePage } from '../../redux/actions/main'
 import { connect } from 'react-redux';
 
 import {FaArrowCircleLeft,FaArrowCircleRight    } from 'react-icons/fa'

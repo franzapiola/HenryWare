@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Navbar, Button, NavDropdown, Nav } from 'react-bootstrap'
+import { Navbar, Button, NavDropdown } from 'react-bootstrap'
 import img from './LogoAdmin.png'
 import styles from './normal-navbar.module.css'
 import './normal-navbar.css'

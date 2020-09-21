@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Order from './index'
 import Cart from './../cart'
-import { useSelector, useDispatch, connect } from 'react-redux'
+import {  useDispatch, connect } from 'react-redux'
 import { fetchOrders, changeStatus } from '../../redux/actions/Orders'
 import { fetchUser } from '../../redux/actions/User'
 import Select from 'react-select'
-import { Button } from 'react-bootstrap'
 import {useHistory} from 'react-router-dom'
 
 
