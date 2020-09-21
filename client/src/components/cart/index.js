@@ -17,40 +17,6 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
     console.log(cartData)
     const products = cartData.products || []
 
-    //var products = []
-    //console.log(products)
-
-    /*if(userInfo.role != "Guest"){
-        console.log("USER INFO: ",userInfo.user_id)
-        console.log("USER NAME: ",userInfo.first_name)
-    }*/
-
-   // const idUser = userInfo.user_id;
-   // console.log("ID USERRRRRRRRRRRRRRRRR:"+idUser)
-
-    
-    /*const traerDatosCarrito = async() =>{
-        userInfo.user_id && await axios.get(`http://localhost:3001/users/${userInfo.user_id}/cart`)
-        .then(response => {
-            
-            setIdCarrito(response.data.order_id)
-
-        })
-        .catch(err => console.log(err))
-    }
-
-    const traerProductosCarrito = async(id) =>{
-        await axios.get(`http://localhost:3001/users/${id}/cart`)
-        .then(response => {
-            products = response.data.products
-            
-            receiveProducts(products)
-        })
-        .catch(err => console.log(err))
-
-    }
-    
-    */
 
     const checkout= (orderId) =>{
         fillOrderData(cartData)
@@ -137,7 +103,12 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
                     </div>    
                    
                 </div> 
-            ):<h3 style={{margin:'auto'}}>No hay productos en tu carrito, hace click <Link to='/products'>acá</Link> para continuar tu compra</h3>} 
+            ):<h3 style={{margin:'auto'}}>No hay productos en tu carrito, hace click <Link to='/products'>acá</Link> para continuar tu compra</h3>}
+
+            {products.length ?
+            <span>Precio total: {products.reduce((acc, p) => acc + (p.LineaDeOrden.price * p.LineaDeOrden.quantity), 0)}</span>
+             : null}
+             
             <span  className={`d-flex justify-content-end`} >
                 <Button className="btn btn-warning font-weight-bold " onClick={() => checkout(cartData.order_id)} >SIGUIENTE</Button>            
             </span>
@@ -158,17 +129,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, props) => {
     const emptyCartData =  {
             products : []
-        }
-    
-    
+        }    
     return {
         deleteProduct: (userId, product_id) => dispatch(deleteProduct(userId, product_id)),
         fetchUserCart: (userId) => dispatch(fetchUserCart(userId)),
         changeQuantity: (userId, product_id, quantity) => dispatch(changeQuantity(userId, product_id, quantity)),
         fillOrderData: (data) => dispatch(fillOrderData(data)),
         emptyCart : () => dispatch(receiveCartData(emptyCartData))
-        
-        //loadUserDataProps: (data) => dispatch(loadUserData(data)),
     }
 }
     

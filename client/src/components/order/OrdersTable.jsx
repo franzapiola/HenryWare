@@ -3,7 +3,6 @@ import Order from './index'
 import Cart from './../cart'
 import {  useDispatch, connect } from 'react-redux'
 import { fetchOrders, changeStatus } from '../../redux/actions/Orders'
-import { fetchUser } from '../../redux/actions/User'
 import Select from 'react-select'
 import {useHistory} from 'react-router-dom'
 
