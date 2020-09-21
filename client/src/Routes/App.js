@@ -53,7 +53,6 @@ const App = (props) => {
     }
   )
   .then(response => {
-    console.log('RESPUESTA:',response)
     const { user } = response.data
     if (user) {
       //Si devuelve un usuario, cargamos sus datos al store de redux
