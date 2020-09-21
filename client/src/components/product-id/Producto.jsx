@@ -6,9 +6,8 @@ import { Button, Carousel } from 'react-bootstrap'
 import axios from "axios"
 import Reviews from '../reviews/reviews';
 import {loadUserData} from '../../redux/actions/auth'
-
 import { useSelector, useDispatch, connect } from 'react-redux'
-import {fetchUserCart} from '../../redux/actions/cart'
+import {fetchUserCart, receiveCartData} from '../../redux/actions/cart'
 
 function Producto (props) {
 
@@ -36,6 +35,21 @@ function Producto (props) {
     const userID = userInfo.user_id
     
     const enviarACarrito = async (id,product_id,quantity,price) => { 
+       
+       //userinfo esta devolviendo role="guest" , el condicional deberia verificar el caso de ser un guest pasar los productos a estado y a localstore
+       //o hacer un redux para el local separado , el problema esta en como agregar los elementos a localstore aunque la otra opcion es traer todo el local,hacer el json parse, hacerle un push al array y stringificarlo de nuevo 
+
+       
+        if(id == "Guest"){
+            //pasa los prodictos al estado 
+
+            receiveCartData({
+                product_id,
+                quantity,
+                price
+            })
+        }else{
+
         await axios.post(`http://localhost:3001/users/${userID}/cart`, {
             product_id : product_id,
             quantity : quantity, 
@@ -47,6 +61,8 @@ function Producto (props) {
           .catch(function (error) {
             console.log(error);
           });
+
+        }
         
     }
 
@@ -100,7 +116,8 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         
         loadUserData: () =>dispatch(loadUserData()),
-        fetchUserCart:(userId) => dispatch(fetchUserCart(userId))
+        fetchUserCart:(userId) => dispatch(fetchUserCart(userId)),
+        receiveCartData:(carData) => dispatch(receiveCartData(carData))
     }
 }
 

@@ -74,7 +74,21 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
        changeQuantity(userInfo.user_id, product.product_id, product.LineaDeOrden.quantity-1)
 
     }
-/*
+
+
+    //la otra opcion que probaba era pasar a local desde el carrito pero es inpractipo porque para ejecutarlo tendria que inevitablemente hacer click en el carrito 
+    const pasarALocal = (carData) => {
+        let newData = JSON.stringify(carData)
+        localStorage.setItem('carritoGuest', newData)
+    }
+
+
+    //funcion pasar de local al carrito 
+
+
+    /*
+
+    
 
 
 
