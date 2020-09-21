@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Carousel } from 'react-bootstrap'
 import Jumbotron from './Jumbotron';
 import {Link} from 'react-router-dom'
 import styles from './home.module.css'
-import image from './Jumbotron.svg'
 import './home .css'
 const Home = (props) => {
 
@@ -19,7 +18,7 @@ const [carouselIndex, setCarouselIndex] = useState(0);
         <>
             <Jumbotron/>
 
-            <Carousel className={`carousel ${styles.carousel}`} activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
+            {/* <Carousel className={`carousel ${styles.carousel}`} activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
 
 
                 {products.map(prod => 
@@ -37,7 +36,7 @@ const [carouselIndex, setCarouselIndex] = useState(0);
                         </Link>
                     </Carousel.Item>
                     )}                    
-                </Carousel>
+                </Carousel> */}
             </>
     )
 }

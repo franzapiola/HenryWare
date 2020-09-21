@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Spinner } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 import styles from './index.module.scss'
-import { useSelector, useDispatch, connect } from 'react-redux'
+import {  useDispatch, connect } from 'react-redux'
 //import { receiveProducts,fetchProducts, fetchUserCart, setId, changeQuantity, deleteProduct } from '../../redux/actions/actions'
 import {receiveCartData,changeQuantity,deleteProduct,fetchUserCart} from '../../redux/actions/cart'
 import {fillOrderData} from '../../redux/actions/order'
 
-import {loadUserData} from '../../redux/actions/auth'
 import axios from "axios";
 import {Link,useHistory} from 'react-router-dom'
 

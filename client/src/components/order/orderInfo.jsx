@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import styles from './orderStyle.module.css'
-import { useSelector, useDispatch, connect } from 'react-redux'
-import {add_product,set_id,set_owner,set_total_price,axiosProducts} from '../../redux/actions/order_info'
-import axios from "axios"
+import {  useDispatch, connect } from 'react-redux'
+import {set_id,axiosProducts} from '../../redux/actions/order_info'
 import {useParams}  from 'react-router-dom'
 
 
@@ -33,7 +32,7 @@ function OrderInfo(props){
 
 
 	return(
-		<div className='col-md-10 offset-1 mt-3'>>
+		<div className='col-md-10 offset-1 mt-3'>
 
 			<div className="card container" style={{width: 50+'rem'}}>
 			  <div className="card-body">

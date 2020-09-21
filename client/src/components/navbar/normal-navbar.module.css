@@ -199,6 +199,12 @@ form input::placeholder{
     text-align: center;
 }
 
+@keyframes numCart{
+    from {transform: scale(0);}
+    to {transform: scale(1)}
+}
+
+
 .numeroCarrito{
     position: absolute;
     left: 50%;
@@ -207,9 +213,13 @@ form input::placeholder{
     border-radius: 20px;
     text-align: center;
     right: 50%;
-    transform: translate(-50%, -50%);
     color: black;
+
+    animation-name:numCart;
+    animation-duration: 0.5s;
 }
+
+
 
 .dropdownWhite, .dropdownWhite>*{
     color:white;
