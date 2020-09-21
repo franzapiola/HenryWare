@@ -52,6 +52,24 @@ function Login(props){
 				loadUserData(user);
 				//El accessToken, por otro lado, lo guardamos en el Local storage
 				localStorage.setItem("actualToken", accessToken);
+				
+				//Mandar carrito localStorage al del usuario que se está logeando:
+				const lStorCart = localStorage.getItem('guestCart');
+				if(lStorCart != null){
+					//Si no está vacío, osea, no es null, lo parseo
+					let currentCart = JSON.parse(lStorCart);
+					//Y a cada producto se lo mando al carrito del usuario logeado
+					currentCart.products.forEach(prod => {
+						axios.post(`http://localhost:3001/users/${response.data.user.user_id}/cart`, {
+						product_id: prod.product_id,
+						quantity: 1,
+						price: prod.price
+						});
+					})
+					//Por último, vacío el carrito local
+					localStorage.removeItem('guestCart');
+				}
+
 				//Redireccionamos a la homepage
 				history.push('/');
 				return;

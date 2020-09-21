@@ -33,16 +33,31 @@ function Producto (props) {
      } ,[]) 
     
     //Recibimos el id del usuario actual a  través del store
-    const userID = userInfo.user_id
+    const { user_id, role} = userInfo
     
-    const enviarACarrito = async (id,product_id,quantity,price) => { 
-        await axios.post(`http://localhost:3001/users/${userID}/cart`, {
+    const enviarACarrito = async (id,product_id,quantity,price) => {
+        if(role === 'Guest'){
+            const lStorCart = localStorage.getItem('guestCart');
+            
+            if (lStorCart == null){
+                let currentCart = {
+                    products: []
+                }
+                currentCart.products.push(productData);
+                return localStorage.setItem('guestCart', JSON.stringify(currentCart));    
+            } else {
+                let currentCart = JSON.parse(lStorCart);
+                currentCart.products.push(productData);
+                return localStorage.setItem('guestCart', JSON.stringify(currentCart));    
+                }
+        }
+        await axios.post(`http://localhost:3001/users/${user_id}/cart`, {
             product_id : product_id,
             quantity : quantity, 
             price : price,
           })
           .then( () => {
-            fetchUserCart(userID)
+            fetchUserCart(user_id)
           })
           .catch(function (error) {
             console.log(error);
@@ -77,7 +92,7 @@ function Producto (props) {
                         <h4 className={styles.stock}>{productData.stock>0?'Stock Disponible': 'Sin Stock'}</h4>
                         {/*<Button className="col-md-5 col-12 mr-2" variant='comprar'  disabled={productData.stock<=0?'disabled':null}>Comprar</Button>*/}
                         <Button className={`col-md-5 col-12 ${styles.buttonCart}`} variant='info'  disabled={productData.stock<=0?'disabled':null} onClick={ 
-                            () => enviarACarrito(userID,productData.product_id,1,productData.price)} className={styles.button}>Añadir al Carrito</Button>
+                            () => enviarACarrito(user_id,productData.product_id,1,productData.price)} className={styles.button}>Añadir al Carrito</Button>
                     </div>
                 </div>
             </div>
@@ -100,7 +115,7 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         
         loadUserData: () =>dispatch(loadUserData()),
-        fetchUserCart:(userId) => dispatch(fetchUserCart(userId))
+        fetchUserCart:(user_id) => dispatch(fetchUserCart(user_id))
     }
 }
 

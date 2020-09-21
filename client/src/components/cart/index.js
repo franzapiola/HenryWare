@@ -7,7 +7,9 @@ import {receiveCartData,changeQuantity,deleteProduct,fetchUserCart} from '../../
 import {fillOrderData} from '../../redux/actions/order'
 
 import axios from "axios";
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory} from 'react-router-dom';
+
+import GuestCart from './guestCart'
 
 function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQuantity,fillOrderData,emptyCart}) {
     const dispatch = useDispatch()
@@ -15,6 +17,9 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
     const [cant, setCant] = useState(1)
     const [idCarrito,setIdCarrito] = useState()
     const products = cartData.products || []
+
+    //Productos locales para pasarle al carrito guest
+    const localStorageCart = JSON.parse(localStorage.getItem('guestCart')) ||  { products: [] }
 
 
     const checkout= (orderId) =>{
@@ -72,9 +77,12 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
         //traerDatosCarrito()
         //dispatch(loadUserData())
         fetchUserCart(userInfo.user_id)
+
         if(productos.length !== products.length) setProductos(products);
     }, [userInfo, productos])
-
+  
+    //Si no hay usuario logeado, retorna carrito de guest que saca sus productos de localStorage, en vez del carrito normal
+    if(userInfo.role === 'Guest') return <GuestCart products = {localStorageCart.products}/>
     return (
     <div className={`${styles.card} offset-1 col-md-10 col-12 mt-3 pt-4 pb-4`}>
             <h4 className='text-center pb-3'>Carrito de { userInfo.first_name } {userInfo.last_name} </h4>
