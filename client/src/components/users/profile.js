@@ -35,7 +35,7 @@ const Profile = (props)=>{
 
         <div className={`card ${styles.cardProfile} w-50 mx-auto my-5`}>
              <div className={`${styles.cardProfileHeader} card-header text-center`}>
-                <h3>Hola {fullUser?fullUser.first_name:null}! &#128540;</h3>
+                <h3 className={`${fullUser && fullUser.role=='admin'?styles.adminTitle:null}`}>Hola {fullUser?fullUser.first_name:null}! &#128540;</h3>
                 {/*<h3>actualID: {localStorage.getItem("actualUserId")}</h3>*/}
             </div>
             <div className={`${styles.cardProfileBody} card-body`}>
@@ -47,6 +47,9 @@ const Profile = (props)=>{
                     <div className='col-6'>
                     <h4 className={styles.cardLabel}>Nombre y apellido</h4>
                     <h6 className={styles.cardText}>{fullUser?fullUser.first_name:null} {fullUser?fullUser.last_name:null}</h6>
+
+                    {fullUser&&fullUser.role == 'admin'?<div><h4 className={styles.cardLabel}>Tipo de usuario</h4>
+                    <h6 className={styles.cardText}>{fullUser?fullUser.role:null}</h6></div>:null}
 
                     <h4 className={styles.cardLabel}>Dirección</h4>
                     <h6 className={styles.cardText}>{fullUser?fullUser.address:null}</h6>
