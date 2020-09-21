@@ -8,8 +8,60 @@ export const REQUEST_CART_DATA = 'REQUEST_CART_DATA';
 export const RECEIVE_CART_DATA = "RECEIVE_CART_DATA";
 
 export const REQUEST_DELETE = "REQUEST_DELETE";
-export const RECEIVE_DELETE = "RECEIVE_DELETE"
+export const RECEIVE_DELETE = "RECEIVE_DELETE";
 
+export const REQUEST_QUANTITY = "REQUEST_QUANTITY";
+export const RECEIVE_QUANTITY = "RECEIVE_QUANTITY";
+
+
+//Cambia la candidad en el carrito
+/* export function changeQuantity(userId, product_id, quantity){
+	
+	return dispatch => { 		
+		fetch(`http://localhost:3001/users/${userId}/cart`, {
+			method: 'PUT', //POST or 'PUT'
+			body: JSON.stringify({product_id, quantity}), // data can be `string` or {object}!
+			headers:{
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(() => dispatch(fetchUserCart(userId)))
+		.catch(err => console.log("Error en changeQuantity:",err))
+	//.then( response => response.json())
+//.then( json => dispatch(receiveQuantity(json)))
+	}
+
+} */
+/* Cambiar la cantidad en el carrito  */
+//Funciones para cambiar la candidad en el carrito
+export function changeQuantity(userId, product_id, quantity){
+	return dispatch =>{
+		dispatch(requestQuantity())
+		fetch(`http://localhost:3001/users/${userId}/cart`, {
+			method: 'PUT', //POST or 'PUT'
+            body: JSON.stringify({product_id, quantity}), // data can be `string` or {object}!
+            headers:{
+                'Content-Type': 'application/json'
+            }
+		})
+		.then( response => response.json())
+		.then( json => dispatch(receiveQuantity(json)))
+		
+	}
+}
+
+export function requestQuantity(){
+	return {
+		type: REQUEST_QUANTITY
+	}
+}
+
+export function receiveQuantity(data){
+	return {
+		type: RECEIVE_QUANTITY,
+		payload: {quantity: data.quantity, product_id: data.product_id }
+	}
+}
 
 
 /* Funciones para eliminar un producto de la db y del store  */
@@ -67,22 +119,4 @@ export function fetchUserCart(idUser) {
 	}
 }
 
-//Cambia la candidad en el carrito
-export function changeQuantity(userId, product_id, quantity){
-	
-		return dispatch => { 		
-			fetch(`http://localhost:3001/users/${userId}/cart`, {
-				method: 'PUT', //POST or 'PUT'
-	        	body: JSON.stringify({product_id, quantity}), // data can be `string` or {object}!
-	        	headers:{
-	            	'Content-Type': 'application/json'
-	        	}
-			})
-			.then(() => dispatch(fetchUserCart(userId)))
-			.catch(err => console.log("Error en changeQuantity:",err))
-		//.then( response => response.json())
-	//.then( json => dispatch(receiveQuantity(json)))
-		}
-	
-}
 

@@ -3,7 +3,9 @@ import {
 	REQUEST_CART_DATA,
 	RECEIVE_CART_DATA,
 	REQUEST_DELETE,
-	RECEIVE_DELETE
+	RECEIVE_DELETE,
+	REQUEST_QUANTITY,
+	RECEIVE_QUANTITY,
 	
 } from '../actions/cart'
 
@@ -20,12 +22,25 @@ const initialState = {
 export default (state= initialState, action) => {
 
 	switch(action.type){
-		
+		case(REQUEST_QUANTITY):
+		return {
+			...state,
+			isFetching: true,
+		}
+		case(RECEIVE_QUANTITY):
+		const products = state.cartData.products.map(prod => {
+			if(prod.product_id === action.payload.product_id) prod.quantity = action.payload.quantity
+			return prod
+		})
+		state.cartData.products = products;
+		return {
+			...state,			
+			isFetching: false,
+		}
 		case(REQUEST_CART_DATA):
 			return{
 				...state,
 				isFetching: true,
-				cartData : {products : []}
 		}
 		case(RECEIVE_CART_DATA):
 			return{
@@ -39,9 +54,6 @@ export default (state= initialState, action) => {
 				...state,
 				isFetching: true,
 			}
-		
-
-
 
 		case(RECEIVE_DELETE):
 			
