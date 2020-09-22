@@ -5,9 +5,9 @@ import {useHistory} from 'react-router-dom'
 
 
 const CategoriesCrud = (props) => {
-    const {user} = props
+    const {user, isFetching} = props
     const history = useHistory()
-    if(user.role != "admin"){
+    if(isFetching === false && user.role != "admin"){
          history.push("/404")
     }
     const { categories, getCategories } = props;
@@ -185,7 +185,8 @@ const CategoriesCrud = (props) => {
 
 const mapStateToProps = state => {
     return{
-        user : state.auth
+        user : state.auth.user,
+        isFetching: state.auth.isFetching
     }
 }
 

@@ -73,7 +73,7 @@ const PasswordReset = props => {
 
 const mapStateToProps = state => {
     return {
-        user: state.auth
+        user: state.auth.user
     }
 }
 

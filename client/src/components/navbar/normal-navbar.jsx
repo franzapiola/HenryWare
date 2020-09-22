@@ -109,7 +109,7 @@ const mapStateToProps = state => {
     return {
         searchInput: state.main.searchInput,
         articles,
-        user: state.auth
+        user: state.auth.user
     }
 };
 

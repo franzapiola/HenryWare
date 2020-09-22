@@ -9,9 +9,9 @@ import {useHistory} from 'react-router-dom'
 
 function OrdersTable(props) {
 
-    const {user,orders} = props
+    const {user, isFetching, orders} = props
     const history = useHistory()
-    if(user.role != "admin"){
+    if(isFetching === false && user.role != "admin"){
          history.push("/404")
     }   
 
@@ -74,7 +74,8 @@ function OrdersTable(props) {
 const mapStateToProps = state => {
     return {
         orders: state.Orders,
-        user: state.auth
+        user: state.auth.user,
+        isFetching: state.auth.isFetching
     }
 }
 

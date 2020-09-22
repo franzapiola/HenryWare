@@ -7,9 +7,9 @@ import {useHistory} from 'react-router-dom'
 
 
 const Crud =(props)=> {
-    const {user} = props
+    const {user, isFetching} = props
     const history = useHistory()
-    if(user.role !== "admin"){
+    if(isFetching === false && user.role !== "admin"){
          history.push("/404")
     }
 
@@ -398,7 +398,8 @@ const Crud =(props)=> {
 
 const mapStateToProps = state => {
     return{
-        user : state.auth
+        user : state.auth.user,
+        isFetching: state.auth.isFetching
     }
 }
 

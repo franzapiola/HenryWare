@@ -173,7 +173,7 @@ import { useHistory } from 'react-router-dom';
 
 const mapStateToProps = state => {
     return {
-        user: state.auth
+        user: state.auth.user
     }
 }
 
