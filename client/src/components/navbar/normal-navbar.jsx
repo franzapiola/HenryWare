@@ -99,8 +99,11 @@ const mapStateToProps = state => {
         ? state.cart.cartData.products.length 
         : null;
     }else {
-        const lStorCart = JSON.parse(localStorage.getItem('guestCart'));
-        articles = lStorCart.products ? lStorCart.products.length : null;
+        if(localStorage.getItem('guestCart')){
+            const lStorCart = JSON.parse(localStorage.getItem('guestCart'));
+            articles = lStorCart.products ? lStorCart.products.length : null;
+        }
+        
     }
     
     return {
