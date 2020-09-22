@@ -14,17 +14,20 @@ function GuestCart(props) {
     const history =useHistory()
 
     const { userInfo } = props;
-    let products = props.products || [];
-
+    //let products = props.products || [];
+    const [products, setProducts ] = useState(props.products)
 
     const deleteProduct = (pId) => {
         const lStorCart = JSON.parse(localStorage.getItem('guestCart'));
 
         lStorCart.products = lStorCart.products.filter( p => p.product_id != pId);
+        setProducts(products.filter( p => p.product_id != pId))
+
         console.log(lStorCart)
         return localStorage.setItem('guestCart', JSON.stringify(lStorCart));
     }
-
+    useEffect(()=>{
+    }, [products])
     return (
     <div className={`${styles.card} offset-1 col-md-10 col-12 mt-3 pt-4 pb-4`}>
             <h4 className='text-center pb-3'>Carrito de Invitado </h4>

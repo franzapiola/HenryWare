@@ -93,7 +93,19 @@ const NormalNavBar = (props) => {
 }
 
 const mapStateToProps = state => {
-    const articles = state.cart.cartData.products ?  state.cart.cartData.products.length : null;
+    let articles;
+    if(state.cart.cartData.products){
+        articles = state.cart.cartData.products 
+        ? state.cart.cartData.products.length 
+        : null;
+    }else {
+        if(localStorage.getItem('guestCart')){
+            const lStorCart = JSON.parse(localStorage.getItem('guestCart'));
+            articles = lStorCart.products ? lStorCart.products.length : null;
+        }
+        
+    }
+    
     return {
         searchInput: state.main.searchInput,
         articles,
