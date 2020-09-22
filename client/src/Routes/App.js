@@ -33,7 +33,7 @@ import PasswordReset from '../components/users/PasswordReset';
 //Redux
 import { connect } from 'react-redux';
 //import store from '../redux/store';
-import { loadUserData, checkLSToken, checkSession } from '../redux/actions/auth';
+import { checkSession } from '../redux/actions/auth';
 
 
 const App = (props) => {
@@ -165,8 +165,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUserData: (userData) => dispatch(loadUserData(userData)),
-    checkLSToken: () => dispatch(checkLSToken()),
     checkSession: token => dispatch(checkSession(token))
   }
 }
