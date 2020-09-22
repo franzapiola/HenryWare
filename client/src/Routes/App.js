@@ -22,6 +22,7 @@ import Home from '../components/Home/Home'
 import Login from '../components/users/login'
 import OrderInfo from '../components/order/orderInfo'
 import ControlPanel from '../components/admin/controlPanel'
+import UsersTable from '../components/users/UsersTable'
 
 import NotFound from  '../components/NotFound'
 import Profile from '../components/users/profile'
@@ -167,6 +168,7 @@ const App = (props) => {
         <Route exact path='/orders/table'>
           <OrdersTable/>
         </Route>
+        <Route exact path="/admin/usersTable"><UsersTable/></Route>
 
         <Route exact path='/profile'><Profile/></Route>
         <Route exact path='/profile/password-reset'>

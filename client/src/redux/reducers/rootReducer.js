@@ -7,8 +7,9 @@ import auth from './auth';
 import review from './review';
 import cart from './cart';
 import order from './order'
+import usersInfo from './users_info'
 
 export default combineReducers({
 
-  cart,Orders,main,orderInfo, auth, review,order
+  cart,Orders,main,orderInfo, auth, review,order,usersInfo
 })

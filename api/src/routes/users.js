@@ -61,6 +61,9 @@ server.put('/:user_id', function(req, res){
             case 'phone_number':
                 newInfo.phone_number = req.body.phone_number;
                 break;
+            case 'role':
+                newInfo.role = req.body.role;
+                break;
         }
     });
 
