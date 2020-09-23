@@ -3,6 +3,7 @@ import { useHistory }  from 'react-router-dom'
 import styles from './register.module.scss'
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
+import Google from './google.jsx';
 
 //Redux
 import { loadUserData } from '../../redux/actions/auth';
@@ -127,6 +128,7 @@ function Login(props){
 				  </div>
 					{errorMsg && <span>{errorMsg}</span>}
 				  <input  type='submit' className={`${styles.henryColor} col-md-12`} value='Ingresar' />
+				  <Google/>
 				</form>
 			</div>
 		</div>
