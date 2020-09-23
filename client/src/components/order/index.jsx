@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styles from './orderStyle.module.css'
 import { useDispatch, connect } from 'react-redux'
 import axios from "axios"
@@ -13,6 +13,26 @@ function Order({orderData,userInfo}) {
    
     const {products} = orderData
 
+    const [form,setForm] = useState({
+      firstName:'',
+      lastName:'',
+      email:'',
+      address:'',
+      depto:'',
+    })
+
+    
+    const updateField = async e => {
+      const { id, value } = e.target
+
+      await setForm({ 
+          ...form,
+          [id]: value
+      })
+  }
+
+
+
     const funcionSuma = (products) => {
       var total = 0
       products.map(product => {
@@ -22,6 +42,7 @@ function Order({orderData,userInfo}) {
       return total
     }
 
+    
 
 
     /////////////ESTA FUNCION ESTA BIEN
@@ -29,6 +50,20 @@ function Order({orderData,userInfo}) {
     function handleSubmit(e) {
       e.preventDefault()
       
+      axios.post('http://localhost:3001/orders/finished',{
+        email: form.email,
+        
+        order_id:orderData.order_id,
+
+        firstName:form.firstName,
+        lastName: form.lastName,
+        address: form.address,
+        depto: form.depto,
+        phone: form.phone,
+        products: products
+      }).then((res)=>console.log('oka'))
+
+
       axios.put(`http://localhost:3001/orders/${orderData.order_id}`,{
         state : "Completa"
       }).then(() => history.push("/"))
@@ -87,44 +122,41 @@ function Order({orderData,userInfo}) {
         <div className="row">
           <div className="col-md-6 mb-3">
             <label for="firstName">Nombre</label>
-            <input type="text" className="form-control" id="firstName" placeholder="Ingresa tu nombre"  required />
+            <input onChange={updateField} type="text" value={form.firstName} className="form-control" id="firstName" placeholder="Ingresa tu nombre"  required />
             <div className="invalid-feedback">
               Ingresa tu nombre.
             </div>
           </div>
           <div className="col-md-6 mb-3">
             <label for="lastName">Apellido</label>
-            <input type="text" className="form-control" id="lastName" placeholder="Ingresa tu apellido" required/>
+            <input onChange={updateField} type="text" value={form.lastName} className="form-control" id="lastName" placeholder="Ingresa tu apellido" required/>
             <div className="invalid-feedback">
               Tu apellido es necesario.
             </div>
           </div>
         </div>
 
-        <div className="mb-3">
-          <label for="username">Nombre de usuario</label>
-          <div className="input-group">
-            <div className="input-group-prepend">
-              <span className="input-group-text">@</span>
-            </div>
-            <input type="text" className="form-control" id="username" placeholder="Nombre de usuario" required/>
-            <div className="invalid-feedback" >
-              Tu nombre de usuario es importante!.
-            </div>
-          </div>
-        </div>
+        
 
         <div className="mb-3">
           <label for="email">Email </label>
-          <input type="email" className="form-control" id="email" placeholder="herny@gmail.com"/>
+          <input onChange={updateField} type="email" value={form.email} className="form-control" id="email" placeholder="herny@gmail.com"/>
           <div className="invalid-feedback">
             Ingresa una dirección de email válida.
           </div>
         </div>
 
         <div className="mb-3">
+          <label for="phone">Teléfono </label>
+          <input onChange={updateField} type="number" value={form.phone} className="form-control" id="phone" placeholder="1161113411"/>
+          <div className="invalid-feedback">
+            Ingrese un teléfono válido
+          </div>
+        </div>
+
+        <div className="mb-3">
           <label for="address">Dirección</label>
-          <input type="text" className="form-control" id="direccion" placeholder="Av. Luis Maria Campos 1053" required/>
+          <input onChange={updateField} type="text" value={form.direccion} className="form-control" id="address" placeholder="Av. Luis Maria Campos 1053" required/>
           <div className="invalid-feedback">
             Por favor ingresa una direción válida.
           </div>
@@ -132,10 +164,11 @@ function Order({orderData,userInfo}) {
 
         <div className="mb-3">
             <label for="Piso">Piso/Departamento</label>
-            <input type="text" className="form-control" id="piso" placeholder="5/H" />
+            <input onChange={updateField} type="text" className="form-control" id="depto" placeholder="5/H" />
         </div>
 
-       
+        <button onClick={()=>console.log(form)}/>
+
         <h4 className="mb-3">Forma de Pago</h4>
 
         <div className="d-block my-3">
@@ -203,7 +236,7 @@ function Order({orderData,userInfo}) {
 
 const mapStateToProps = state => {
     return {
-        userInfo : state.auth,
+        userInfo : state.auth.user,
         orderData: state.order.orderData
     }
 }
