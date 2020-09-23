@@ -15,55 +15,29 @@ const checkPassword = async(user,password) => {
 	return comparacion
 };
 
-
-
-server.post('/externalLogin',(req,res,next) =>{
+server.post('/externalLogin',(req,res) =>{
 	const {external} = req.query
-	const {email,first_name, last_name} = req.body
+	const {email, first_name, last_name} = req.body
 
-	User.findOne({
-		where:{ email }
-	})
-	.then( user => {
-		if(!user){
-			User.create({
-				first_name,
-				last_name,
-				role : "user",
-				email,
-
-			}).then( newUser => {
-				const userData = { 
-					user: {
-						user_id : user.user_id,
-						first_name : user.first_name,
-						last_name : user.last_name,
-						role : user.role,
-						email : email
-					} 
-				}
-				//Creamos el token pasándole la información del usuario y el ACCESS_TOKEN_SECRET declarado en .env
-				const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET);
-				return res.status(200).json({
-					accessToken , 
-					user : {
-						user_id : user.user_id,
-						first_name : user.first_name,					
-						last_name : user.last_name,
-						role : user.role,
-						email : email }
-					})
-
-			}).then(() => console.log("Usuario creado con cuenta de google"))
+	User.findOrCreate({
+		where:{ email },
+		defaults: {
+			first_name,
+			last_name
 		}
-
-		const userData = { user: {
-					user_id : user.user_id,
-					first_name : user.first_name,
-					last_name : user.last_name,
-					role : user.role,
-					email : email
-				} }
+	})
+	.then( result => {
+		//findOrCreate devuelve un array, el primer elemento es el usuario. El segundo es un booleano
+		const user = result[0];
+		const userData = { 
+			user: {
+				user_id : user.user_id,
+				first_name : user.first_name,
+				last_name : user.last_name,
+				role : user.role,
+				email : email
+			}
+		}
 		//Creamos el token pasándole la información del usuario y el ACCESS_TOKEN_SECRET declarado en .env
 		const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET);
 		return res.status(200).json({
@@ -76,9 +50,9 @@ server.post('/externalLogin',(req,res,next) =>{
 					email : email }
 				})
 	})
+	.catch(err => console.log('error en /auth/externalLogin:', err));
 
 })
-
 
 
 server.post("/login",(req,res,next) => {
