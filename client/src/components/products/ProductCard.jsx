@@ -74,7 +74,6 @@ const HowManyStars = (review) => {
 const ProductCard = (props) =>{
     const { user, fetchUserCart } = props;
 
-
     const [index,setIndex] = useState(0)
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
@@ -96,6 +95,7 @@ const ProductCard = (props) =>{
                 return localStorage.setItem('guestCart', JSON.stringify(currentCart));    
             }
         }
+        
         await axios.post(`http://localhost:3001/users/${user.user_id}/cart`, {
             product_id : product_id,
             quantity : quantity, 

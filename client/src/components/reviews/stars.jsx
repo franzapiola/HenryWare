@@ -9,7 +9,7 @@ import { allReview, averageReview } from '../../redux/actions/review';
 
 function StarRating (props) {
 
-   let { user_id } = props.auth;
+   let { user_id } = props.auth.user;
    let { product_id } = props;
    const history = useHistory();
 
