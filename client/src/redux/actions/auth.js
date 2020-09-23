@@ -40,18 +40,8 @@ export const checkSession = token => {
             }
             }
         )
-        .then(response => {
-            const { user } = response.data
-            //Si devuelve un usuario, cargamos sus datos al store de redux
-            const { user_id, first_name, last_name, email, role} = user;
-            return dispatch(loadUserData({
-                user_id,
-                first_name,
-                last_name,
-                email,
-                role
-            }));
-        })
+       //Cargamos los datos del usuario al store de redux, isFetching = false
+        .then(response => dispatch(loadUserData(response.data.user)))
         .catch(err => console.log('ERROR EN LLAMADO A /auth/me:', err));
     }
 
