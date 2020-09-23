@@ -25,14 +25,12 @@ export const checkSession = token => {
         //Si el token es null, no lo mando
         if(token === null) return dispatch(
             loadUserData({
-            role: 'Guest'
+                role: 'Guest'
             })
         );
 
         //isFetching = true;
         dispatch(checkLSToken());
-
-        //Llamado a /auth/me
         axios.get('http://localhost:3001/auth/me', 
             {
             headers: {
@@ -40,8 +38,11 @@ export const checkSession = token => {
             }
             }
         )
-       //Cargamos los datos del usuario al store de redux, isFetching = false
-        .then(response => dispatch(loadUserData(response.data.user)))
+        .then(response =>
+            //isFetching = false;
+            //Cargamos los datos del usuario al store de redux
+            dispatch(loadUserData(response.data.user))
+        )
         .catch(err => console.log('ERROR EN LLAMADO A /auth/me:', err));
     }
 
