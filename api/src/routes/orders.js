@@ -42,10 +42,10 @@ server.get('/:order_id', function(req, res){
         where:{
             order_id
         },
-        include: [{model: Product, as:'products'}]
+        include: [{model: Product, as:'products'}, { model: User}]
     })
     .then(order => {
-        res.send(order);
+        res.status(200).send(order);  
     })
     .catch(error => {
         res.status(400).send(error);
@@ -88,5 +88,24 @@ server.get('/:order_id/totalprice', (req, res) => {
     .then(total_price => res.send({total_price}))
     .catch(error => res.status(400).send(error));
 });
+
+
+server.get('/table/:order_id/', function(req, res){
+    const { order_id } = req.params;
+
+    Order.findAll({
+        where:{
+            order_id
+        },
+        include: [{model: Product, as:'products'}, { model: User}]
+    })
+    .then(order => {
+        res.status(200).send(order);  
+    })
+    .catch(error => {
+        res.status(400).send(error);
+    })
+})
+
 
 module.exports = server;

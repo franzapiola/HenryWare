@@ -80,7 +80,22 @@ const ProductCard = (props) =>{
         setIndex(selectedIndex);
         };
 
-    const enviarACarrito = async (product_id,quantity,price) => { 
+    const enviarACarrito = async (product_id,quantity,price) => {
+        if(user.role === 'Guest'){
+            const lStorCart = localStorage.getItem('guestCart');
+            
+            if (lStorCart == null){
+                let currentCart = {
+                    products: []
+                }
+                currentCart.products.push(props.data);
+                return localStorage.setItem('guestCart', JSON.stringify(currentCart));    
+            } else {
+                let currentCart = JSON.parse(lStorCart);
+                currentCart.products.push(props.data);
+                return localStorage.setItem('guestCart', JSON.stringify(currentCart));    
+            }
+        }
         await axios.post(`http://localhost:3001/users/${user.user_id}/cart`, {
             product_id : product_id,
             quantity : quantity, 
@@ -113,7 +128,10 @@ const ProductCard = (props) =>{
                 <Button className={`mt-2 w-75 align-self-center nodisplay`} className={`${styles.btnComprar}`} >Ver detalles</Button>
             </Link>
             
+                {props.data.stock ?
                 <Button className={`mt-2 w-75 align-self-center nodisplay`} className={`${styles.btnComprar}`} onClick={()=>enviarACarrito(props.data.product_id, 1, props.data.price)} >Agregar al carrito</Button>
+                : 
+                <Button className={`mt-2 w-75 align-self-center nodisplay`} style={{backgroundColor: 'gray'}} className={`${styles.btnComprar}`}>Agregar al carrito</Button>}
 
         </div>
         </div>
@@ -123,7 +141,7 @@ const ProductCard = (props) =>{
 
 const mapStateToProps = state => {
     return {
-        user: state.auth
+        user: state.auth.user
     }
 }
 
