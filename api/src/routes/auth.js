@@ -33,8 +33,15 @@ server.post("/login",(req,res,next) => {
 		checkPassword(user,password)
 		.then( match => {
 			if(match){//si lo son, devolvemos token
-				const userData = { user }
-				//Creamos el token pasándole la información del usuario y el ACCES_TOKEN_SECRET declarado en .env
+				//No guardamos la password en el token
+				const userData = { user: {
+					user_id : user.user_id,
+					first_name : user.first_name,
+					last_name : user.last_name,
+					role : user.role,
+					email : email
+				} }
+				//Creamos el token pasándole la información del usuario y el ACCESS_TOKEN_SECRET declarado en .env
 				const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET);
 
 				//Mandamos al front la info del usuario y el token
@@ -69,8 +76,7 @@ function authenticateToken(req,res,next){
 	const token = authHeader && authHeader.split(' ')[1]
 	if ( token == null) return res.sendStatus(401)
 	jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err, user) =>{
-		if(err) return res.sendStatus(403)
-		//req.email = email
+		if(err) return res.sendStatus(403);
 		res.send(user);
 	})
 	

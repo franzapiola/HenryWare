@@ -22,10 +22,15 @@ export const loadUserData = (userData) => {
 
 export const checkSession = token => {
     return dispatch => {
+        //Si el token es null, no lo mando
+        if(token === null) return dispatch(
+            loadUserData({
+                role: 'Guest'
+            })
+        );
+
         //isFetching = true;
         dispatch(checkLSToken());
-
-        //Llamado a /auth/me
         axios.get('http://localhost:3001/auth/me', 
             {
             headers: {
@@ -33,24 +38,11 @@ export const checkSession = token => {
             }
             }
         )
-        .then(response => {
-            const { user } = response.data
-            if (user) {
-                //Si devuelve un usuario, cargamos sus datos al store de redux
-                const { user_id, first_name, last_name, email, role} = user;
-                return dispatch(loadUserData({
-                    user_id,
-                    first_name,
-                    last_name,
-                    email,
-                    role
-                }));
-            }
-            //El axios a /auth/me no devolvió ningun usuario, por ende no hay usuario logeado
-            dispatch(loadUserData({
-                role: 'Guest'
-                }));
-        })
+        .then(response =>
+            //isFetching = false;
+            //Cargamos los datos del usuario al store de redux
+            dispatch(loadUserData(response.data.user))
+        )
         .catch(err => console.log('ERROR EN LLAMADO A /auth/me:', err));
     }
 
