@@ -109,7 +109,7 @@ const mapStateToProps = state => {
   
     return {
         averageReview: state.review.averageReview,
-        userInfo : state.auth
+        userInfo : state.auth.user
     }
 }
   

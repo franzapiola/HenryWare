@@ -33,9 +33,11 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
         
     }
     
+
     const sumarCantidad = (e,product) =>{
         e.preventDefault()
         const newQuantity = product.LineaDeOrden.quantity+1
+        setCant(newQuantity)
         changeQuantity(userInfo.user_id, product.product_id, newQuantity)
         setProductos(productos.map( producto => {
             if(producto.product_id === product.product_id) producto.LineaDeOrden.quantity = newQuantity;
@@ -43,16 +45,18 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
         } ))
 
     }
+
     const restarCantidad = (e,product) =>{
        e.preventDefault();
        const newQuantity = product.LineaDeOrden.quantity - 1
+       setCant(newQuantity)
        changeQuantity(userInfo.user_id, product.product_id, newQuantity)
        setProductos(productos.map( producto => {
         if(producto.product_id === product.product_id) producto.LineaDeOrden.quantity = newQuantity;
         return producto;
         } ))
-
     }
+
     const eliminarProducto = async (user_id, product_id) => {
         await deleteProduct(user_id, product_id)
         await setProductos(productos.filter( producto => producto.product_id !== product_id))
@@ -80,12 +84,12 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
         //traerProductosCarrito(userInfo.user_id)
         //traerDatosCarrito()
         //dispatch(loadUserData())
-        console.log(cartData)
-        console.log('productslength', products.length, 'productos: ', productos.length)
+        // console.log(cartData)
+        // console.log('productslength', products.length, 'productos: ', productos.length)
         fetchUserCart(userInfo.user_id)
 
         if(products.length !== productos.length) setProductos(products);
-    }, [userInfo])
+    }, [userInfo,cant])
   
     //Si no hay usuario logeado, retorna carrito de guest que saca sus productos de localStorage, en vez del carrito normal
     if(userInfo.role === 'Guest') return <GuestCart products = {localStorageCart.products}/>
@@ -144,7 +148,7 @@ const mapStateToProps = state => {
     return {
         isFetching: state.cart.isFetching,
         cartData: state.cart.cartData,
-        userInfo : state.auth
+        userInfo : state.auth.user
     }
 }
   
