@@ -128,7 +128,10 @@ const ProductCard = (props) =>{
                 <Button className={`mt-2 w-75 align-self-center nodisplay`} className={`${styles.btnComprar}`} >Ver detalles</Button>
             </Link>
             
-                {props.data.stock ? <Button className={`mt-2 w-75 align-self-center nodisplay`} className={`${styles.btnComprar}`} onClick={()=>enviarACarrito(props.data.product_id, 1, props.data.price)} >Agregar al carrito</Button> : null}
+                {props.data.stock ?
+                <Button className={`mt-2 w-75 align-self-center nodisplay`} className={`${styles.btnComprar}`} onClick={()=>enviarACarrito(props.data.product_id, 1, props.data.price)} >Agregar al carrito</Button>
+                : 
+                <Button className={`mt-2 w-75 align-self-center nodisplay`} style={{backgroundColor: 'gray'}} className={`${styles.btnComprar}`}>Agregar al carrito</Button>}
 
         </div>
         </div>
