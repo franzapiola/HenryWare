@@ -302,7 +302,7 @@ server.get('/:user_id/orders',function(req,res){
         where:{
             user_id
         },
-        // include:[{model:Product,as:'products'}]
+        include: [{model: Product, as:'products'}, { model: User}]
     })
     .then(response => res.status(200).send(response))
     .catch(err => res.status(404).send(err))
