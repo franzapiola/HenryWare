@@ -22,6 +22,13 @@ export const loadUserData = (userData) => {
 
 export const checkSession = token => {
     return dispatch => {
+        //Si el token es null, no lo mando
+        if(token === null) return dispatch(
+            loadUserData({
+            role: 'Guest'
+            })
+        );
+
         //isFetching = true;
         dispatch(checkLSToken());
 
@@ -35,21 +42,15 @@ export const checkSession = token => {
         )
         .then(response => {
             const { user } = response.data
-            if (user) {
-                //Si devuelve un usuario, cargamos sus datos al store de redux
-                const { user_id, first_name, last_name, email, role} = user;
-                return dispatch(loadUserData({
-                    user_id,
-                    first_name,
-                    last_name,
-                    email,
-                    role
-                }));
-            }
-            //El axios a /auth/me no devolvió ningun usuario, por ende no hay usuario logeado
-            dispatch(loadUserData({
-                role: 'Guest'
-                }));
+            //Si devuelve un usuario, cargamos sus datos al store de redux
+            const { user_id, first_name, last_name, email, role} = user;
+            return dispatch(loadUserData({
+                user_id,
+                first_name,
+                last_name,
+                email,
+                role
+            }));
         })
         .catch(err => console.log('ERROR EN LLAMADO A /auth/me:', err));
     }
