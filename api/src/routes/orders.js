@@ -112,8 +112,18 @@ server.get('/table/:order_id/', function(req, res){
 server.post('/finished',(req,res)=>{
 
   const {email,order_id,firstName,lastName,address,depto,products,phone} = req.body
- 
-  console.log(phone)
+
+  const PrecioTotal = (products)=>{
+    
+    let precioFinal = 0
+
+    products.map((product)=>{
+        precioFinal += product.price*product.LineaDeOrden.quantity
+    })
+
+    return precioFinal
+  }
+
 
   let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -128,7 +138,7 @@ server.post('/finished',(req,res)=>{
   let mailOptions = {
       from:"ehenryware@gmail.com",
       to: `${email}`,
-      subject:`Su pedido número ${order_id} ha sido enviado`,
+      subject:`Su pedido número ${order_id} ha sido A COMPLETAR`,
       html:`
       <html>
 
@@ -145,9 +155,11 @@ server.post('/finished',(req,res)=>{
             </tr>
             <tr>
               <td colspan="2" style="border: solid 1px #ddd; padding:10px 20px;">
-                <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Estado de tu orden</span><b style="color:green;font-weight:normal;margin:0">Pendiente</b></p>
+                <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Estado de tu orden</span><b style="color:green;font-weight:normal;margin:0">A COMPLETAR</b></p>
                 <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">ID de tu orden</span> ${order_id}</p>
-                <p style="font-size:14px;margin:0 0 0 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Precio final</span>XXX</p>
+                <p style="font-size:14px;margin:0 0 0 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Precio final</span>$${
+                  PrecioTotal(products)
+                }</p>
               </td>
             </tr>
             <tr>
@@ -174,7 +186,7 @@ server.post('/finished',(req,res)=>{
                       return`<div style="display:flex;font-size:14px;padding:10px;border:solid 1px black">
           
                       <div style="display:flex;flex-direction:row;margin-left:5px;">
-                        <img style="max-width:100px;padding:0;margin:0" src="${product.images[0].img_url}"/>
+                        <img style="max-width:120px;max-height:120px;padding:0;margin:0" src="${product.images[0].img_url}"/>
                        </div>
                        
                       <div style="margin:auto 10px">
