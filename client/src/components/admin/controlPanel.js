@@ -9,59 +9,55 @@ const imgUsers = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fww
 const imgCats = "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2F2.bp.blogspot.com%2F-gNMIOHboLMo%2FT1Dlp5pi3uI%2FAAAAAAAAAVc%2F80O8Ao9rrfQ%2Fs1600%2FCategories%2BExcel.jpg&f=1&nofb=1"
 
 const ControlPanel = function(props){
-	const {user} = props
-	const history = useHistory()
-	if(user.role != "admin"){
-		 history.push("/404")
-	}	
+	const {user, isFetching} = props
+	const history = useHistory();
+	//Si ya se recibió la respuesta de /auth/me, y el usuario recibido no es admin, sacarlo cagan2 de ahí
+	if(isFetching === false && user.role != "admin"){
+		 history.push("/404");
+	}
 	
-		return(
-			<div className="container-fluid  d-flex mt-4 justify-content-around">
-				<div className="row">
-					<div className="col-md-4 pt-4">
-						<Card
-						imgsrc={imgAdd}
-						title="Administrar Productos"
-						text={`Agregar/editar productos y administrar imágenes`}
-						linkto="/products/edit"
-						/>
-					</div>
-					<div className="col-md-4  pt-4">
-						<Card
-						imgsrc={imgCats}
-						title="Administrar Categorías"
-						text={`Agregar o editar categorías`}
-						linkto='/products/categories/edit'
-						/>
-					</div>
-					<div className="col-md-4  pt-4">
-						<Card imgsrc={imgOrders}
-						title="Órdenes"
-						text="Listado completo"
-						linkto = "/orders/table"
-						/>
-					</div>
-					<div className="col-md-4  pt-4">
-						<Card imgsrc={imgUsers}
-						title="Gente"
-						text="Listado de staff y de usuarios registrados"
-						/>
-					</div>
+	return(
+		<div className="container-fluid  d-flex mt-4 justify-content-around">
+			<div className="row">
+				<div className="col-md-4 pt-4">
+					<Card
+					imgsrc={imgAdd}
+					title="Administrar Productos"
+					text={`Agregar/editar productos y administrar imágenes`}
+					linkto="/products/edit"
+					/>
 				</div>
-
+				<div className="col-md-4  pt-4">
+					<Card
+					imgsrc={imgCats}
+					title="Administrar Categorías"
+					text={`Agregar o editar categorías`}
+					linkto='/products/categories/edit'
+					/>
+				</div>
+				<div className="col-md-4  pt-4">
+					<Card imgsrc={imgOrders}
+					title="Órdenes"
+					text="Listado completo"
+					linkto = "/orders/table"
+					/>
+				</div>
+				<div className="col-md-4  pt-4">
+					<Card imgsrc={imgUsers}
+					title="Gente"
+					text="Listado de staff y de usuarios registrados"
+					/>
+				</div>
 			</div>
 
-
-
-			)
-	
-
-
+		</div>
+		);
 }
 
 const mapStateToProps = state => {
 	return{
-		user : state.auth
+		user : state.auth.user,
+		isFetching: state.auth.isFetching
 	}
 }
 
