@@ -38,7 +38,7 @@ function UsersTable(props) {
     useEffect(() =>{
         dispatch(requestUsers())
 
-    },[usersTable])
+    },[])
 
 
     return (

@@ -16,6 +16,71 @@ const checkPassword = async(user,password) => {
 };
 
 
+
+server.post('/externalLogin',(req,res,next) =>{
+	const {external} = req.query
+	const {email,first_name, last_name} = req.body
+
+	User.findOne({
+		where:{ email }
+	})
+	.then( user => {
+		if(!user){
+			User.create({
+				first_name,
+				last_name,
+				role : "user",
+				email,
+
+			}).then( newUser => {
+				const userData = { 
+					user: {
+						user_id : user.user_id,
+						first_name : user.first_name,
+						last_name : user.last_name,
+						role : user.role,
+						email : email
+					} 
+				}
+				//Creamos el token pasándole la información del usuario y el ACCESS_TOKEN_SECRET declarado en .env
+				const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET);
+				return res.status(200).json({
+					accessToken , 
+					user : {
+						user_id : user.user_id,
+						first_name : user.first_name,					
+						last_name : user.last_name,
+						role : user.role,
+						email : email }
+					})
+
+			}).then(() => console.log("Usuario creado con cuenta de google"))
+		}
+
+		const userData = { user: {
+					user_id : user.user_id,
+					first_name : user.first_name,
+					last_name : user.last_name,
+					role : user.role,
+					email : email
+				} }
+		//Creamos el token pasándole la información del usuario y el ACCESS_TOKEN_SECRET declarado en .env
+		const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET);
+		return res.status(200).json({
+				accessToken , 
+				user : {
+					user_id : user.user_id,
+					first_name : user.first_name,					
+					last_name : user.last_name,
+					role : user.role,
+					email : email }
+				})
+	})
+
+})
+
+
+
 server.post("/login",(req,res,next) => {
 
 	//authenticate with email

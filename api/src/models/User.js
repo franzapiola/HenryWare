@@ -58,20 +58,18 @@ const User = (sequelize) => {
     },
     address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
           len: {
             args: [5, 30],
             msg: "No es una dirección valida"
-          },
-          notNull: {
-            msg: 'Dirección obligatoria'
           }
+          
         }
     },
     phone_number: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         validate: {
           len: {
             args: [7, 20],
@@ -80,9 +78,6 @@ const User = (sequelize) => {
           isNumeric: true,
           isInt: {
             msg: "No es un numero"
-          },
-          notNull: {
-            msg: 'Numero obligatorio'
           }
         }
     },
@@ -96,9 +91,12 @@ const User = (sequelize) => {
           },
         }
     },
+   /* external_id:{
+
+    },*/
     password: {
         type: DataTypes.TEXT,
-        allowNull:false,
+        allowNull:true,
         set(value){
           const hash = bcrypt.hashSync(value, 10);
           this.setDataValue('password', hash);
