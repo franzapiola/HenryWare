@@ -46,6 +46,7 @@ const ControlPanel = function(props){
 					<Card imgsrc={imgUsers}
 					title="Gente"
 					text="Listado de staff y de usuarios registrados"
+					linkto = "/admin/usersTable"
 					/>
 				</div>
 			</div>
