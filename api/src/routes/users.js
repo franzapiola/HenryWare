@@ -206,7 +206,7 @@ server.put('/:user_id/cart', function(req, res){
     //El front tiene que mandar por params el user_id, y por body el product_id y la cantidad deseada
     const { user_id } = req.params;
     const { product_id, quantity } = req.body;
-    // console.log('userID', user_id, 'product_id', product_id, 'quantity', quantity)
+
     Order.findOne({
         where:{
             user_id,
