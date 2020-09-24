@@ -15,7 +15,7 @@ function OrderInfo(props){
 		props.products_order.map(product => 
 			suma += product.price*product.LineaDeOrden.quantity
 			) 
-		console.log(suma)
+		// console.log(suma)
 		return suma
 		
 	}

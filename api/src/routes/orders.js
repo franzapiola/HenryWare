@@ -2,6 +2,7 @@ const server = require('express').Router()
 const bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
 
+
 const { LineaDeOrden, Order, Product, User} = require('../db.js')
 //Middlewares de checkeo de usuario
 const { checkIsAdmin } = require('../utils')
@@ -43,7 +44,7 @@ server.get('/:order_id', function(req, res){
         where:{
             order_id
         },
-        include: [{model: Product, as:'products'}, { model: User}]
+        include: [{model: Product, as:'products',include:[{model:Image}]}, { model: User}]
     })
     .then(order => {
         res.status(200).send(order);  
@@ -59,7 +60,7 @@ server.get('/:order_id', function(req, res){
 server.put('/:order_id', (req, res) => {
     const {order_id} = req.params;
     const {state} = req.body;
-    console.log('status', state)
+    // console.log('status', state)
     if(state !== 'Carrito' && state !== 'Creada' && state !== 'Procesando' && state !== 'Cancelada' && state !== 'Completa'){
         res.status(404).send('No es un estado válido')
     }
@@ -110,7 +111,7 @@ server.get('/table/:order_id/', checkIsAdmin, function(req, res){
 
 server.post('/finished',(req,res)=>{
 
-  const {email,order_id,firstName,lastName,address,depto,products,phone,discount} = req.body
+  const {email,order_id,firstName,lastName,address,depto,products,phone,discount,status,noTotal} = req.body
 
   const PrecioTotal = (products)=>{
     
@@ -139,11 +140,11 @@ server.post('/finished',(req,res)=>{
   let mailOptions = {
       from:"ehenryware@gmail.com",
       to: `${email}`,
-      subject:`Su pedido número ${order_id} ha sido A COMPLETAR`,
+      subject:`Su pedido número ${order_id} pasó a estado: ${status?status:'Procesando'}`,
       html:`
       <html>
 
-      <body style="background-color:#e2e1e0;font-family: Open Sans, sans-serif;font-size:100%;font-weight:400;line-height:1.4;color:#000;">
+      <body style="background-color:white;font-family: Open Sans, sans-serif;font-size:100%;font-weight:400;line-height:1.4;color:#000;">
         <table style="max-width:670px;margin:50px auto 10px;background-color:#fff;padding:50px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);-moz-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24); border-top: solid 10px yellow;">
           <thead style="display:flex;justify-content:center;position:relative;left:50%">
           <tr style="margin:auto;display:flex;align-content:center;align-items:center;justify-content:center;position:relative;left:50%">
@@ -156,10 +157,10 @@ server.post('/finished',(req,res)=>{
             </tr>
             <tr>
               <td colspan="2" style="border: solid 1px #ddd; padding:10px 20px;">
-                <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Estado de tu orden</span><b style="color:green;font-weight:normal;margin:0">A COMPLETAR</b></p>
+                <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Estado de tu orden</span><b style="color:green;font-weight:normal;margin:0">${status?status:'Procesando'}</b></p>
                 <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">ID de tu orden</span> ${order_id}</p>
-                <p style="font-size:14px;margin:0 0 0 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Precio final</span>$${
-                  PrecioTotal(products)
+                <p style="font-size:14px;margin:0 0 0 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">${noTotal!=true?'Precio final':''}</span>${noTotal!==true?'$':''}${
+                  noTotal!==true?PrecioTotal(products):''
                 }</p>
               </td>
             </tr>
@@ -173,7 +174,7 @@ server.post('/finished',(req,res)=>{
                 
               </td>
               <td style="width:50%;padding:20px;vertical-align:top">
-                <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Dirección</span>${address} ${depto}</p>
+                <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Dirección</span>${address} ${depto?depto:""}</p>
                 <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Teléfono de contacto</span>${phone}</p>
               </td>
             </tr>
@@ -187,7 +188,7 @@ server.post('/finished',(req,res)=>{
                       return`<div style="display:flex;font-size:14px;padding:10px;border:solid 1px black">
           
                       <div style="display:flex;flex-direction:row;margin-left:5px;">
-                        <img style="max-width:120px;max-height:120px;padding:0;margin:0" src="${product.images[0].img_url}"/>
+                        <img style="max-width:120px;max-height:120px;padding:0;margin:0" src="${product.images?product.images[0].img_url:""}"/>
                        </div>
                        
                       <div style="margin:auto 10px">
@@ -227,7 +228,7 @@ server.post('/finished',(req,res)=>{
       if(error){
           res.status(500).send(error.message)
       }else{
-          console.log("Email enviado.")
+          // console.log("Email enviado.")
           res.status(200).json(req.body)
       }
 

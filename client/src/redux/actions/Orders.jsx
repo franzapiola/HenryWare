@@ -12,6 +12,9 @@ export const changeStatus = (state, order_id) => {
     console.log('state', state, 'orderId', order_id)
     return dispatch => {
         dispatch(requestChangeStatus());
+
+        
+
         fetch(`http://localhost:3001/orders/${order_id}`, {
             method: 'PUT',
             body: JSON.stringify({state:state}), // 

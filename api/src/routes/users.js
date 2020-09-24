@@ -153,7 +153,7 @@ server.get('/:id', (req, res)=>{
 //Agregar producto al carrito de un usuario en particular       /users/:user_id/cart
 server.post('/:user_id/cart', function(req,res){
 
-    console.log(req.body);
+    // console.log(req.body);
     const {user_id} = req.params;
     const { product_id, quantity, price } = req.body;
 
@@ -208,7 +208,7 @@ server.put('/:user_id/cart', function(req, res){
     //El front tiene que mandar por params el user_id, y por body el product_id y la cantidad deseada
     const { user_id } = req.params;
     const { product_id, quantity } = req.body;
-    //console.log('userID', user_id, 'product_id', product_id, 'quantity', quantity)
+
     Order.findOne({
         where:{
             user_id,

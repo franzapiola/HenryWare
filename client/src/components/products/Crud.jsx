@@ -200,7 +200,7 @@ const Crud =(props)=> {
     });
     //hace el fetch para borrar la imagen cuando se clickea el botón eliminar en el modal de imágenes
     const handleOnClickDeleteImg = (product_id, img_id) => {
-        console.log(imgModalData)
+        // console.log(imgModalData)
         fetch(`http://localhost:3001/products/${product_id}/images/${img_id}`, {
             method: 'DELETE',
             headers: {

@@ -13,6 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Selectt from '@material-ui/core/Select';
+import axios from 'axios'
 
 
 function OrdersTable(props) {
@@ -59,15 +60,38 @@ function OrdersTable(props) {
         setInputUser('')}
     }
 
-    console.log(orders)
+    const mailChangeStatus = (order)=>{
+
+        axios.get(`http://localhost:3001/orders/${order.order_id}`)
+        .then((response)=>{
+
+            const {user,products,order_id,state} = response.data
+            axios.post('http://localhost:3001/orders/finished',{
+                email:user.email,
+                order_id:order_id,
+                firstName:user.first_name,
+                lastName:user.last_name,
+                address:user.address,
+                products:products,
+                phone:user.phone_number,
+                status:state,
+                noTotal:true,
+            })
+            
+
+        })
+
+    }
    
 
 
     return (
 
         <div className='col-md-10 offset-1 mt-3'>
+
             <div className={s.filter}>
                 <div className={s.select} >
+
                 <FormControl className={s.state} >
                     <InputLabel id="demo-simple-select-label">
                     Estado </InputLabel>
@@ -84,6 +108,7 @@ function OrdersTable(props) {
                     <MenuItem value="Completa">Completa</MenuItem>
                     </Selectt>
                 </FormControl>
+                
                 </div>
                 <div>
                     <TextField 
@@ -142,7 +167,7 @@ function OrdersTable(props) {
                                     isSearchable
                                     name="color"
                                     options={status}
-                                    onChange={e=>dispatch(changeStatus(e.value, order.order_id))}
+                                    onChange={e=>{dispatch(changeStatus(e.value, order.order_id));mailChangeStatus(order)}}
                                 />
                                 </td>
                                 <td>{order.user.email}</td>

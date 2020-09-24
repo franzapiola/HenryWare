@@ -25,7 +25,7 @@ server.post('/:product_id',(req, res) => {
     const { product_id } = req.params;
     const { rating, description, user_id } = req.body;
 
-    console.log(req.body)
+    // console.log(req.body)
     
     Review.create({
         rating,
