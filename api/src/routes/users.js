@@ -263,7 +263,7 @@ server.delete('/:user_id/deletecartproduct', (req, res) => {
     })    
 })
 
-//Ruta para eliminar linea de ordenl carrito de determinado usuario pasado por paramas user_id /users/user_id/cart
+//Ruta para vaciar el carrito de determinado usuario pasado por paramas user_id /users/user_id/cart
 
 server.delete('/:user_id/cart', (req, res) => {
     const { user_id } = req.params;

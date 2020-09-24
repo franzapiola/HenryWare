@@ -84,7 +84,7 @@ server.post("/login",(req,res,next) => {
 					email : email
 				} }
 				//Creamos el token pasándole la información del usuario y el ACCESS_TOKEN_SECRET declarado en .env
-				const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET);
+				const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '90m' });
 
 				//Mandamos al front la info del usuario y el token
 				return res.status(200).json({accessToken , user : {

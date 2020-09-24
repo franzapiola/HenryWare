@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer')
 
 const { LineaDeOrden, Order, Product, User} = require('../db.js')
 //Middlewares de checkeo de usuario
-const { checkIsAdmin } = require('../utils')
+const { checkIsAdmin, checkIsLoggedIn } = require('../utils')
 server.use(bodyParser.json());
 
 
@@ -91,7 +91,7 @@ server.get('/:order_id/totalprice', (req, res) => {
 });
 
 
-server.get('/table/:order_id/', function(req, res){
+server.get('/table/:order_id/', checkIsAdmin, function(req, res){
     const { order_id } = req.params;
 
     Order.findAll({

@@ -19,4 +19,17 @@ const checkIsAdmin = (req, res, next) => {
     });
 }
 
-module.exports = { checkIsAdmin };
+const checkIsLoggedIn = (req, res, next) => {
+    //Saco el token del header
+	const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    //Si no hay token, devuelvo 401 Unauthorized
+    if ( token == null) return res.sendStatus(401);
+    // Si el token no es null, lo dejo pasar
+    next();
+}
+
+module.exports = {
+    checkIsAdmin,
+    checkIsLoggedIn
+};
