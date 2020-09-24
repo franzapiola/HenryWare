@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './index.module.scss'
 import {  useDispatch, connect } from 'react-redux'
-//import { receiveProducts,fetchProducts, fetchUserCart, setId, changeQuantity, deleteProduct } from '../../redux/actions/actions'
 import {receiveCartData,changeQuantity,deleteProduct,fetchUserCart} from '../../redux/actions/cart'
 import {fillOrderData} from '../../redux/actions/order'
 
@@ -11,12 +10,11 @@ import {Link,useHistory} from 'react-router-dom';
 
 import GuestCart from './guestCart'
 
-function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQuantity,fillOrderData,emptyCart}) {
+function Cart({cartData, products, isFetching,userInfo,fetchUserCart,deleteProduct,changeQuantity,fillOrderData,emptyCart}) {
     const dispatch = useDispatch()
     const history =useHistory()
     const [cant, setCant] = useState(1)
     const [idCarrito,setIdCarrito] = useState()
-    const products = cartData.products || []
 
     //Productos locales para pasarle al carrito guest
     const localStorageCart = JSON.parse(localStorage.getItem('guestCart')) ||  { products: [] }
@@ -30,65 +28,30 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
         })
         .then(() => emptyCart() )
         .then(() => history.push('/order'))
-        
+        .catch(err => console.log('error al ir a checkout:', err))
     }
     
 
     const sumarCantidad = (e,product) =>{
         e.preventDefault()
         const newQuantity = product.LineaDeOrden.quantity+1
-        setCant(newQuantity)
         changeQuantity(userInfo.user_id, product.product_id, newQuantity)
-        setProductos(productos.map( producto => {
-            if(producto.product_id === product.product_id) producto.LineaDeOrden.quantity = newQuantity;
-            return producto;
-        } ))
-
+        setCant(newQuantity)
     }
-
     const restarCantidad = (e,product) =>{
-       e.preventDefault();
-       const newQuantity = product.LineaDeOrden.quantity - 1
-       setCant(newQuantity)
-       changeQuantity(userInfo.user_id, product.product_id, newQuantity)
-       setProductos(productos.map( producto => {
-        if(producto.product_id === product.product_id) producto.LineaDeOrden.quantity = newQuantity;
-        return producto;
-        } ))
+        e.preventDefault();
+        const newQuantity = product.LineaDeOrden.quantity - 1
+        changeQuantity(userInfo.user_id, product.product_id, newQuantity)
+        setCant(newQuantity)
     }
 
     const eliminarProducto = async (user_id, product_id) => {
         await deleteProduct(user_id, product_id)
-        await setProductos(productos.filter( producto => producto.product_id !== product_id))
+        await fetchUserCart(userInfo.user_id)
     }
-/*
-
-
-
-
-    const modificarCantidad = (cantidad, product_id) => {
-        //usamos el user_id que está guardado en redux y no el que estaba
-        // en el localStorage
-        dispatch(changeQuantity(userInfo.user_id, product_id, cantidad));
-    }*/
-    //const idUser = localStorage.getItem("actualUserId"); --->
-    // el idUser lo sacamos del store de redux 
-
     
-
-    //idUser!=='Guest'  && traerDatosCarrito() && traerProductosCarrito(idUser)
-    
-    const [ productos, setProductos ] = useState([]);
     useEffect( () => {
-        //dispatch(setId(idCarrito))
-        //traerProductosCarrito(userInfo.user_id)
-        //traerDatosCarrito()
-        //dispatch(loadUserData())
-        // console.log(cartData)
-        // console.log('productslength', products.length, 'productos: ', productos.length)
         fetchUserCart(userInfo.user_id)
-
-        if(products.length !== productos.length) setProductos(products);
     }, [userInfo,cant])
   
     //Si no hay usuario logeado, retorna carrito de guest que saca sus productos de localStorage, en vez del carrito normal
@@ -96,7 +59,7 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
     return (
     <div className={`${styles.card} offset-1 col-md-10 col-12 mt-3 pt-4 pb-4`}>
             <h4 className='text-center pb-3'>Carrito de { userInfo.first_name } {userInfo.last_name} </h4>
-            {productos.length ? productos.map( product =>                 
+            {products.length ? products.map( product =>                 
                <div key={product.product_id} className='d-flex mb-4'>
                     <div className="imagen col-md-2 text-center d-flex align-items-center justify-content-center">
                         <img src={product.images[0].img_url} style={{height: '60px'}}/>
@@ -148,6 +111,7 @@ const mapStateToProps = state => {
     return {
         isFetching: state.cart.isFetching,
         cartData: state.cart.cartData,
+        products: state.cart.cartData.products || [],
         userInfo : state.auth.user
     }
 }

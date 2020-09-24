@@ -9,15 +9,15 @@ import {addUsers,requestUsers} from '../../redux/actions/users_info'
 
 function UsersTable(props) {
     const dispatch = useDispatch()
-    const {user,usersTable} = props
+    const {user, isFetching, usersTable} = props
     const history = useHistory()
     const [ role,setRole] = useState()
     
     //comprobamos que el usuario tenga privilegios de ADMIN
     //Descomentar estas lineas 
-  /*  if(user.role != "admin"){
+    if(!isFetching && user.role != "admin"){
          history.push("/404")
-    }   */
+    }
 
 
     const promote = async (userId,oldRole) =>{
@@ -52,7 +52,6 @@ function UsersTable(props) {
         dispatch(requestUsers())
 
     },[role])
-
 
     return (
 
@@ -96,7 +95,8 @@ function UsersTable(props) {
 const mapStateToProps = state => {
     return {
         usersTable : state.usersInfo,
-        user: state.auth
+        user: state.auth.user,
+        isFetching: state.auth.isFetching
     }
 }
 
