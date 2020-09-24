@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
 
 //Middlewares de checkeo de usuario
-const { checkIsAdmin } = require('../authMiddlewares')
+const { checkIsAdmin } = require('../utils.js')
 
 const checkPassword = async(user,password) => {
 	const comparacion = await bcrypt.compare(password, user.password)

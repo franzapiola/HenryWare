@@ -3,7 +3,7 @@ const { json } = require('body-parser');
 const bodyParser = require('body-parser')
 const { User,Order,LineaDeOrden,Product,Image } = require('../db.js')
 //Middlewares de checkeo de usuario
-const { checkIsAdmin } = require('../authMiddlewares')
+const { checkIsAdmin } = require('../utils.js')
 
 server.use(bodyParser.json());
 

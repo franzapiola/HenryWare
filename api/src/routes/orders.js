@@ -4,15 +4,13 @@ const nodemailer = require('nodemailer')
 
 const { LineaDeOrden, Order, Product, User} = require('../db.js')
 //Middlewares de checkeo de usuario
-const { checkIsAdmin, checkIsUser, checkIsAuthenticated } = require('../authMiddlewares')
+const { checkIsAdmin } = require('../utils')
 server.use(bodyParser.json());
 
 
 //Ruta que devuelve todas las ordenes y, en caso de tener query string Status, trae todas las ordenes con ése estado  /orders
 server.get('/', checkIsAdmin, function(req,res){
-    const {status} = req.query
-
-    
+    const {status} = req.query    
 
     if(status){
         if(status !== 'Carrito' && status !== 'Creada' && status !== 'Procesando' && status !== 'Cancelada' && status !== 'Completa'){
@@ -38,7 +36,7 @@ server.get('/', checkIsAdmin, function(req,res){
 });
 
 //Traer una orden en particular según order_id, pasada por params       /orders/:order_id
-server.get('/:order_id', checkIsAuthenticated, function(req, res){
+server.get('/:order_id', function(req, res){
     const { order_id } = req.params;
 
     Order.findOne({
@@ -58,7 +56,7 @@ server.get('/:order_id', checkIsAuthenticated, function(req, res){
 // Actualizar el estado de una orden     /orders/order_id
 // Front envia orden_id por params y state por body
 
-server.put('/:order_id', checkIsAuthenticated, (req, res) => {
+server.put('/:order_id', (req, res) => {
     const {order_id} = req.params;
     const {state} = req.body;
     console.log('status', state)
@@ -79,7 +77,7 @@ server.put('/:order_id', checkIsAuthenticated, (req, res) => {
 })
 
 //Traer el precio total de una orden en particular
-server.get('/:order_id/totalprice', checkIsAuthenticated, (req, res) => {
+server.get('/:order_id/totalprice', (req, res) => {
     const { order_id } = req.params;
 
     LineaDeOrden.findAll({
