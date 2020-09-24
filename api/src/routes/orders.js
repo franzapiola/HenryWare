@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
 
 
-const { LineaDeOrden, Order, Product, User} = require('../db.js')
+const { LineaDeOrden, Order, Product, User,Image} = require('../db.js')
 //Middlewares de checkeo de usuario
 const { checkIsAdmin } = require('../utils')
 server.use(bodyParser.json());
@@ -160,7 +160,7 @@ server.post('/finished',(req,res)=>{
                 <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Estado de tu orden</span><b style="color:green;font-weight:normal;margin:0">${status?status:'Procesando'}</b></p>
                 <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">ID de tu orden</span> ${order_id}</p>
                 <p style="font-size:14px;margin:0 0 0 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">${noTotal!=true?'Precio final':''}</span>${noTotal!==true?'$':''}${
-                  noTotal!==true?PrecioTotal(products):''
+                  noTotal!==true?PrecioTotal(products).toFixed(2):''
                 }</p>
               </td>
             </tr>
