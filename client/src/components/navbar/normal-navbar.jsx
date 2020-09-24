@@ -67,6 +67,7 @@ const NormalNavBar = (props) => {
                         } className={styles.navbutton} >
                             
                                 <NavDropdown.Item><Link to="/profile"> Perfil </Link></NavDropdown.Item>
+                                <NavDropdown.Item><Link to="/orderUser"> Mis ordenes </Link></NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item> <Link onClick={()=>{
                                         //Logout

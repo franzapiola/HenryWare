@@ -26,6 +26,7 @@ import UsersTable from '../components/users/UsersTable'
 
 import NotFound from  '../components/NotFound'
 import Profile from '../components/users/profile'
+import OrderUser from '../components/order/orderUser'
 
 
 import PasswordReset from '../components/users/PasswordReset';
@@ -146,6 +147,7 @@ const App = (props) => {
         <Route exact path="/admin/usersTable"><UsersTable/></Route>
 
         <Route exact path='/profile'><Profile/></Route>
+        <Route exact path='/orderUser'><OrderUser/></Route>
         <Route exact path='/profile/password-reset'>
           <PasswordReset/>
         </Route>
