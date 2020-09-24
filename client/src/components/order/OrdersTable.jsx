@@ -92,6 +92,7 @@ function OrdersTable(props) {
                     onChange={(e) => setInput(e.target.value)}
                     value={input}
                     className={s.input}
+                    type="number"
                     />
                     <AiOutlineSearch className={s.lupa} onClick={() => filterId()}/>
                  </div>
@@ -102,6 +103,7 @@ function OrdersTable(props) {
                     onChange={(e) => setInputUser(e.target.value)}
                     value={InputUser}
                     className={s.input}
+                    type="number"
                     />
                     <AiOutlineSearch className={s.lupa} onClick={() => filterUserId()} />
                    
