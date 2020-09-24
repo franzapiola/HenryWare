@@ -61,8 +61,9 @@ function Cart({cartData,isFetching,userInfo,fetchUserCart,deleteProduct,changeQu
         await deleteProduct(user_id, product_id)
         await setProductos(productos.filter( producto => producto.product_id !== product_id))
     }
-/*
 
+
+    /*
 
 
 

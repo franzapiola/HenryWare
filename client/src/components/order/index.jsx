@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styles from './orderStyle.module.css'
 import { useDispatch, connect } from 'react-redux'
 import axios from "axios"
@@ -9,7 +9,9 @@ import { useHistory } from 'react-router-dom';
 function Order({orderData,userInfo}) {
     const dispatch = useDispatch()
     const history = useHistory()
-    
+    const [promoCode,setpromoCode] = useState('')
+
+    const [hasDiscount,setHasDiscount] = useState(false)
    
     const {products} = orderData
 
@@ -19,9 +21,11 @@ function Order({orderData,userInfo}) {
       email:'',
       address:'',
       depto:'',
+      discount:false
     })
 
     
+
     const updateField = async e => {
       const { id, value } = e.target
 
@@ -60,7 +64,9 @@ function Order({orderData,userInfo}) {
         address: form.address,
         depto: form.depto,
         phone: form.phone,
-        products: products
+        products: products,
+        discount:form.discount
+
       }).then((res)=>console.log('oka'))
 
 
@@ -70,7 +76,21 @@ function Order({orderData,userInfo}) {
 
     }
 
+    const checkDiscount = (e)=>{
+      e.preventDefault()
+      form.discount= true
+      if(promoCode  == "SOYHENRY"){
+        setHasDiscount(true)
+      } 
+    }
 
+    const ApplyDiscount = (products)=>{
+      return (funcionSuma(products) * 0.8).toFixed(2)
+    }
+
+    useEffect(()=>{
+
+    },[hasDiscount])
 
     return ( 
         <div className={styles.containerOrder}>
@@ -103,21 +123,25 @@ function Order({orderData,userInfo}) {
                         <li className="list-group-item d-flex justify-content-between">
                           <span>Total (pesos)</span>
                           <strong>$ {
-                            funcionSuma(products)
+                            hasDiscount == false?funcionSuma(products):ApplyDiscount(products)
                          } </strong>
                         </li>
                     </ul>
                      <form className={`card p-2 ${styles.promoCode}`}>
                         <div className="input-group">
-                          <input type="text" className="form-control" placeholder="Promo code"/>
+
+                          <input type="text" onChange={(e)=>{setpromoCode(e.target.value)}} className="form-control" placeholder="Promo code"/>
+
                           <div className="input-group-append">
-                            <button type="submit" className="btn btn-secondary">Aplicar promo</button>
+                            <button onClick={checkDiscount} className="btn btn-secondary">Aplicar promo</button>
                           </div>
                         </div>
                       </form>
                 </div>
                 <div className="col-md-8 order-md-1">
+
                 <h4 className="mb-3">Información de facturación</h4>
+
       <form className="needs-validation" onSubmit={handleSubmit} >
         <div className="row">
           <div className="col-md-6 mb-3">
