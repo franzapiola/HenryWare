@@ -71,3 +71,23 @@
     font-size: 22px;
     margin-right: 12px;
 }
+
+.hide{display:none}
+
+.selectPayment{
+  width: 30%;
+  padding: 10px;
+  border:1px solid rgba(128, 128, 128, 0.322);
+  border-radius: 5px;
+  background-color: white;
+  font-weight: bold;
+  color:rgba(0, 0, 0, 0.582)
+}
+
+
+.selectPayment:focus{
+  border:none;
+  box-shadow: none;
+  outline: none;
+}
+
