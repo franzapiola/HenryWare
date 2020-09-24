@@ -9,6 +9,9 @@ const bcrypt = require('bcrypt');
 
 const jwt = require("jsonwebtoken")
 
+//Middlewares de checkeo de usuario
+const { checkIsAdmin } = require('../utils.js')
+
 const checkPassword = async(user,password) => {
 	const comparacion = await bcrypt.compare(password, user.password)
 	
@@ -81,7 +84,7 @@ server.post("/login",(req,res,next) => {
 					email : email
 				} }
 				//Creamos el token pasándole la información del usuario y el ACCESS_TOKEN_SECRET declarado en .env
-				const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET);
+				const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '90m' });
 
 				//Mandamos al front la info del usuario y el token
 				return res.status(200).json({accessToken , user : {
@@ -123,10 +126,11 @@ function authenticateToken(req,res,next){
 }
 
 //		/auth/me
+//Devuelve el usuario que está logeado
 server.get('/me', authenticateToken)
 
 //Promover un usuario a admin
-server.post('/promote/:user_id', (req, res) => {
+server.post('/promote/:user_id', checkIsAdmin, (req, res) => {
 	const { user_id } = req.params;
 
 	User.update({

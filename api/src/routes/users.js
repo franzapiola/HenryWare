@@ -2,13 +2,15 @@ const server = require('express').Router()
 const { json } = require('body-parser');
 const bodyParser = require('body-parser')
 const { User,Order,LineaDeOrden,Product,Image } = require('../db.js')
+//Middlewares de checkeo de usuario
+const { checkIsAdmin } = require('../utils.js')
 
 server.use(bodyParser.json());
 
 
 //Ruta para obtener todos los usuarios  /users
 
-server.get('/',function(req,res){
+server.get('/', checkIsAdmin, function(req,res){
     User.findAll({}).then(response => res.status(200).send(response))
 })
 
@@ -93,7 +95,7 @@ server.put('/:user_id/password-reset', (req, res) => {
 
 // users/:id   ruta para eliminar usuario            NV.
 
-server.delete('/:id', (req, res)=>{
+server.delete('/:id', checkIsAdmin, (req, res)=>{
     User.destroy({
         where: {
             user_id: req.params.id
@@ -149,7 +151,7 @@ server.get('/:id', (req, res)=>{
 //-----------------------CARRITO---------------------------------------------------------------------
 
 //Agregar producto al carrito de un usuario en particular       /users/:user_id/cart
-server.post('/:user_id/cart',function(req,res){
+server.post('/:user_id/cart', function(req,res){
 
     // console.log(req.body);
     const {user_id} = req.params;
@@ -261,7 +263,7 @@ server.delete('/:user_id/deletecartproduct', (req, res) => {
     })    
 })
 
-//Ruta para eliminar linea de ordenl carrito de determinado usuario pasado por paramas user_id /users/user_id/cart
+//Ruta para vaciar el carrito de determinado usuario pasado por paramas user_id /users/user_id/cart
 
 server.delete('/:user_id/cart', (req, res) => {
     const { user_id } = req.params;
@@ -297,7 +299,7 @@ server.delete('/:user_id/cart', (req, res) => {
 
 
 // Ruta que trae todas las ordenes de un usuario en particular (Por ID (params) )    /users/iduser/orders
-server.get('/:user_id/orders',function(req,res){
+server.get('/:user_id/orders', function(req,res){
 
     const {user_id} = req.params
 

@@ -44,7 +44,11 @@ export const requestChangeStatus = () => {
 export function fetchOrders() { 
     return dispatch => {
         dispatch(requestOrders())
-        fetch(`http://localhost:3001/orders`)
+        fetch(`http://localhost:3001/orders`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('actualToken')}`
+            }
+        })
         .then( response => response.json())
         .then( json => dispatch(receiveOrders(json)))
         
@@ -61,7 +65,11 @@ export function fetchOrdersUserId(user_id) {
 export function fetchOrdersFilter(status) { 
     return dispatch => {
         dispatch(requestOrders())
-        fetch(`http://localhost:3001/orders?status=${status}`)
+        fetch(`http://localhost:3001/orders?status=${status}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('actualToken')}`
+            }
+        })
         .then( response => response.json())
         .then( json => dispatch(receiveOrders(json))) 
     }
@@ -70,7 +78,11 @@ export function fetchOrdersFilter(status) {
 export function fetchOrdersId(order_id) { 
     return dispatch => {
         dispatch(requestOrders())
-        fetch(`http://localhost:3001/orders/table/${order_id}`)
+        fetch(`http://localhost:3001/orders/table/${order_id}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('actualToken')}`
+            }
+        })
         .then( response => response.json())
         .then( json => dispatch(receiveOrders(json))) 
     }
