@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState,useEffect } from 'react'
 import {  useDispatch, connect } from 'react-redux'
 import Select from 'react-select'
 import {useHistory} from 'react-router-dom'
@@ -11,6 +11,7 @@ function UsersTable(props) {
     const dispatch = useDispatch()
     const {user,usersTable} = props
     const history = useHistory()
+    const [ role,setRole] = useState()
     
     //comprobamos que el usuario tenga privilegios de ADMIN
     //Descomentar estas lineas 
@@ -26,6 +27,10 @@ function UsersTable(props) {
             role : newRole
         })
         .then((response) => console.log(response))
+        .then(() => {
+            setRole(oldRole)
+            setRole(newRole)
+        })
 
     }
 
@@ -34,11 +39,19 @@ function UsersTable(props) {
         .then((response) => console.log(response))
     }
 
+    const getRole = async (userId) => {
+        await axios.get(`http://localhost:3001/users/${userId}`)
+        .then( response => {
+            //setRole(response.data.role)
+            console.log(response.data.role)
+        })
+        .catch(err => console.log(err))
+    }
 
     useEffect(() =>{
         dispatch(requestUsers())
 
-    },[usersTable])
+    },[role])
 
 
     return (
@@ -53,8 +66,7 @@ function UsersTable(props) {
                             <th>Apellido</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Hacer Admin</th>
-                            <th>Ordenes</th>
+                            <th>Cambiar Rol</th>
                             <th>Eliminar</th>
                         </tr>
                     </thead>
@@ -68,7 +80,6 @@ function UsersTable(props) {
                                     <td>{user.email}</td>
                                     <td>{user.role}</td>
                                     <td> <a className="btn btn-success" onClick={() => promote(user.user_id,user.role)} > + </a></td>
-                                    <td> + </td>
                                     <td> <a className="btn btn-danger" onClick={() => deleteUser(user.user_id)} > - </a></td> 
                                 </tr>
                                 ))
