@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer')
 
 const { LineaDeOrden, Order, Product, User} = require('../db.js')
 //Middlewares de checkeo de usuario
-const { checkIsAdmin, checkIsLoggedIn } = require('../utils')
+const { checkIsAdmin } = require('../utils')
 server.use(bodyParser.json());
 
 

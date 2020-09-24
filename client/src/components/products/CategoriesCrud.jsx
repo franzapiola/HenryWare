@@ -28,7 +28,10 @@ const CategoriesCrud = (props) => {
 
     const deleteCat = () => {
         fetch(`http://localhost:3001/products/category/${selectedCat.category_id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('actualToken')}`
+            }
         })
         .then(getCategories)
     };
@@ -42,7 +45,8 @@ const CategoriesCrud = (props) => {
                 name: form
             }),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('actualToken')}`
             }
         })
         .then(getCategories)
@@ -53,7 +57,8 @@ const CategoriesCrud = (props) => {
         fetch('http://localhost:3001/products/category', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('actualToken')}`
             },
             body: JSON.stringify(formAgregar)
         })
