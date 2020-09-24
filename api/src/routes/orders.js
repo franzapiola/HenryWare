@@ -111,7 +111,7 @@ server.get('/table/:order_id/', function(req, res){
 
 server.post('/finished',(req,res)=>{
 
-  const {email,order_id,firstName,lastName,address,depto,products,phone} = req.body
+  const {email,order_id,firstName,lastName,address,depto,products,phone,discount} = req.body
 
   const PrecioTotal = (products)=>{
     
@@ -120,6 +120,8 @@ server.post('/finished',(req,res)=>{
     products.map((product)=>{
         precioFinal += product.price*product.LineaDeOrden.quantity
     })
+
+    if(discount){return precioFinal*0.8}
 
     return precioFinal
   }
