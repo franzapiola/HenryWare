@@ -16,7 +16,11 @@ export const addUsers = (users) => {
 
 export function requestUsers(){
 	return dispatch => {
-		axios.get(`http://localhost:3001/users`)
+		axios.get(`http://localhost:3001/users`, {
+			headers: {
+				'Authorization': `Bearer ${localStorage.getItem('actualToken')}`
+			}
+		})
 		.then(response => {
 			dispatch(addUsers(response.data))
 		})

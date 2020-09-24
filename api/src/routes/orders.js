@@ -3,15 +3,14 @@ const bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
 
 const { LineaDeOrden, Order, Product, User} = require('../db.js')
-
+//Middlewares de checkeo de usuario
+const { checkIsAdmin } = require('../utils')
 server.use(bodyParser.json());
 
 
 //Ruta que devuelve todas las ordenes y, en caso de tener query string Status, trae todas las ordenes con ése estado  /orders
-server.get('/',function(req,res){
-    const {status} = req.query
-
-    
+server.get('/', checkIsAdmin, function(req,res){
+    const {status} = req.query    
 
     if(status){
         if(status !== 'Carrito' && status !== 'Creada' && status !== 'Procesando' && status !== 'Cancelada' && status !== 'Completa'){
@@ -92,7 +91,7 @@ server.get('/:order_id/totalprice', (req, res) => {
 });
 
 
-server.get('/table/:order_id/', function(req, res){
+server.get('/table/:order_id/', checkIsAdmin, function(req, res){
     const { order_id } = req.params;
 
     Order.findAll({

@@ -122,7 +122,8 @@ const Crud =(props)=> {
         const deletear = fetch(`http://localhost:3001/products/${idEliminar}`, {
             method: 'DELETE',
             headers:{
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('actualToken')}`
             }
         })
         deletear.then( res => {
@@ -140,7 +141,8 @@ const Crud =(props)=> {
             method: addEdit, //POST or 'PUT'
             body: JSON.stringify(form), // data can be `string` or {object}!
             headers:{
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('actualToken')}`
             }
         })
         .then(res=>{
@@ -158,6 +160,9 @@ const Crud =(props)=> {
         let idprod = idp || idUpdate
         fetch(`http://localhost:3001/products/${idprod}/category/${idCategoria}`, {
             method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('actualToken')}`
+            }
         }).then(res => res.text())
         .then(res => {
             getProducts();
@@ -197,7 +202,10 @@ const Crud =(props)=> {
     const handleOnClickDeleteImg = (product_id, img_id) => {
         console.log(imgModalData)
         fetch(`http://localhost:3001/products/${product_id}/images/${img_id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('actualToken')}`
+            }
         })
         .then( () =>  fetch(`http://localhost:3001/products/${product_id}/images`))
         .then(response => response.json())
@@ -223,7 +231,8 @@ const Crud =(props)=> {
                 img_url: addImgURL
             }),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('actualToken')}`
             }
         })
         //Utilizo la ruta /products/:product_id/images

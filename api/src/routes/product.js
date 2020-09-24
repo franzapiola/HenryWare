@@ -2,6 +2,8 @@ const server = require('express').Router();
 const {Op} = require('sequelize')
 const bodyParser = require('body-parser')
 const { Product, Categories, product_category, Image } = require('../db.js');
+//Middlewares de checkeo de usuario
+const { checkIsAdmin } = require('../utils.js')
 
 //Trae *todos* los productos
 server.get('/', (req, res, next) => {
@@ -69,7 +71,7 @@ server.get('/categorias/:categoria',function(req,res){
 //--------------------------------Imágenes-----------------------------------------------------------------
 
 //Agregar imagen a un producto
-server.post('/:product_id/images', function(req, res){
+server.post('/:product_id/images', checkIsAdmin, function(req, res){
     const { product_id } = req.params;
     //Front debe enviar por params el product_id y por body el URL de la imagen
     const { img_url } = req.body;
@@ -83,7 +85,7 @@ server.post('/:product_id/images', function(req, res){
 });
 
 //Quitar imagen de un producto
-server.delete('/:product_id/images/:img_id', function(req, res){
+server.delete('/:product_id/images/:img_id', checkIsAdmin, function(req, res){
     const { product_id, img_id } = req.params;
     //Front debe enviar por params el product_id y el img_id
     Image.destroy({
@@ -160,7 +162,7 @@ server.get('/:id',function(req,res,next){
 
 
 var jsonParser = bodyParser.json()
-server.post("/",jsonParser,(req,res,next) =>{
+server.post("/", checkIsAdmin, jsonParser, (req,res,next) =>{
     const { name, price, description, rating, warranty, stock, image} = req.body
 
     //para agregar productos: /products . Jx
@@ -189,7 +191,7 @@ server.post("/",jsonParser,(req,res,next) =>{
 })
 
 //Ruta para editar un producto por body
-server.put('/:id',function(req,res){
+server.put('/:id', checkIsAdmin, function(req,res){
 
     const {id} = req.params;
 
@@ -207,7 +209,7 @@ server.put('/:id',function(req,res){
 })
 
 //Ruta para eliminar productos
-server.delete('/:id',function(req,res){
+server.delete('/:id', checkIsAdmin, function(req,res){
     const {id}=req.params;
     
     Product.destroy({
@@ -222,7 +224,7 @@ server.delete('/:id',function(req,res){
 //-------------------------------------Categorías--------------------------------------------------------
 
 //Ruta para crear/agregar categorias
-server.post('/category',function(req,res){
+server.post('/category', checkIsAdmin, function(req,res){
 
     const {name}=req.body
     
@@ -232,7 +234,7 @@ server.post('/category',function(req,res){
 })
 
 //Ruta para eliminar categorias
-server.delete('/category/:id',function(req,res){
+server.delete('/category/:id', checkIsAdmin, function(req,res){
     const {id} = req.params;
 
     Categories.destroy({
@@ -243,7 +245,7 @@ server.delete('/category/:id',function(req,res){
 })
 
 //Ruta para editar categorias
-server.put('/category/:id',function(req,res){
+server.put('/category/:id', checkIsAdmin, function(req,res){
 
     const {id} = req.params;
 
@@ -257,7 +259,7 @@ server.put('/category/:id',function(req,res){
 })
 
 //Ruta para agregar categoría a un producto
-server.post("/:idproducto/category/:idcategoria",function(req,res){
+server.post("/:idproducto/category/:idcategoria", checkIsAdmin, function(req,res){
 
     const {idproducto,idcategoria} = req.params
 
