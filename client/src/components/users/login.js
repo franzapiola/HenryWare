@@ -1,11 +1,9 @@
-import React,{ useState, useEffect } from 'react';
-import { useParams, useHistory }  from 'react-router-dom'
+import React,{ useState } from 'react';
+import { useHistory }  from 'react-router-dom'
 import styles from './register.module.scss'
-import { FormControl, TextField, Button } from '@material-ui/core';
-import GoogleButton from 'react-google-button'
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
+import Google from './google.jsx';
 
 //Redux
 import { loadUserData } from '../../redux/actions/auth';
@@ -18,7 +16,7 @@ function Login(props){
 	const history = useHistory();
 	
 	//Redux
-	const { loadUserData } = props;
+	const { user, loadUserData } = props;
 
 	const [ form, setForm ] = useState({
 		email: '',
@@ -36,7 +34,11 @@ function Login(props){
 	  }
 	})
 */
-	
+	//Si ya hay un usuario loggeado, redirigirlo automáticamente al home
+	if(user.role != 'Guest'){
+		history.push('/');
+	}
+
 	const handleSubmit =  (e) => {
 		e.preventDefault();
 		//Autenticamos con el contenido del form a la ruta de login
@@ -51,6 +53,24 @@ function Login(props){
 				loadUserData(user);
 				//El accessToken, por otro lado, lo guardamos en el Local storage
 				localStorage.setItem("actualToken", accessToken);
+				
+				//Mandar carrito localStorage al del usuario que se está logeando:
+				const lStorCart = localStorage.getItem('guestCart');
+				if(lStorCart != null){
+					//Si no está vacío, osea, no es null, lo parseo
+					let currentCart = JSON.parse(lStorCart);
+					//Y a cada producto se lo mando al carrito del usuario logeado
+					currentCart.products.forEach(prod => {
+						axios.post(`http://localhost:3001/users/${response.data.user.user_id}/cart`, {
+						product_id: prod.product_id,
+						quantity: 1,
+						price: prod.price
+						});
+					})
+					//Por último, vacío el carrito local
+					localStorage.removeItem('guestCart');
+				}
+
 				//Redireccionamos a la homepage
 				history.push('/');
 				return;
@@ -108,6 +128,7 @@ function Login(props){
 				  </div>
 					{errorMsg && <span>{errorMsg}</span>}
 				  <input  type='submit' className={`${styles.henryColor} col-md-12`} value='Ingresar' />
+				  <Google/>
 				</form>
 			</div>
 		</div>
@@ -115,7 +136,9 @@ function Login(props){
 }
 
 const mapStateToProps = state => {
-	return {}
+	return {
+		user: state.auth.user
+	}
 }
 
 const mapDispatchToProps = dispatch => {

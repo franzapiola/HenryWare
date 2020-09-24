@@ -1,14 +1,16 @@
 .carousel{
-    width:50%;
+    width:60%;
+    margin: 10px 50px;
 }
 .carouselItem{
     text-align: center;
+    margin: 10px, 10px 20px 10px;
 }
 .carouselImg{
     height: 100%;
 }
 
-.buttonCart{
+.button {
 
     color: rgba(227,174,38,1);
     color: -moz-linear-gradient(top, rgba(227,174,38,1) 0%, rgba(238,242,123,1) 100%);
@@ -29,8 +31,54 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#303030', GradientType=1 );
     outline:none;
     border:none;
+    height: 60px;
+    width: 100%;
+    margin: 25px 0px;
+}
+
+.button:hover {
+    color: yellow;
+    background: linear-gradient(135deg, rgba(48,48,48,1) 0%, rgba(0,0,0,1)  100%);
+    font-size: 16px;
+
+
+}
+
+.caja {
+    display: flex;
+    flex-direction: column;
+    margin: 30px 20px 30px 30px;
+    width: 25%;
+    justify-content: start;
+
+}
+
+.container {
+    width: 100%;
+    display: flex;
+}
+
+.stock {
+    font-size: 15px;
+    margin: 0%;
+}
+.garantia {
+    margin: 0%;
 }
 
 
+.r {
+    font-size: 22px;
+}
 
+.cajaPrice {
+    display: flex;
+    margin: 20px 10px;
+    align-items: baseline;
+}
+
+.ars {
+    margin: 0px;
+    font-size: 10px;
+}
 

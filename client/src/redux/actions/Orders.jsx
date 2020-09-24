@@ -47,6 +47,32 @@ export function fetchOrders() {
         
     }
 }
+export function fetchOrdersUserId(user_id) { 
+    return dispatch => {
+        dispatch(requestOrders())
+        fetch(`http://localhost:3001/users/${user_id}/orders`)
+        .then( response => response.json())
+        .then( json => dispatch(receiveOrders(json)))        
+    }
+}
+export function fetchOrdersFilter(status) { 
+    return dispatch => {
+        dispatch(requestOrders())
+        fetch(`http://localhost:3001/orders?status=${status}`)
+        .then( response => response.json())
+        .then( json => dispatch(receiveOrders(json))) 
+    }
+}
+
+export function fetchOrdersId(order_id) { 
+    return dispatch => {
+        dispatch(requestOrders())
+        fetch(`http://localhost:3001/orders/table/${order_id}`)
+        .then( response => response.json())
+        .then( json => dispatch(receiveOrders(json))) 
+    }
+}
+
 export const requestOrders = () => {
 	return {
         type: REQUEST_ORDERS,

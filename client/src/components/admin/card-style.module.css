@@ -3,32 +3,33 @@
 .imgCard{
 	height: 12rem;
 	padding-top:10px;
-	width: 14rem;
+	width: 10rem;
 }
 
-
-
-.card:hover{
-	box-shadow: 5px 10px 20px 1px rgba(0,0,0,0.253)!important;
+.cardAdmin{
+	border-radius: 0;
 }
 
-.card-body{
+.CardBody{
 	padding: 3rem 0 !important;
 }
 
 .btnAdmin{
-	border:2px solid rgb(55,184,55);
+	border:2px solid rgb(236, 200, 38);
 	text-align: center;
 	padding: 10px 0;
-	color:rgb(55,184,55);
+	color:rgb(233, 220, 44);
 	transition: 0.3s;
+	font-weight: bold;
 	border-radius: 10px;
+	width: 100%;
 }
 
 .btnAdmin:hover{
-	background-color:rgb(55, 184, 55);
+	background-color:rgb(255, 217, 0);
 	text-align: center;
 	padding: 10px 0;
-	color:white;
+	color:black;
 	transition: 0.3s;
+
 }

@@ -1,38 +1,50 @@
-import React, {useState}from 'react'
+import React, {useState, useEffect}from 'react'
 import { FaStar }from 'react-icons/fa';
 import s from './stars.module.css';
 import { TextField, Button } from '@material-ui/core';
 import axios from 'axios';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import { useHistory }  from 'react-router-dom'
+import { allReview, averageReview } from '../../redux/actions/review';
 
 function StarRating (props) {
 
-   let { user_id } = props.auth;
+   let { user_id } = props.auth.user;
    let { product_id } = props;
+   const history = useHistory();
 
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null);
-    const [input, setInput] = useState();
+    const [input, setInput] = useState('');
 
     const handleonChange = (e) => {
         setInput(e)
     }
 
+    const dispatch = useDispatch();
+
     const createReview = async (e) => {
         e.preventDefault();
-
-        await axios.post(`http://localhost:3001/reviews/${product_id}`, {
-            rating,  
-            description: input,
-            user_id         
-        })
-        .then(response => {
-            console.log(response)
-          })
-        .catch(error => {
-            console.log(error);
-        });
+        if(user_id){ 
+                await axios.post(`http://localhost:3001/reviews/${product_id}`, {
+                rating,  
+                description: input,
+                user_id         
+            })
+            .then((response) => {
+            setRating(null);
+            setInput('');
+            dispatch(allReview(response.data.message.product_id))
+            dispatch(averageReview(response.data.message.product_id))
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        } else {
+            history.push('/login');
+        }
     }
+
 
     return (
             <div className={s.div}>
@@ -43,6 +55,7 @@ function StarRating (props) {
                     multiline
                     rowsMax={4}
                     className={s.input}
+                    value={input}
                     onChange={(e) => handleonChange(e.target.value)}
                     />                
                 </div>
@@ -84,5 +97,12 @@ const mapStateToProps = (state) => {
         auth: state.auth
     };
 };
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        allReview: () => dispatch(allReview()),
+        averageReview: () => dispatch(averageReview())
+    };
+}
         
-export default connect(mapStateToProps)(StarRating)
+export default connect(mapStateToProps, mapDispatchToProps)(StarRating)

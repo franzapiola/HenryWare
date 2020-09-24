@@ -1,49 +1,32 @@
-import React,{ useState, useEffect} from 'react';
+import React,{  useEffect} from 'react';
 import s from './reviews.module.css';
 import Review from './review';
-import axios from "axios";
 import Stars from './stars';
+import { allReview } from '../../redux/actions/review';
+import { connect, useDispatch } from 'react-redux';
 
 
 
+function Reviews (props) {
 
-export default function Reviews (props) {
-    
-    const { id } = props;
-    
-    const [productReview, setproductReview] = useState([]);
+    const dispatch = useDispatch();
+    const { id, reviewsProduct } = props;
 
-
-// Llamamos a back por los review de determinado producto pasado por id del componente product. NV
-
-      const getReviews = () => {
-            
-        axios.get(`http://localhost:3001/reviews/${id}`) 
-        .then(response => {
-        // Seteamos el estado con los todos los review. NV
-            setproductReview(response.data)          
-        })
-        .catch(error => {
-            console.log(error);
-        })
-    }
-
-    useEffect((id) => {
-            getReviews(id)  
+    useEffect(() => {
+            dispatch(allReview(id))  
     } ,[]) 
 
-
+    
     return (
             <div className={s.caja}>
-                <h2 className={s.titulo}>{productReview.length ? 'Comentarios': 'Sin comentarios'}</h2>
+                <h2 className={s.titulo}>{reviewsProduct ? 'Comentarios': 'Sin comentarios'}</h2>
                 <hr/>
                 <div> <Stars product_id={id}/> </div>
                 
-
-                {/* x es cada review del producto traido de back */}
-                    {productReview.map( x => <Review 
-                            review_id={x.review_id}
-                            product={x.product}
+                     {/* x es cada review del producto traido de back */}
+                    {reviewsProduct.map( x => <Review 
+                            // review_id={x.review_id}
+                            // product={x.product}
                             rating={x.rating} 
                             description={x.description}
                             first_name={x.user.first_name}
@@ -54,3 +37,18 @@ export default function Reviews (props) {
             </div>
     )
 }
+
+const mapStateToProps = (state) => {
+    
+    return {
+        reviewsProduct : state.review.reviewsProduct
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        allReview: () => dispatch(allReview())
+    };
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Reviews);

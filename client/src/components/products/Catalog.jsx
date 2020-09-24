@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, {  useEffect } from 'react'
 import ProductCard from './ProductCard.jsx';
 import { Button } from 'react-bootstrap';
 import styles from './catalog.module.css'
 //Redux
 import store from '../../redux/store';
-import { selectAll, selectCategories, selectCategory, changePage } from '../../redux/actions/main'
+import { selectAll, selectCategory, changePage } from '../../redux/actions/main'
 import { connect } from 'react-redux';
 
 import {FaArrowCircleLeft,FaArrowCircleRight    } from 'react-icons/fa'
@@ -22,6 +22,7 @@ function Catalogo(props) {
         changePage(currentPage + 1);
     };
 
+    const active = styles.activo
 
     useEffect(()=>{
         getProducts();
@@ -40,13 +41,13 @@ function Catalogo(props) {
                             selectAll();
                             getProducts();
                         }}
-                        className={`list-group-item list-group-item-action ${view==='All' && 'active'}`}
+                        className={`list-group-item list-group-item-action ${view==='All' && active}`}
                         >Todos los productos</li>
                     {/* Botón mostrar todos */}
 
                 { categories.map( cat => {
-                  let categoryClass = 'list-group-item list-group-item-action'
-                  if(selectedCategory===cat.name && view === 'Category') categoryClass += ' active'
+                  let categoryClass = 'list-group-item list-group-item-action '
+                  if(selectedCategory===cat.name && view === 'Category') categoryClass += active
                   return <li key={cat.category_id} className={`${categoryClass} ${styles.category}`} onClick={()=> {
                     selectCategory(cat.name);
                     changePage(1);
@@ -70,17 +71,17 @@ function Catalogo(props) {
                    {/* NAVEGACIÓN DE PÁGINAS */}
            <div className={`d-flex justify-content-around ${styles.navigationPages}`}>
 
-                {currentPage > 1 && <Button className={styles.buttonPagination} onClick={()=>{
+                {currentPage > 1 ? <Button className={styles.buttonPagination} onClick={()=>{
                     retrocederPagina();
                     }}
-                    ><FaArrowCircleLeft/></Button>}
+                    ><FaArrowCircleLeft/></Button> : <FaArrowCircleLeft/>}
 
                     <span className={styles.currentPage}>{currentPage}</span>
 
-                {!(products.length < 12) && <Button className={styles.buttonPagination} onClick={()=>{
+                {!(products.length < 12) ? <Button className={styles.buttonPagination} onClick={()=>{
                     avanzarPagina();
                     }}
-                    ><FaArrowCircleRight/></Button>}
+                    ><FaArrowCircleRight/></Button> : <FaArrowCircleRight/>}
                     
            </div>
 

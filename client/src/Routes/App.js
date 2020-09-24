@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //Componentes
 import Crud from '../components/products/Crud'
 import Catalog from '../components/products/Catalog';
-import SearchBar from '../components/SearchBar';
+import NavBar from '../components/navbar/navbar';
 import Producto from '../components/product-id/Producto';
 import CategoriesCrud from '../components/products/CategoriesCrud';
 import Footer from '../components/Footer'
@@ -22,12 +22,19 @@ import Home from '../components/Home/Home'
 import Login from '../components/users/login'
 import OrderInfo from '../components/order/orderInfo'
 import ControlPanel from '../components/admin/controlPanel'
+import UsersTable from '../components/users/UsersTable'
+
 import NotFound from  '../components/NotFound'
+import Profile from '../components/users/profile'
+
+
+import PasswordReset from '../components/users/PasswordReset';
+
 
 //Redux
 import { connect } from 'react-redux';
 //import store from '../redux/store';
-import { loadUserData } from '../redux/actions/auth';
+import { checkSession } from '../redux/actions/auth';
 
 
 const App = (props) => {
@@ -40,43 +47,12 @@ const App = (props) => {
   const [carouselIndex, setCarouselIndex] = useState(0);
 
   //Redux
-  const { view, searchInput, selectedCategory, currentPage, loadUserData } = props;
-
-  const handleCarouselSelect = (selectedIndex, e) => {
-    setCarouselIndex(selectedIndex);
-  }
+  const { view, searchInput, selectedCategory, currentPage, checkSession } = props;
 
   //Hacemos *siempre* un axios a /auth/me para que, si hay una sesión activa (es decir, hay un accessToken presente en localStorage),
-  //ésta se mantenga vigente a través de recargas de la página, o salir y volver a entrar. Hasta que el usuario haga logout.
+  //ésta se mantenga vigente a través de recargas de la página, o salir y volver a entrar. Hasta que el usuario haga logout. (y ponerle un tiempo de expiracion al token?)
   const actualToken = localStorage.getItem('actualToken');
-  axios.get('http://localhost:3001/auth/me', 
-    {
-      headers: {
-        'Authorization': `Bearer ${actualToken}`
-      }
-    }
-  )
-  .then(response => {
-    console.log('RESPUESTA:',response)
-    const { user } = response.data
-    if (user) {
-      //Si devuelve un usuario, cargamos sus datos al store de redux
-      const { user_id, first_name, last_name, email, role} = user;
-      return loadUserData({
-        user_id,
-        first_name,
-        last_name,
-        email,
-        role
-      });
-    }
-    //El axios a /auth/me no devolvió ningun usuario, por ende no hay usuario logeado
-    loadUserData({
-      role: 'Guest'
-    })
-  })
-  .catch(err => console.log('ERROR:', err));
-
+  checkSession(actualToken);
 
   //Traer lista entera actualizada de categorías de la base de datos
   const getCategories = async ()=>{
@@ -97,19 +73,19 @@ const App = (props) => {
   const getProducts = ()=>{
     switch(view){
       case 'All':
-        fetch(`http://localhost:3001/products?offset=${currentPage == 1 ? 0 : (currentPage - 1) * 12}&limit=12`)
+        fetch(`http://localhost:3001/products?offset=${(currentPage - 1) * 12}&limit=12`)
         .then(r=>r.json())
         .then(json=>setProducts(json))
         .catch(err => console.log(err));
         break;
       case 'Category':
-        fetch(`http://localhost:3001/products/categorias/${selectedCategory}?offset=${currentPage == 1 ? 0 : (currentPage - 1) * 12}&limit=12`)
+        fetch(`http://localhost:3001/products/categorias/${selectedCategory}?offset=${(currentPage - 1) * 12}&limit=12`)
         .then(r => r.json())
         .then(json => setProducts(json))
         .catch(err => console.log(err));
         break;
       case 'Search':
-        fetch(`http://localhost:3001/products/search?product=${searchInput}&offset=${currentPage == 1 ? 0 : (currentPage - 1) * 12}&limit=12`)
+        fetch(`http://localhost:3001/products/search?product=${searchInput}&offset=${(currentPage - 1) * 12}&limit=12`)
         .then(res=> res.json())
         .then(res=> setProducts(res))
         .catch(err => console.log(err));
@@ -118,13 +94,14 @@ const App = (props) => {
   }
 
   useEffect(()=>{
-      getProducts();
-      getCategories();
+    //Comenté este getProducts porque creo que no es necesario, lo dejo por las dudas, si se llega a romper el catálogo quiza tenga que ver -fran
+    //getProducts();
+    getCategories();
   },[])
 
   return(
     <BrowserRouter>
-      <Route path ='/' render={ ()=><SearchBar getProducts = {getProducts} categories={categories} getCategories={getCategories}/> }/>
+      <Route path ='/' render={ ()=><NavBar/> }/>
       <Switch>
         <Route exact path='/' render={()=>{
           return <Home products={products}/>
@@ -162,9 +139,15 @@ const App = (props) => {
         <Route exact path='/orders/table/:id'>
           <OrderInfo />
         </Route>
-         <Route exact path="/admin"> <ControlPanel/></Route> 
+         <Route exact path="/admin"> <ControlPanel/> </Route> 
         <Route exact path='/orders/table'>
           <OrdersTable/>
+        </Route>
+        <Route exact path="/admin/usersTable"><UsersTable/></Route>
+
+        <Route exact path='/profile'><Profile/></Route>
+        <Route exact path='/profile/password-reset'>
+          <PasswordReset/>
         </Route>
         <Route component={NotFound} />
       </Switch>
@@ -184,7 +167,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUserData: (userData) => dispatch(loadUserData(userData))
+    checkSession: token => dispatch(checkSession(token))
   }
 }
 

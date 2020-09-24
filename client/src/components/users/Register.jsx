@@ -4,8 +4,13 @@ import { FormControl, TextField, Button } from '@material-ui/core';
 import GoogleButton from 'react-google-button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-export default function Register() {
+ function Register (props) {
+    //Redux
+    const { user } = props;
+    const history = useHistory();
     //form carga los datos del formulario
     const [form, setForm] = useState({})
     //errors carga los errores que devuelve la api
@@ -13,7 +18,7 @@ export default function Register() {
     //update field va a gregando al form los datos cargados en el formulario 
     const updateField = async e => {
         const { id, value } = e.target
-        await setForm({
+        await setForm({ 
             ...form,
             [id]: value
         })
@@ -60,8 +65,13 @@ export default function Register() {
 
     const notify = (message = 'Usuario creado con exito', type = 'success') => toast[type](message, { position: toast.POSITION.TOP_CENTER });
 
+    	//Si ya hay un usuario loggeado, redirigirlo automáticamente al home
+	if(user.role != 'Guest'){
+		history.push('/');
+    }
+    
     return (
-        <div className={`pt-3 mt-5 d-flex align-items-center w-75 mx-auto ${styles.container} position-relative`}>
+        <div className={`pt-3 mt-5 d-flex align-items-center w-75 mx-auto ${styles.container2} position-relative`}>
             <h1 className={`${styles.titulo}`}>Abrir una Cuenta</h1>
 
             <div className="d-flex align-items-center  h-75 col-md-6 border-right">
@@ -133,6 +143,15 @@ export default function Register() {
                                     onChange={updateField} />
                             </FormControl>
                         </div>
+                        <div className="col-md-8 offset-2 mb-4">
+                            <FormControl className='col-md-12'>
+                                <TextField
+                                    type='password'
+                                    id="confirmPassword"
+                                    label="Confirme su contraseña"
+                                    onChange={'ola'} />
+                            </FormControl>
+                        </div>
                         <div className="col-md-4 offset-4 mb-4">
                             <Button
                                 type='submit'
@@ -151,3 +170,11 @@ export default function Register() {
         </div>
     )
 }
+
+const mapStateToProps = state => {
+    return {
+        user: state.auth.user
+    }
+}
+
+export default connect(mapStateToProps)(Register);

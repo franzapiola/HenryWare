@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Modal, Form } from 'react-bootstrap'
-import bsCustomFileInput from 'bs-custom-file-input'
 import Select from 'react-select'
+import {connect} from 'react-redux'
+import {useHistory} from 'react-router-dom'
 
 
-export default function Crud(props) {
+
+const Crud =(props)=> {
+    const {user, isFetching} = props
+    const history = useHistory()
+    if(isFetching === false && user.role !== "admin"){
+         history.push("/404")
+    }
 
     //Estado local de categorías
     const [categories, setCategories] = useState([]);
@@ -46,10 +53,6 @@ export default function Crud(props) {
             const response = await fetch(`http://localhost:3001/products`);
             const jsonData = await response.json();
             setProducts(jsonData);
-            // if(showImgs) setImgModalData({
-            //     ...jsonData.find(p => p.product_id === idProducto)
-            // });
-            //Dejar comentado por lo pronto porfa! -fran
         } catch (error) {
             console.error(error.message)
         }        
@@ -196,9 +199,7 @@ export default function Crud(props) {
         fetch(`http://localhost:3001/products/${product_id}/images/${img_id}`, {
             method: 'DELETE'
         })
-        .then( () => {
-            return fetch(`http://localhost:3001/products/${product_id}/images`);
-        })
+        .then( () =>  fetch(`http://localhost:3001/products/${product_id}/images`))
         .then(response => response.json())
         .then(newImages => {
             setImgModalData({
@@ -225,11 +226,9 @@ export default function Crud(props) {
                 'Content-Type': 'application/json'
             }
         })
-        .then( () => {
-            //Utilizo la ruta /products/:product_id/images
-            //para traer sólo las imágenes del producto al que le agregué una.
-            return fetch(`http://localhost:3001/products/${product_id}/images`);
-        })
+        //Utilizo la ruta /products/:product_id/images
+        //para traer sólo las imágenes del producto al que le agregué una.
+        .then( () => fetch(`http://localhost:3001/products/${product_id}/images`))
         .then(response => response.json())
         .then(newImages => {
             setImgModalData({
@@ -245,7 +244,7 @@ export default function Crud(props) {
     useEffect( () => {
         getProducts();
         getCategories();
-    }, []);
+    }, [imgModalData]);
     
     return (
         <div className='col-md-8 offset-2 pt-3 table-responsive'>
@@ -393,3 +392,15 @@ export default function Crud(props) {
         </div>
     )
 }
+
+
+
+
+const mapStateToProps = state => {
+    return{
+        user : state.auth.user,
+        isFetching: state.auth.isFetching
+    }
+}
+
+export default connect(mapStateToProps)(Crud);

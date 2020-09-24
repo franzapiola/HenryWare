@@ -14,7 +14,7 @@ server.get('/', checkIsAdmin, function(req,res){
     User.findAll({}).then(response => res.status(200).send(response))
 })
 
-//Ruta para crear un usuario    /user    NV.
+//Ruta para crear un usuario    /users    NV.
 server.post('/',(req, res) => {
   
     const { email, first_name, last_name, address, phone_number, role, password }= req.body;
@@ -36,7 +36,7 @@ server.post('/',(req, res) => {
     })
 })
 
-//Ruta para modificar información de un usuario     /users/:user_id
+//Ruta para modificar información de un usuario (que no sea password)     /users/:user_id
 server.put('/:user_id', function(req, res){
     const user_id = req.params.user_id;
 
@@ -63,6 +63,9 @@ server.put('/:user_id', function(req, res){
             case 'phone_number':
                 newInfo.phone_number = req.body.phone_number;
                 break;
+            case 'role':
+                newInfo.role = req.body.role;
+                break;
         }
     });
 
@@ -70,6 +73,23 @@ server.put('/:user_id', function(req, res){
     User.update(newInfo, { where: { user_id } })
     .then( () => res.status(200).send(`La información de usuario fue actualizada con éxito!`))
     .catch( err => res.status(400).send(err));
+})
+
+//Ruta para cambiar contraseña
+server.put('/:user_id/password-reset', (req, res) => {
+    const { user_id } = req.params;
+
+    const {newPassword} = req.body;
+
+    User.update({
+        password: newPassword
+    }, {
+        where: {
+            user_id
+        }
+    })
+    .then(()=>res.sendStatus(200))
+    .catch(err => console.log(err));
 })
 
 
@@ -188,7 +208,7 @@ server.put('/:user_id/cart', function(req, res){
     //El front tiene que mandar por params el user_id, y por body el product_id y la cantidad deseada
     const { user_id } = req.params;
     const { product_id, quantity } = req.body;
-    console.log('userID', user_id, 'product_id', product_id, 'quantity', quantity)
+    //console.log('userID', user_id, 'product_id', product_id, 'quantity', quantity)
     Order.findOne({
         where:{
             user_id,
@@ -287,7 +307,7 @@ server.get('/:user_id/orders', function(req,res){
         where:{
             user_id
         },
-        // include:[{model:Product,as:'products'}]
+        include: [{model: Product, as:'products'}, { model: User}]
     })
     .then(response => res.status(200).send(response))
     .catch(err => res.status(404).send(err))

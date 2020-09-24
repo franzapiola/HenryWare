@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Carousel } from 'react-bootstrap'
-import Jumbotron from '../Jumbotron';
+import Jumbotron from './Jumbotron';
 import {Link} from 'react-router-dom'
-
-
-
+import styles from './home.module.css'
+import './home .css'
 const Home = (props) => {
 
 const {products} = props
@@ -15,11 +14,13 @@ const [carouselIndex, setCarouselIndex] = useState(0);
     setCarouselIndex(selectedIndex);
   }
 
-
     return (
         <>
-            <Jumbotron />
-            <Carousel style={{width:"100%" }, {height:"50%"}}className="carousel" activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
+            <Jumbotron/>
+
+            {/* <Carousel className={`carousel ${styles.carousel}`} activeIndex={carouselIndex} onSelect={handleCarouselSelect}>
+
+
                 {products.map(prod => 
                     <Carousel.Item>
                         <Link to={`/products/${prod.product_id}`}>
@@ -35,7 +36,7 @@ const [carouselIndex, setCarouselIndex] = useState(0);
                         </Link>
                     </Carousel.Item>
                     )}                    
-                </Carousel>
+                </Carousel> */}
             </>
     )
 }
