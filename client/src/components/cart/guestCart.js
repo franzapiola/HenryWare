@@ -23,7 +23,7 @@ function GuestCart(props) {
         lStorCart.products = lStorCart.products.filter( p => p.product_id != pId);
         setProducts(products.filter( p => p.product_id != pId))
 
-        console.log(lStorCart)
+        // console.log(lStorCart)
         return localStorage.setItem('guestCart', JSON.stringify(lStorCart));
     }
     useEffect(()=>{

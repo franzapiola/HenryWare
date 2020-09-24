@@ -60,7 +60,7 @@ server.get('/:order_id', function(req, res){
 server.put('/:order_id', (req, res) => {
     const {order_id} = req.params;
     const {state} = req.body;
-    console.log('status', state)
+    // console.log('status', state)
     if(state !== 'Carrito' && state !== 'Creada' && state !== 'Procesando' && state !== 'Cancelada' && state !== 'Completa'){
         res.status(404).send('No es un estado válido')
     }
@@ -144,7 +144,7 @@ server.post('/finished',(req,res)=>{
       html:`
       <html>
 
-      <body style="background-color:#e2e1e0;font-family: Open Sans, sans-serif;font-size:100%;font-weight:400;line-height:1.4;color:#000;">
+      <body style="background-color:white;font-family: Open Sans, sans-serif;font-size:100%;font-weight:400;line-height:1.4;color:#000;">
         <table style="max-width:670px;margin:50px auto 10px;background-color:#fff;padding:50px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);-moz-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24); border-top: solid 10px yellow;">
           <thead style="display:flex;justify-content:center;position:relative;left:50%">
           <tr style="margin:auto;display:flex;align-content:center;align-items:center;justify-content:center;position:relative;left:50%">
@@ -228,7 +228,7 @@ server.post('/finished',(req,res)=>{
       if(error){
           res.status(500).send(error.message)
       }else{
-          console.log("Email enviado.")
+          // console.log("Email enviado.")
           res.status(200).json(req.body)
       }
 
