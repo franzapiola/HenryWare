@@ -129,6 +129,7 @@ function Login(props){
 				  </div>
 					{errorMsg && <span>{errorMsg}</span>}
 				  <input  type='submit' className={`${styles.henryColor} col-md-12`} value='Ingresar' />
+
 				  <div className='d-flex'>
 					  <div className='w-50 d-flex justify-content-center'>
 						<Google/>
@@ -137,6 +138,7 @@ function Login(props){
 						<GitHub/>
 					  </div>
 				  </div>
+
 				</form>
 			</div>
 		</div>

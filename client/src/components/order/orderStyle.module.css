@@ -91,3 +91,99 @@
   outline: none;
 }
 
+.modalOrder{
+  text-align: center;
+}
+
+.modalOrderTitle{
+  margin:auto;
+}
+
+.productModal{
+  width: 90%;
+  height: 100px;
+  background-color: rgba(0, 0, 0, 0.068);
+  border-radius: 10px;
+  margin:10px auto 10px auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  
+}
+
+.imageModal{
+  height: 100%;
+  margin-left:10px;
+}
+.namedescModal{
+text-align: start;
+}
+
+.namedescModal>*{
+  margin:0 0 0 15px;
+  padding:0;
+}
+
+.namedescModal>*:nth-child(1){
+  font-weight: bold;
+}
+
+.namedescModal>*:nth-child(2){
+  font-size: 12px;
+}
+
+.pricequantModal{
+  margin-right:15px;
+  margin-left:auto;
+}
+.pricequantModal>*{
+  margin:0 0 0 15px;
+  padding:0;
+}
+
+.pricequantModal>*:nth-child(1){
+  font-weight: bold;
+}
+
+.pricequantModal>*:nth-child(2){
+  font-size: 12px;
+}
+
+.buttonModal{
+  margin:auto;
+}
+
+
+.totalPriceModal{
+  margin:15px 20px 5px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.totalPriceModal>*:first-child{
+  font-size: 20px;
+  font-weight: bold;
+
+}
+.totalPriceModal>*:nth-child(2){
+  font-size: 15px;
+  font-weight: bold;
+}
+
+
+.contactInfo{
+  margin:10px 0px;
+  font-size: 15px;
+}
+
+.contactInfo>*{
+  margin:0;
+  padding: 0;
+}
+
+.sendingProd{
+  margin:0px 0px 10px 0px;
+  padding:0;
+  font-size: 15px;
+}
