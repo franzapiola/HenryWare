@@ -1,6 +1,5 @@
 import React from 'react'
-import GoogleLogin from 'react-google-login'
-import {GoogleButton} from 'react-google-button';
+import GitHubLogin from 'react-github-login';
 import axios from 'axios';
 
 //Redux
@@ -9,18 +8,18 @@ import { connect } from 'react-redux';
 import { loadUserData } from '../../redux/actions/auth';
 import { fetchUserCart } from '../../redux/actions/cart';
 
-function Google (props) {
+
+function Github(props) {
+
     const { loadUserData, fetchUserCart } = props;
     const history = useHistory();
 
     let userIdParaFetch;
 
-    const responseSuccess=(googleResponse) => {
-        axios.post("http://localhost:3001/auth/externalLogin?external=google",{
-            email : googleResponse.profileObj.email,
-            first_name : googleResponse.profileObj.givenName,
-            last_name : googleResponse.profileObj.familyName
-        })
+    const onSuccess = resp => {
+        console.log(resp);
+        axios.get(`http://localhost:3001/auth/githublogin/${resp.code}`)
+        //.then( response => console.log(response))
         .then( response =>{
             // el objeto user tiene los datos relevantes del usuario ( id, nombre, apellido,rol)
             // el objeto accessToken es el token de sesion
@@ -52,21 +51,17 @@ function Google (props) {
         .then(()=>fetchUserCart(userIdParaFetch))
         .then(()=>history.push('/'))
         .catch(err => console.log('error en responseSuccess al logearse con Google:', err))
-    }
-
-    const responseFailure = (response) =>{
-        console.log(response)
-    }
-
+    } 
+    const onFailure = response => console.error(response);
     return (
-            <GoogleLogin
-            //guardarla en .env
-            clientId='243862763103-9oer77jtoipa8qhd4ooflsjv5u31lmj2.apps.googleusercontent.com'
-            buttonText='Login'
-            onSuccess={responseSuccess}
-            onFailure={responseFailure}
-            cookiePolicy={'single_host_origin'}
-            />
+        <button className="btn btn-light"><img src='https://image.flaticon.com/icons/png/512/25/25231.png' style={{width: '20px'}}/>
+        <GitHubLogin className='btn'
+        clientId="658de51c3bbf0db736fc"
+        redirectUri="http://localhost:3000"
+        onSuccess={onSuccess}
+        onFailure={onFailure}
+        buttonText='GitHub'
+        /></button>
     )
 }
 
@@ -77,4 +72,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Google);
+export default connect(null, mapDispatchToProps)(Github);
