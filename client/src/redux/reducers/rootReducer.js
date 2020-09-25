@@ -6,10 +6,18 @@ import orderInfo from './orderInfo';
 import auth from './auth';
 import review from './review';
 import cart from './cart';
-import order from './order'
-import usersInfo from './users_info'
+import order from './order';
+import usersInfo from './users_info';
+import crud from './crud';
 
 export default combineReducers({
-
-  cart,Orders,main,orderInfo, auth, review,order,usersInfo
+  auth,
+  main,
+  review,
+  cart,
+  order,
+  crud,
+  Orders,
+  orderInfo,
+  usersInfo
 })
