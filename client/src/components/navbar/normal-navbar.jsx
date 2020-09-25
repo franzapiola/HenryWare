@@ -80,6 +80,7 @@ const NormalNavBar = (props) => {
                                 
                         </NavDropdown>
                         : <Link className={`${styles.navbutton} ${styles.navbarLink}`} to='/signup'>Registrarse</Link>}  
+                     <Link className={`${styles.navbutton} ${styles.navbarLink}`} to='/about'>About</Link>  
 
                     <Link className={`${styles.navbutton} ${styles.navbuttonCart} ${styles.navbarLink}`} to="/cart">
                         {articles!==0 && <span className={`${styles.numeroCarrito}`}>{articles}</span>}

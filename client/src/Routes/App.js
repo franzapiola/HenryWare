@@ -27,6 +27,7 @@ import UsersTable from '../components/users/UsersTable'
 import NotFound from  '../components/NotFound'
 import Profile from '../components/users/profile'
 import OrderUser from '../components/order/orderUser'
+import About from '../components/about/About'
 
 
 import PasswordReset from '../components/users/PasswordReset';
@@ -151,6 +152,7 @@ const App = (props) => {
         <Route exact path='/profile/password-reset'>
           <PasswordReset/>
         </Route>
+        <Route exact path='/about' component={About} />
         <Route component={NotFound} />
       </Switch>
         <Route path='/' component={Footer}/>
