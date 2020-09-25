@@ -191,7 +191,7 @@ server.post("/", checkIsAdmin, jsonParser, (req,res,next) =>{
 })
 
 //Ruta para editar un producto por body
-server.put('/:id', checkIsAdmin, function(req,res){
+server.put('/:id', function(req,res){
 
     const {id} = req.params;
 

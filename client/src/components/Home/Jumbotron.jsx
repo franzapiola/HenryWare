@@ -1,18 +1,16 @@
 import React from "react";
-import  './Jumbotron.css'
-import image from './Jumbotron.svg'
+import s from  './Jumbotron.module.css'
+import image from './electronic6.jpg'
 import button from './BotonJumbotron.svg'
 import {Link} from 'react-router-dom'
 
 const Jumbotron = () =>{
-	return(
-		<div className="jumbotron jumbotron-fluid">
-			<img className='jumbotronImg' src={image} alt=""/>
-			<Link to='/products'><img className='jumbotronButton' src={button}/></Link>
+	return (
+
+		<div className={s.container}>
+			<img src={image} className={s.img} alt=""/>  	
 		</div>
 		
-		
-
 	)
 
 }
