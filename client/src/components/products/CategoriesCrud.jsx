@@ -108,7 +108,7 @@ const CategoriesCrud = (props) => {
                     <tbody>
                         {categories.map( cat => {
                             return (
-                                <tr>
+                                <tr key={cat.category_id}>
                                     <td>{cat.category_id}</td>
                                     <td>{cat.name}</td>
                                     <td>{cat.products.length}</td>
