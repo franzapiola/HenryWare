@@ -24,7 +24,7 @@ function Reviews (props) {
                 <div> <Stars product_id={id}/> </div>
                 
                      {/* x es cada review del producto traido de back */}
-                    {reviewsProduct.map( x => <Review 
+                    {/* reviewsProduct.map( x => <Review 
                             // review_id={x.review_id}
                             // product={x.product}
                             rating={x.rating} 
@@ -33,7 +33,7 @@ function Reviews (props) {
                             last_name={x.user.last_name}
                             updatedAt={x.updatedAt}
                             />
-                    )}          
+                    ) */}          
             </div>
     )
 }
