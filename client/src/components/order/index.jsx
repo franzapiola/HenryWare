@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './orderStyle.module.css'
+import { Button, Modal, Form } from 'react-bootstrap'
+
 import { useDispatch, connect } from 'react-redux'
 import axios from "axios"
 import { useHistory } from 'react-router-dom';
@@ -10,7 +12,7 @@ function Order({ orderData, userInfo }) {
   const dispatch = useDispatch()
   const history = useHistory()
   const [promoCode, setpromoCode] = useState('')
-
+  const [errorCode,setErrorCode] =useState(false)
   const [hasDiscount, setHasDiscount] = useState(false)
 
   const { products } = orderData
@@ -26,6 +28,7 @@ function Order({ orderData, userInfo }) {
 
   const [paymentMethod,setPaymentMethod] = useState('')
 
+  const [showPostVenta,setshowPostVenta] = useState(false)
 
   const updateField = async e => {
     const { id, value } = e.target
@@ -73,7 +76,7 @@ function Order({ orderData, userInfo }) {
 
     axios.put(`http://localhost:3001/orders/${orderData.order_id}`, {
       state: "Completa"
-    }).then(() => history.push("/"))
+    }).then(() => setshowPostVenta(true))
 
   }
 
@@ -82,6 +85,12 @@ function Order({ orderData, userInfo }) {
     form.discount = true
     if (promoCode == "SOYHENRY") {
       setHasDiscount(true)
+      setErrorCode(false)
+
+    }else{
+      setErrorCode(true)
+      setHasDiscount(false)
+
     }
   }
 
@@ -139,6 +148,7 @@ function Order({ orderData, userInfo }) {
 
             </div>
             {hasDiscount ? <span style={{ color: "green", textAlign: 'center', paddingTop: '10px' }}>Se aplicó tu código correctamente!:)</span> : null}
+            {errorCode ? <span style={{ color: "red", textAlign: 'center', paddingTop: '10px' }}>Ese código de descuento es inválido!:(</span> : null}
           </form>
         </div>
         <div className="col-md-8 order-md-1">
@@ -267,6 +277,54 @@ function Order({ orderData, userInfo }) {
             <button className="btn btn-warning btn-lg btn-block" type="submit">Finalizar compra</button>
           </form>
         </div></div>
+
+
+        <Modal className={styles.modalOrder} show={showPostVenta}>
+                <Modal.Header  >
+                    <Modal.Title className={styles.modalOrderTitle}>Gracias por tu compra!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p className={styles.sendingProd}>Muchas gracias por tu compra, <b>{form.firstName}</b>!</p>
+                    
+                    <p className={styles.sendingProd}>Esta es la información de contacto que utilizaremos para informarte acerca de tu pedido:</p>
+                    <div className={styles.contactInfo}>
+                    <p><b>Correo electrónico:</b> {form.email}</p>
+                    <p><b>Teléfono:</b>{form.phone} </p>
+                    </div>
+                    <p className={styles.sendingProd}>Tu pedido será enviado a: <b>{form.address} {form.depto}</b></p>
+                    <div>
+                      <p className={styles.sendingProd}>A continuación, te dejamos la información de tu pedido:</p>
+                      <div>
+                      {hasDiscount==true?<p style={{fontSize:"12px"}}>Código de descuento utilizado: <b>SOYHENRY</b> <span style={{color:"green",fontWeight:'bold'}}>(-20%)</span></p>:''}
+                      {products.map((product)=>{
+                        return  <div className={styles.productModal}>
+                                      
+                                      <img className={styles.imageModal} src={product.images[0].img_url} alt=""/>
+
+                                      <div className={styles.namedescModal}>
+                                        <p>{product.name}</p>
+                                        <p>{product.description}</p>
+                                      </div>
+
+                                      <div className={styles.pricequantModal}>
+                                        <p>{product.LineaDeOrden.price}</p>
+                                        <p>{product.LineaDeOrden.quantity}</p>
+                                      </div>
+
+                                </div>
+                      })}
+                      </div>
+                      <div className={styles.totalPriceModal}>
+                          <h3>Precio final</h3>
+                          <h5>${hasDiscount == false ? funcionSuma(products) : ApplyDiscount(products)}</h5>
+                      </div>
+                      <Modal.Footer>
+                        <Button className={styles.buttonModal } onClick={()=> history.push("/")}>Ir al inicio</Button>
+                      </Modal.Footer>
+                    </div>
+                </Modal.Body>
+                
+            </Modal>         
     </div>
 
   )

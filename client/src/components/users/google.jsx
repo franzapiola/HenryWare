@@ -2,7 +2,7 @@ import React from 'react'
 import GoogleLogin from 'react-google-login'
 import GoogleButton from 'react-google-button';
 import axios from 'axios';
-
+import styles from './register.module.scss'
 //Redux
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -59,7 +59,7 @@ function Google (props) {
     }
 
     return (
-        <div>
+        <div className={styles.googleDiv}>
             <GoogleLogin
             //guardarla en .env
             clientId='243862763103-9oer77jtoipa8qhd4ooflsjv5u31lmj2.apps.googleusercontent.com'
@@ -67,6 +67,7 @@ function Google (props) {
             onSuccess={responseSuccess}
             onFailure={responseFailure}
             cookiePolicy={'single_host_origin'}
+            className={styles.googleButton}
             />
 
         </div>
