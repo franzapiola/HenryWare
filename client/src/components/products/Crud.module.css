@@ -37,8 +37,15 @@
 
 .restablecer:hover{
     background-color: rgba(128, 128, 128, 0.192);
+    color: rgb(114, 114, 114);
 }
 
+.restablecer:focus{
+    background-color: rgba(128, 128, 128, 0.192);
+    color: rgb(114, 114, 114);
+    outline: none;
+    border:none;
+}
 
 .productsTable {
     margin-left: 50px;

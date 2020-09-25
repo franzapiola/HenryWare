@@ -57,17 +57,17 @@ export const getProducts = (view, searchInput, selectedCategory, currentPage, se
         dispatch(requestProducts());
         switch(view){
             case 'All':
-                axios.get(`http://localhost:3001/products?offset=${(currentPage - 1) * 25}&limit=25`)
+                axios.get(`http://localhost:3001/products?offset=${(currentPage - 1) * 15}&limit=15`)
                 .then(response => dispatch(receiveProducts(response.data)))
                 .catch(err => console.log('error al hacer getProducts-All en CRUD:',err));
                 break;
             case 'Category':
-                axios.get(`http://localhost:3001/products/categorias/${selectedCategory}?offset=${(currentPage - 1) * 25}&limit=25`)
+                axios.get(`http://localhost:3001/products/categorias/${selectedCategory}?offset=${(currentPage - 1) * 15}&limit=15`)
                 .then(response => dispatch(receiveProducts(response.data)))
                 .catch(err => console.log('error al hacer getProducts-Category en CRUD:',err));
                 break;
             case 'Search':
-                axios.get(`http://localhost:3001/products/search?product=${searchInput}&offset=${(currentPage - 1) * 25}&limit=25`)
+                axios.get(`http://localhost:3001/products/search?product=${searchInput}&offset=${(currentPage - 1) * 15}&limit=15`)
                 .then(response => dispatch(receiveProducts(response.data)))
                 .catch(err => console.log('error al hacer getProducts-Search en CRUD:',err));
                 break;

@@ -275,14 +275,20 @@ const Crud =(props)=> {
                             className={style.input}
                             type='text'
                             label='Buscar por nombre'
-                            onChange = {e => search(e.target.value)}
+                            onChange = {e => {
+                                search(e.target.value);
+                                changePage(1);
+                            }}
                         />
 
                         <TextField
                             className={style.input}
                             type='number'
                             label='Buscar por ID'
-                            onChange = {e => selectID(e.target.value)}
+                            onChange = {e => {
+                                selectID(e.target.value);
+                                changePage(1);
+                            }}
                         />
                         <FormControl className={style.input}>
                             <InputLabel id="demo-simple-select-label">
@@ -292,7 +298,10 @@ const Crud =(props)=> {
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 value='' 
-                                onChange={e=>selectCategory(e.target.value)}
+                                onChange={e=>{
+                                    selectCategory(e.target.value);
+                                    changePage(1);
+                                }}
                             >
                             {categories.map( c => 
                                 <MenuItem key={c.category_id} value={c.name}>{c.name}</MenuItem>
@@ -367,7 +376,7 @@ const Crud =(props)=> {
 
                         <span >{currentPage}</span>
 
-                    {!(products.length < 25) ? <Button  onClick={avanzarPagina} className={style.buttonPagination}
+                    {!(products.length < 15) ? <Button  onClick={avanzarPagina} className={style.buttonPagination}
                         ><FaArrowCircleRight/></Button> : <FaArrowCircleRight/>}
                 </div>}
 
