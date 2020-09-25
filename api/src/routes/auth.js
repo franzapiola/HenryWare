@@ -1,5 +1,5 @@
-require('dotenv').config()
-
+require ( 'dotenv' ).config()
+const axios = require('axios')
 
 const server = require('express').Router()
 const { json } = require('body-parser');
@@ -8,7 +8,7 @@ const { User } = require('../db.js')
 const bcrypt = require('bcrypt');
 
 const jwt = require("jsonwebtoken")
-
+const superagent = require('superagent');
 //Middlewares de checkeo de usuario
 const { checkIsAdmin } = require('../utils.js')
 
@@ -18,10 +18,54 @@ const checkPassword = async(user,password) => {
 	return comparacion
 };
 
-server.post('/externalLogin',(req,res) =>{
-	const {external} = req.query
-	const {email, first_name, last_name} = req.body
+server.get('/githublogin/:code', ( req, res ) => {
+	const { code } = req.params;
+	axios.post(`https://github.com/login/oauth/access_token`, {
+		accept: 'aplication/json',
+		client_id: '658de51c3bbf0db736fc',
+		client_secret: 'df08e0012f3cc6343730c2aa176960403b0f44e8',
+		code,
+	})
+	.then( response => {	
+		//console.log(response)
+		access_token = response.data.split('&');
+		access_token = access_token[0].split('=');
+		access_token = access_token[1];		
+		return access_token;
+	})
+	.then( token => {
+		superagent
+		.get('https://api.github.com/user')
+		.set('Authorization', 'token ' + token)
+		.set('user-agent', 'node.js')
+		.then( result => {
+			const user = result.body;
+			superagent
+			.get('https://api.github.com/user/emails')
+			.set('Authorization', 'token ' + token)
+			.set('user-agent', 'node.js')
+			.then( mail => {
+				const userMail = mail.body;
+				/* console.log('user', user)
+				console.log('usermail', userMail) */
+				superagent
+				.post('http://localhost:3001/auth/externalLogin')
+				.send({ email: userMail[0].email, first_name: user.login, last_name: '' }) // sends a JSON post body
+				.set('accept', 'json')
+				.then( response => res.status(200).send(response.body))
+				//return res.status(200).json({ user, userMail });
+			})
+			
+		})
+		.catch( err => console.log(err))
+	})
+	.catch( err => res.status(400).send(err))
+})
 
+server.post('/externalLogin',(req,res) =>{
+	const { external } = req.query
+	const { email, first_name, last_name } = req.body
+	console.log('external')
 	User.findOrCreate({
 		where:{ email },
 		defaults: {
@@ -58,7 +102,7 @@ server.post('/externalLogin',(req,res) =>{
 })
 
 
-server.post("/login",(req,res,next) => {
+server.post("/login",( req, res, next ) => {
 
 	//authenticate with email
 	const email = req.body.email

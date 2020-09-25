@@ -2,6 +2,7 @@ import React from 'react'
 import Card from './card'
 import {connect} from 'react-redux'
 import {useHistory} from 'react-router-dom'
+import { Fade } from '@material-ui/core'
 
 const imgAdd= "http://images.all-free-download.com/images/graphicthumb/document_add_100293.jpg";
 const imgOrders = "https://http2.mlstatic.com/100-hojas-papel-bond-blanco-alta-blancura-medida-33-x-483-D_NQ_NP_922905-MLM25110687502_102016-F.jpg";
@@ -17,6 +18,11 @@ const ControlPanel = function(props){
 	}
 	
 	return(
+		<Fade
+                        in={true}
+                        style={{ transformOrigin: '0 0 0' }}
+                        {...(true ? { timeout: 800 } : {})}
+                    >
 		<div className="container-fluid  d-flex mt-4 justify-content-around">
 			<div className="row">
 				<div className="col-md-4 pt-4">
@@ -52,6 +58,7 @@ const ControlPanel = function(props){
 			</div>
 
 		</div>
+		</Fade>
 		);
 }
 

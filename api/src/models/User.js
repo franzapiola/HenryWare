@@ -45,16 +45,7 @@ const User = (sequelize) => {
     },
     last_name: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: {
-          args: [2, 30],
-          msg: "No es apellido valido"
-        },
-        notNull: {
-          msg: 'Apellido obligatorio'
-        }
-      }
+      allowNull: true,      
     },
     address: {
         type: DataTypes.STRING,

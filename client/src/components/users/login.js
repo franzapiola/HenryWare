@@ -4,7 +4,7 @@ import styles from './register.module.scss'
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import Google from './google.jsx';
-
+import GitHub from './GitHub.jsx';
 //Redux
 import { loadUserData } from '../../redux/actions/auth';
 import { connect } from 'react-redux';
@@ -103,7 +103,8 @@ function Login(props){
 		.catch( (err) => console.log(err) )
 
 	}*/
-
+	const onSuccess = response => console.log(response);
+	const onFailure = response => console.error(response);
 		
 	return(
 		<div className={`pt-3 mt-2 d-flex justify-content-center align-items-center w-100 mx-auto ${styles.container}`}>
@@ -129,7 +130,15 @@ function Login(props){
 					{errorMsg && <span>{errorMsg}</span>}
 				  <input  type='submit' className={`${styles.henryColor} col-md-12`} value='Ingresar' />
 
-				  <Google />
+				  <div className='d-flex'>
+					  <div className='w-50 d-flex justify-content-center'>
+						<Google/>
+					  </div>
+					  <div className='w-50 d-flex justify-content-center'>
+						<GitHub/>
+					  </div>
+				  </div>
+
 				</form>
 			</div>
 		</div>
