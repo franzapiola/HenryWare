@@ -51,3 +51,14 @@
     -moz-box-shadow: 0px 2px 15px -8px rgba(0,0,0,0.75);
     box-shadow: 0px 2px 15px -8px rgba(0,0,0,0.75);
 }
+
+.googleButton{
+    width: fit-content;
+    text-align: center;
+    margin: 15px auto 0px auto;
+}
+
+.googleDiv{
+    display:flex;
+    justify-content: center;
+}

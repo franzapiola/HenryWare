@@ -128,7 +128,8 @@ function Login(props){
 				  </div>
 					{errorMsg && <span>{errorMsg}</span>}
 				  <input  type='submit' className={`${styles.henryColor} col-md-12`} value='Ingresar' />
-				  <Google/>
+
+				  <Google />
 				</form>
 			</div>
 		</div>
