@@ -1,5 +1,5 @@
-require('dotenv').config()
-
+require ( 'dotenv' ).config()
+const axios = require('axios')
 
 const server = require('express').Router()
 const { json } = require('body-parser');
@@ -18,10 +18,37 @@ const checkPassword = async(user,password) => {
 	return comparacion
 };
 
+server.get('/githublogin/:code', ( req, res ) => {
+	const { code } = req.params;
+	axios.post(`https://github.com/login/oauth/access_token`, {
+		client_id: '658de51c3bbf0db736fc',
+		client_secret: 'df08e0012f3cc6343730c2aa176960403b0f44e8',
+		code,
+	})
+	.then( response => {	
+		console.log(response.data)
+		access_token = response.data.split('&');
+		access_token = access_token[0].split('=');
+		access_token = access_token[1];		
+		console.log(access_token);
+		//access_token = JSON.parse(response.config.data)
+	})
+	/* .then( res => {
+		console.log('token',res)
+		axios.get(`https://api.github.com/user`, {
+			data: {
+				Authorization: `token ` + res,
+			  }			 
+		})			
+		.then( response => console.log('login',response))
+	}) */
+	.catch( err => res.status(400).send(err))
+	res.send('ok')
+})
 server.post('/externalLogin',(req,res) =>{
 	const {external} = req.query
 	const {email, first_name, last_name} = req.body
-
+	console.log('external')
 	User.findOrCreate({
 		where:{ email },
 		defaults: {
