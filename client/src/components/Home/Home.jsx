@@ -25,7 +25,7 @@ const Home = (props) => {
                 return a.rating - b.rating
             })
             const topProducts = [];
-            var cantidad = 0;
+            var cantidad = 5;
             //esto lo que hace es mostrar solo los primeros 5, o la 
             //cantidad que traigan ( cuando son menos que 5)
             if(orden.length < 5) {cantidad = orden.length}
