@@ -14,7 +14,7 @@ import style from './Crud.module.css';
 
 //Redux
 import {connect} from 'react-redux'
-import { search, selectCategory, changePage, selectAll, getProducts } from '../../redux/actions/crud';
+import { search, selectCategory, changePage, selectAll, selectID, getProducts } from '../../redux/actions/crud';
 
 
 const Crud =(props)=> {
@@ -27,10 +27,10 @@ const Crud =(props)=> {
 
     //Filtrado y búsqueda usando redux:
         //States
-        const { products, view, searchInput, selectedCategory, currentPage } = props;
+        const { products, view, searchInput, selectedCategory, selectedID, currentPage } = props;
 
         //Acciones
-        const { search, selectCategory, changePage, selectAll, getProducts } = props;
+        const { search, selectCategory, changePage, selectAll, selectID, getProducts } = props;
 
         const retrocederPagina = () => {
             changePage(currentPage - 1);
@@ -44,9 +44,6 @@ const Crud =(props)=> {
     //Estado local de categorías
     const [categories, setCategories] = useState([]);
 
-    //Estado local de products
-    // const [products, setProducts] = useState([]);
-
     //show muestra el modal para agregar/editar si esta en TRUE
     const [ show, setShow ] = useState(false);
 
@@ -58,10 +55,7 @@ const Crud =(props)=> {
 
     //state para id de categoria
     const [ idCategoria, setIdCategoria ] = useState()
-
-    //state para id de producto
-    //const [ idProducto, setIdProducto ] = useState()
-    
+   
     //form es un objeto que toma todos los valores del formulario
     const [ form, setForm ] = useState({
         name: '',
@@ -145,7 +139,7 @@ const Crud =(props)=> {
             }
         })
         deletear.then( res => {
-            getProducts(view, searchInput, selectedCategory, currentPage);
+            getProducts(view, searchInput, selectedCategory, currentPage, selectedID);
             handleCloseElim();
         })
     }
@@ -166,7 +160,7 @@ const Crud =(props)=> {
         .then(res=>res.json())
         .then(res => {
             //traigo de nuevo los products de la db
-            getProducts(view, searchInput, selectedCategory, currentPage);
+            getProducts(view, searchInput, selectedCategory, currentPage, selectedID);
             handleSubmitCat(res.product_id)
         })
         handleClose()
@@ -181,7 +175,7 @@ const Crud =(props)=> {
             }
         }).then(res => res.text())
         .then(res => {
-            getProducts(view, searchInput, selectedCategory, currentPage);
+            getProducts(view, searchInput, selectedCategory, currentPage, selectedID);
         })
     }
     const categorias = (cate) => {
@@ -263,10 +257,12 @@ const Crud =(props)=> {
 
 
     useEffect( () => {
-        getProducts(view, searchInput, selectedCategory, currentPage);
+        getProducts(view, searchInput, selectedCategory, currentPage, selectedID);
+    }, [imgModalData, view, selectedCategory, currentPage, searchInput, selectedID]);
+
+    useEffect(()=>{
         getCategories();
-    }, [imgModalData, view, selectedCategory, currentPage, searchInput]);
-    
+    }, [])
     return (
         <>
             <div className={style.mainWrapper}>
@@ -284,9 +280,9 @@ const Crud =(props)=> {
 
                         <TextField
                             className={style.input}
-                            type='text'
+                            type='number'
                             label='Buscar por ID'
-                            // onChange = {e => search(e.target.value)}
+                            onChange = {e => selectID(e.target.value)}
                         />
                         <FormControl className={style.input}>
                             <InputLabel id="demo-simple-select-label">
@@ -299,16 +295,22 @@ const Crud =(props)=> {
                                 onChange={e=>selectCategory(e.target.value)}
                             >
                             {categories.map( c => 
-                                <MenuItem value={c.name}>{c.name}</MenuItem>
+                                <MenuItem key={c.category_id} value={c.name}>{c.name}</MenuItem>
                                 )}
                             </Selectt>
                         </FormControl>
+                        <Button 
+                        className={style.restablecer}
+                        onClick={selectAll}
+                        >Todos</Button>
                     </div>
                 </div>
                 
                 <div className={`col-md-8 offset-2 pt-3 table-responsive ${style.productsTable}`}>
-                {view === 'Category' && <h5>Mostrando los productos de la categoría {selectedCategory}</h5>}
-                {view === 'Search' && <h5>Búsqueda de productos: '{searchInput}'</h5>}
+
+                {view === 'Category' && <h5>Mostrando todos los productos de la categoría {selectedCategory}</h5>}
+                {view === 'Search' && <h5>Mostrando el resultado de la búsqueda: '{searchInput}'</h5>}
+                {view === 'All' && <h5>Mostrando todos los productos</h5>}
 
                 {/* Componentes de react-bootstrap */}
                 <table style={{backgroundColor: 'whitesmoke'}} className='table table-striped table-collapse'>
@@ -338,7 +340,6 @@ const Crud =(props)=> {
                                 <td>{prod.stock}</td>
                                 <td onClick={()=>{
                                     setImgModalData(prod);
-                                    //setIdProducto(prod.product_id);
                                     setShowImgs(true);
                                     }} style={{alignItems:'center'}}><img className={style.prodImg} src={prod.images[0].img_url} style={style.img}/></td>
                                 <td><ul style={{listStyleType:'none',padding:'0'}}>{prod.categories.map((cat)=>{return <li key={cat.category_id}>{cat.name}</li>})}</ul></td>
@@ -360,15 +361,15 @@ const Crud =(props)=> {
                 </table>
 
                     {/* NAVEGACIÓN DE PÁGINAS */}
-                <div className={`d-flex justify-content-around`}>
-                    {currentPage > 1 ? <Button  onClick={retrocederPagina}
+                {view != 'ID' && <div className={`d-flex justify-content-around`}>
+                    {currentPage > 1 ? <Button  onClick={retrocederPagina} className={style.buttonPagination}
                         ><FaArrowCircleLeft/></Button> : <FaArrowCircleLeft/>}
 
                         <span >{currentPage}</span>
 
-                    {!(products.length < 25) ? <Button  onClick={avanzarPagina}
+                    {!(products.length < 25) ? <Button  onClick={avanzarPagina} className={style.buttonPagination}
                         ><FaArrowCircleRight/></Button> : <FaArrowCircleRight/>}
-                </div>
+                </div>}
 
                 {/* MODAL EDITAR/AGREGAR PRODUCTO */}
                 <Modal show={show} onHide={handleClose}>
@@ -478,6 +479,7 @@ const mapStateToProps = state => {
         searchInput: state.crud.settings.searchInput,
         selectedCategory: state.crud.settings.selectedCategory,
         currentPage: state.crud.settings.currentPage,
+        selectedID: state.crud.settings.selectedID,
         products: state.crud.products
     }
 }
@@ -488,7 +490,8 @@ const mapDispatchToProps = dispatch => {
         changePage: num => dispatch(changePage(num)),
         selectCategory: category => dispatch(selectCategory(category)),
         selectAll: () => dispatch(selectAll()),
-        getProducts: (view, searchInput, selectedCategory, currentPage) => dispatch(getProducts(view, searchInput, selectedCategory, currentPage))
+        selectID: product_id => dispatch(selectID(product_id)),
+        getProducts: (view, searchInput, selectedCategory, currentPage, selectedID) => dispatch(getProducts(view, searchInput, selectedCategory, currentPage, selectedID))
     }
 }
 

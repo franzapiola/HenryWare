@@ -1,4 +1,4 @@
-import { SEARCH_CRUD, SELECT_CATEGORY_CRUD, SELECT_ALL_CRUD, CHANGE_PAGE_CRUD, REQUEST_PRODUCTS, RECEIVE_PRODUCTS } from '../actions/crud';
+import { SEARCH_CRUD, SELECT_CATEGORY_CRUD, SELECT_ALL_CRUD, CHANGE_PAGE_CRUD, REQUEST_PRODUCTS, RECEIVE_PRODUCTS, SEARCH_ID_CRUD } from '../actions/crud';
 
 const initialState = {
     isFetching: false,
@@ -7,6 +7,7 @@ const initialState = {
         selectedCategory: null,
         view: 'All',
         currentPage: 1,
+        selectedID: null
     },
     products: []
 }
@@ -56,6 +57,25 @@ export default (state = initialState, action) => {
                 settings: {
                     ...state.settings,
                     currentPage: action.payload
+                }
+            }
+        case SEARCH_ID_CRUD:
+            if(action.payload === ''){
+                return {
+                    ...state,
+                    settings: {
+                        ...state.settings,
+                        view: 'All',
+                        selectedID: null
+                    }
+                }
+            }
+            return {
+                ...state,
+                settings: {
+                    ...state.settings,
+                    view: 'ID',
+                    selectedID: action.payload
                 }
             }
         case REQUEST_PRODUCTS:
