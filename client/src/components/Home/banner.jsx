@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const Banner = () =>{
 	return(
 		<div className={s.banner}>	    
-		    <p className={s.titulo}> Crea tu cuenta, descubrí y accede a los mejores precios de hardware.</p>
+		    <p className={s.titulo}> Crea tu cuenta, navegá y accedé a los mejores precios de nuestros productos.</p>
 			<Link to='/products' className={s.boxImg}><img src={button} className={s.button}/></Link>
 		</div>
 	)

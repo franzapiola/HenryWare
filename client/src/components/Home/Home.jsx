@@ -7,31 +7,43 @@ import './home .css'
 import Banner from './banner';
 import TopProduct from './TopProduct';
 import TopCard from '../products/TopCard'
+import axios from "axios"
+
 
 const Home = (props) => {
 
-    const { products } = props;
-    const [ topFive, setTopFive] = useState([]);
-   
-    const fiveProducts = () => {
 
-        const orden = products.sort((a, b) => {
-            return a.rating - b.rating
-          })
-        const topProduc = [];
-        topProduc.push(orden[orden.length-1])
-        topProduc.push(orden[orden.length-2])
-        topProduc.push(orden[orden.length-3])
-        topProduc.push(orden[orden.length-4])
+    const [topFive,setTopFive] = useState([]);
 
-        setTopFive(topProduc)
+
+    //traemos todos los productos
+    const fetchProducts = async () =>{
+        await axios.get(`http://localhost:3001/products`)
+        .then(response => {
+            //los ordenamos segun el rating
+            const orden = response.data.sort((a, b) => {
+                return a.rating - b.rating
+            })
+            const topProducts = [];
+            var cantidad = 0;
+            //esto lo que hace es mostrar solo los primeros 5, o la 
+            //cantidad que traigan ( cuando son menos que 5)
+            if(orden.length < 5) {cantidad = orden.length}
+           
+            for(let i = 1; i <= cantidad;i++){
+                topProducts.push(orden[orden.length-i])    
+            }
+                     
+            setTopFive(topProducts)}
+
+        )
     }
+   
+    
 
     useEffect(()=>{
-        fiveProducts(products);
+        fetchProducts();
     }, []);
-
-    console.log('topFive :', topFive);
 
     return (
         <>
@@ -40,13 +52,17 @@ const Home = (props) => {
     
             <div className={styles.topFive}>
 
-                <h3 className={styles.titulotop}>Productos mejores calificados</h3>
+                <h3 className={styles.titulotop}>Nuestro Top de productos</h3>
                 <div className={styles.topBox}>
-                {topFive.length ? topFive.map(prod => 
 
-                <TopCard key={prod.product_id} data={prod} className={styles.card}/>
-                ) : <p></p> }
+                {topFive.length >1 && topFive.map((product) => 
+                         
+                        <TopCard key={product.product_id} data={product} className={styles.card}/>
+                        
+                    )
 
+                }
+                
 
                 </div>
                 
