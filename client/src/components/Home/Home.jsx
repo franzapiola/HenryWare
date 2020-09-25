@@ -6,16 +6,12 @@ import styles from './home.module.css'
 import './home .css'
 import Banner from './banner';
 import TopProduct from './TopProduct';
-import ProductCard from '../products/ProductCard'
+import TopCard from '../products/TopCard'
 
 const Home = (props) => {
 
     const { products } = props;
     const [ topFive, setTopFive] = useState([]);
-
-    console.log('products:', products)
-
-
    
     const fiveProducts = () => {
 
@@ -26,19 +22,16 @@ const Home = (props) => {
         topProduc.push(orden[orden.length-1])
         topProduc.push(orden[orden.length-2])
         topProduc.push(orden[orden.length-3])
+        topProduc.push(orden[orden.length-4])
 
         setTopFive(topProduc)
-        console.log('top:', topProduc)
-        console.log('orden:', orden);
-        console.log('topFive:', topFive);
     }
-
 
     useEffect(()=>{
         fiveProducts(products);
     }, []);
 
-    console.log('topFive         5 :', topFive);
+    console.log('topFive :', topFive);
 
     return (
         <>
@@ -47,10 +40,11 @@ const Home = (props) => {
     
             <div className={styles.topFive}>
 
-                <h3 className={styles.titulotop}>Mejores productos</h3>
+                <h3 className={styles.titulotop}>Productos mejores calificados</h3>
                 <div className={styles.topBox}>
                 {topFive.length ? topFive.map(prod => 
-                <ProductCard key={prod.product_id} data={prod} />
+
+                <TopCard key={prod.product_id} data={prod} className={styles.card}/>
                 ) : <p></p> }
 
 

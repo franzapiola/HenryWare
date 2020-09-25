@@ -34,7 +34,8 @@
 }
 
 .card {
-    margin: 30px 20px;
+    background-color: black !important;
+    
 }
 
 .topBox {
@@ -42,6 +43,6 @@
 }
 
 .titulotop {
-    margin: 15px
+    margin: 10px 0px 40px 0px;
 }
 
