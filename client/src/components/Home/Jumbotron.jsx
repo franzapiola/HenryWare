@@ -1,6 +1,6 @@
 import React from "react";
 import s from  './Jumbotron.module.css'
-import image from './electronic6.jpg'
+import image from './electronic6.png'
 import button from './BotonJumbotron.svg'
 import {Link} from 'react-router-dom'
 
