@@ -155,7 +155,7 @@ const App = (props) => {
         </Route>
         <Route exact path='/about' component={About} />
         <Route path='/passwordforgot' component={PasswordForgot}/>
-        <Route path='/passwordreset/:user_id' render={({match})=>{return <PasswordReset userID={match.params.user_id}/>}} />
+        <Route path='/passwordreset/:user_id/:passResetToken' render={({match}) => <PasswordReset user_id={match.params.user_id} passResetToken={match.params.passResetToken}/>} />
         <Route component={NotFound} />
       </Switch>
         <Route path='/' component={Footer}/>
