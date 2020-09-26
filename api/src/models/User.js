@@ -49,21 +49,14 @@ const User = (sequelize) => {
     },
     address: {
         type: DataTypes.STRING,
-        allowNull: true,
-        validate: {
-          len: {
-            args: [5, 30],
-            msg: "No es una dirección valida"
-          }
-          
-        }
+        allowNull: true
     },
     phone_number: {
         type: DataTypes.INTEGER,
         allowNull: true,
         validate: {
           len: {
-            args: [7, 20],
+            args: [5, 25],
             msg: "No es un numero valido"
           },
           isNumeric: true,
