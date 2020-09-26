@@ -1,8 +1,10 @@
+require ( 'dotenv' ).config();
 const server = require('express').Router()
 const { json } = require('body-parser');
 const bodyParser = require('body-parser')
 const { User,Order,LineaDeOrden,Product,Image } = require('../db.js')
-const nodemailer = require ('nodemailer')
+const nodemailer = require ('nodemailer');
+const jwt = require('jsonwebtoken');
 //Middlewares de checkeo de usuario
 const { checkIsAdmin } = require('../utils.js')
 
@@ -340,10 +342,12 @@ server.post('/forgotpassword',(req,res)=>{
             email:email
         }
     }).then(response=>{
-        if(response == null) return res.send('Este correo electrónico no está registrado!')
-
-        const {user_id} = response
+        if(response == null) return res.send('Este correo electrónico no está registrado!');
+        //Encontró el usuario con ese mail
         
+        const tokenID = response.dataValues.user_id;
+
+        const passResetToken = jwt.sign({tokenID}, 'process.env.ACCESS_TOKEN_SECRET', {expiresIn: '3m'});
 
         let transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
@@ -436,7 +440,7 @@ server.post('/forgotpassword',(req,res)=>{
                 </tr>
                 <tr>
                 <td>
-                <a data-click-track-id="37" href="http://localhost:3000/passwordreset/${user_id}" style="margin:36px auto ;-ms-text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; color: yellow; font-family: 'Postmates Std', 'Helvetica', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; font-size: 12px; font-smoothing: always; font-style: normal; font-weight: 600; letter-spacing: 0.7px; line-height: 48px; mso-line-height-rule: exactly; text-decoration: none; vertical-align: top; width: 220px; background-color: black; border-radius: 28px; display: block; text-align: center; text-transform: uppercase" target="_blank">
+                <a data-click-track-id="37" href="http://localhost:3000/passwordreset/${tokenID}/${passResetToken}" style="margin:36px auto ;-ms-text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; color: yellow; font-family: 'Postmates Std', 'Helvetica', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; font-size: 12px; font-smoothing: always; font-style: normal; font-weight: 600; letter-spacing: 0.7px; line-height: 48px; mso-line-height-rule: exactly; text-decoration: none; vertical-align: top; width: 220px; background-color: black; border-radius: 28px; display: block; text-align: center; text-transform: uppercase" target="_blank">
                                                         Reestablecer contraseña
                                                       </a>
                 </td>

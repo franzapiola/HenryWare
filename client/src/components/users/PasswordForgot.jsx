@@ -64,7 +64,7 @@ function PasswordForgot(props){
                 <div className={`d-flex justify-content-center`}>
                     <Button className='btn-warning w-50' type='submit'>Enviar</Button>
                 </div>
-                <p className={styles.error}>{error?error:''}</p>
+                <p className={styles.error}>{(error && !error.email)?error:''}</p>
                 </Form.Group>
             </Form>
         </Container>

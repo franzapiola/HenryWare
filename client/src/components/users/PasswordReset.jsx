@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 import { Form, Container } from 'react-bootstrap'
 import axios from 'axios'
 import { FormControl, TextField, Button } from '@material-ui/core';
+import jwt from 'jsonwebtoken';
+
 
 //Redux
 import { loadUserData } from '../../redux/actions/auth'
@@ -10,12 +12,21 @@ import { connect } from 'react-redux';
 
 import styles from './PasswordForgot.module.css'
 
+require ( 'dotenv' ).config();
 
-function PasswordForgot({userID}){
+function PasswordReset({passResetToken, user_id}){
     const history = useHistory()
     const [password,setPassword] = useState('')
     const [checkPassword,setcheckPassword] = useState('')
     const [error,setError] = useState('')
+
+    //Verificar que el id guardado en el token sea el que corresponde
+    jwt.verify(passResetToken, 'process.env.ACCESS_TOKEN_SECRET',(err, resp) =>{
+        // console.log('TOKENID', tokenID);
+        if (err) return history.push('/404');
+        if (resp.tokenID != user_id) return history.push('/404');
+	})
+
 
     const mostrarError = string => {
         setError(string);
@@ -30,10 +41,9 @@ function PasswordForgot({userID}){
         if(password.length<8) return mostrarError('La contraseña tiene que tener al menos 8 caracteres')
         if(password !== checkPassword) return mostrarError('Las contraseñas tienen que coincidir')
 
-        axios.put(`http://localhost:3001/users/${userID}/password-reset`,{
-
+        axios.put(`http://localhost:3001/users/${user_id}/password-reset`,
+        {
             newPassword:password
-
         })
         .then(()=> history.push('/'))
 
@@ -85,4 +95,4 @@ function PasswordForgot({userID}){
     )
 }
 
-export default PasswordForgot
+export default PasswordReset
