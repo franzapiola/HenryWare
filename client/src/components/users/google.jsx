@@ -62,7 +62,7 @@ function Google (props) {
             <GoogleLogin
             //guardarla en .env
             clientId='243862763103-9oer77jtoipa8qhd4ooflsjv5u31lmj2.apps.googleusercontent.com'
-            buttonText='Login'
+            buttonText='Ingresar'
             onSuccess={responseSuccess}
             onFailure={responseFailure}
             cookiePolicy={'single_host_origin'}

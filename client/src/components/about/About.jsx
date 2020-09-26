@@ -190,7 +190,7 @@ export default function About() {
                     <div className={`card-body ${styles.bodyCard}`}>
                     <h5 class={`card-title ${styles.cardTitle}`}>Nicolas Velandia</h5>
                     <p class={`${styles.cardText} card-text`}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" className={`${styles.linkedinButton}`}><AiFillLinkedin/></a>
+                    <a href="https://www.linkedin.com/in/nicolas-velandia-8849b71b6/" className={`${styles.linkedinButton}`}><AiFillLinkedin/></a>
                     </div>
 
                 </div>
@@ -214,7 +214,7 @@ export default function About() {
                     <div className={`card-body ${styles.bodyCard}`}>
                     <h5 class={`card-title ${styles.cardTitle}`}>Juan Cruz Barneix</h5>
                     <p class={`${styles.cardText} card-text`}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" className={`${styles.linkedinButton}`}><AiFillLinkedin/></a>
+                    <a href="https://www.linkedin.com/in/juan-cruz-barneix-9a0a17188/" className={`${styles.linkedinButton}`}><AiFillLinkedin/></a>
                     </div>
                 </div>
                 </Animated > 
@@ -226,7 +226,7 @@ export default function About() {
                     <div className={`card-body ${styles.bodyCard}`}>
                     <h5 class={`card-title ${styles.cardTitle}`}>Nicolas Kenny</h5>
                     <p class={`${styles.cardText} card-text`}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" className={`${styles.linkedinButton}`}><AiFillLinkedin/></a>
+                    <a href="https://www.linkedin.com/in/nicolasdkenny/" className={`${styles.linkedinButton}`}><AiFillLinkedin/></a>
                     </div>
 
                 </div>
@@ -239,7 +239,7 @@ export default function About() {
                     <div className={`card-body ${styles.bodyCard}`}>
                     <h5 class={`card-title ${styles.cardTitle}`}>Francisco Zapiola</h5>
                     <p class={`${styles.cardText} card-text`}>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" className={`${styles.linkedinButton}`}><AiFillLinkedin/></a>
+                    <a href="https://www.linkedin.com/in/francisco-zapiola-martin-44301b1a6/" className={`${styles.linkedinButton}`}><AiFillLinkedin/></a>
                     </div>
 
                 </div>

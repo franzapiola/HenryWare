@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loadUserData } from '../../redux/actions/auth';
 import { fetchUserCart } from '../../redux/actions/cart';
+import styles from './register.module.scss'
 
 
 function Github(props) {
@@ -61,6 +62,8 @@ function Github(props) {
         onSuccess={onSuccess}
         onFailure={onFailure}
         buttonText='GitHub'
+        className={`${styles.GitHubLogin} btn`}
+
         /></button>
     )
 }
