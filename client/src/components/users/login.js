@@ -108,10 +108,10 @@ function Login(props){
 	const onFailure = response => console.error(response);
 		
 	return(
-		<div className={`pt-3 mt-2 d-flex justify-content-center align-items-center w-100 mx-auto ${styles.container}`}>
+		<div className={`pt-3 mt-2 d-flex flex-column justify-content-center align-items-center w-100 mx-auto ${styles.container}`}>
 			<div className={`card ${styles.cardLogin}`}  >
 			{/* <span>TOKEN actual : {localStorage.getItem("actualToken")} </span> */}
-			<form onSubmit={handleSubmit}>
+			<form style={{textAlign:'center'}}  onSubmit={handleSubmit}>
 				 <div className="form-group">
 				    <label for="userInput">Correo Electronico</label>
 					<input name="correo" value={form.email}type="text" className={`form-control ${styles.inputLogin}`} id="correo" 
@@ -128,20 +128,25 @@ function Login(props){
 						password: e.target.value
 					})}/>
 				  </div>
-					{errorMsg && <span>{errorMsg}</span>}
+					{errorMsg && <span className={styles.error}>{errorMsg}</span>}
 				  <input  type='submit' className={`${styles.henryColor} col-md-12`} value='Ingresar' />
 
 				  <div className='d-flex'>
-					  <div className='w-50 d-flex justify-content-center'>
-						<Google/>
-					  </div>
-					  <div className='w-50 d-flex justify-content-center'>
-						<GitHub/>
-					  </div>
+					  
 				  </div>
-					<Link to='/passwordforgot'>Olvidé mi contraseña :(</Link>
 				</form>
 			</div>
+		<Link className={styles.botonPasswordF} to='/passwordforgot'>Olvidé mi contraseña</Link>
+		<div className={`fit-content d-flex flex-row  align-items-center ${styles.buttonsExternal}`}>
+		<div>
+			<Google style={{marginTop:'0px'}} className={styles.buttonExternal}/>
+		</div>
+		<div>
+
+			<GitHub className={styles.buttonExternal}/>
+			</div>
+
+		</div>
 		</div>
 		)
 }
