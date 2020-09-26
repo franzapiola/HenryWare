@@ -9,11 +9,8 @@ module.exports = (sequelize) => {
             autoIncrement: true
         },
         img_url: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
-            validate: {
-                isURL: true
-            }
         }
     });
 }

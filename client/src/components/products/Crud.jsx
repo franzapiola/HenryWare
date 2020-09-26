@@ -10,7 +10,7 @@ import Selectt from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import style from './Crud.module.css';
-
+import FileBase64 from 'react-file-base64';
 
 //Redux
 import {connect} from 'react-redux'
@@ -39,7 +39,9 @@ const Crud =(props)=> {
             changePage(currentPage + 1);
         };
     
+    //Estado para imagenes
 
+    const [images,setImages] = useState([])
     
     //Estado local de categorías
     const [categories, setCategories] = useState([]);
@@ -63,7 +65,6 @@ const Crud =(props)=> {
         warranty: '',
         price:'',
         stock:'',
-        image:'',
         rating:null,
     });
 
@@ -100,6 +101,7 @@ const Crud =(props)=> {
     const handleClose = () => setShow(false);
 
     //handleAddUpdate muestra la ventana modal y además actualiza el state de addEdit para hacer el fetch
+
     const handleAddUpdate = (product, addEdit) =>{
         setAddEdit(addEdit)
         if(addEdit==='PUT'){           
@@ -110,7 +112,6 @@ const Crud =(props)=> {
                 warranty: product.warranty,
                 price: product.price,
                 stock: product.stock,
-                image: product.image,
                 rating:null,
             })
         }else{
@@ -121,7 +122,6 @@ const Crud =(props)=> {
                 warranty: '',
                 price:'',
                 stock: '',
-                image:'',
                 rating:null,
             })
         }
@@ -158,8 +158,28 @@ const Crud =(props)=> {
             }
         })
         .then(res=>res.json())
+        .then( response =>{
+            
+             images.forEach( (image)=>{
+
+                 axios.post(`http://localhost:3001/products/${response.product_id}/images`,{
+
+                    img_url:image.base64
+
+                },{
+                    headers:{
+                        'Authorization': `Bearer ${localStorage.getItem('actualToken')}`
+                    }
+                }).then((response)=>'imagen agregada')
+            
+            })
+
+            return response
+        })
         .then(res => {
             //traigo de nuevo los products de la db
+
+
             getProducts(view, searchInput, selectedCategory, currentPage, selectedID);
             handleSubmitCat(res.product_id)
         })
@@ -226,6 +246,7 @@ const Crud =(props)=> {
     };
     //URL de imagen para agregarla a un producto en el modal de imágenes
     const [ addImgURL, setAddImgURL ] = useState()
+    
     const addImg = (e) => {
         e.preventDefault();
 
@@ -263,6 +284,12 @@ const Crud =(props)=> {
     useEffect(()=>{
         getCategories();
     }, [])
+
+    const getFiles = (files)=>{
+        console.log("SOY PUTO",files)
+        setImages(files)
+    }
+
     return (
         <>
             <div className={style.mainWrapper}>
@@ -399,7 +426,11 @@ const Crud =(props)=> {
                             <Form.Label>Ingrese el stock</Form.Label>
                             <Form.Control id='stock' name='stock' value={form.stock} type="text" placeholder="Ingrese Existencias" onChange={updateField}/> 
                             <Form.Label>Ingrese una imagen [URL]</Form.Label>
-                            <Form.Control id='image' name='image' value={form.image} type="text" placeholder="Ingrese Url de Imagen" onChange={updateField}/>                  
+
+                            <Form.Label>Imagenes</Form.Label>
+                            
+                            <FileBase64 id='image' name='image' multiple={true} onDone={getFiles}/>    
+
                             <Form.Label>Categorias</Form.Label>
                             <Select options ={categorias(categories)} onChange={handleChangeCat}/>     
                         </Modal.Body>
@@ -439,7 +470,7 @@ const Crud =(props)=> {
                         <p style={{fontSize:'12px'}}>Recuerde que los productos deben tener al menos una imagen</p>
                         <ul style={{listStyleType: 'none'}}>
                             {imgModalData.images.map(img=>{
-                                
+                                console.log(img)
                                 const { img_url, img_id } = img;
                                 const { product_id } = imgModalData;
                                 
