@@ -17,7 +17,8 @@ function Producto (props) {
     const [ productData, setProductData ] = useState({
         images:[]
     })
-    
+
+    const [reviewProduct, setReviewProduct] = useState([]);    
     const { id } = useParams()
     const getIdProduct = async (id) =>{
         try {
@@ -29,7 +30,8 @@ function Producto (props) {
         }}
         
     useEffect(() => {
-        getIdProduct(id) 
+        getIdProduct(id)
+        getReview(id)
      } ,[]) 
     
     //Recibimos el id del usuario actual a  través del store
@@ -64,6 +66,13 @@ function Producto (props) {
           });
         
     }
+    const getReview = () => {
+        fetch(`http://localhost:3001/reviews/${id}`)
+          .then(response => response.json())
+          .then(json => {
+            setReviewProduct(json)
+          });
+      };
 
     return (
 
@@ -86,6 +95,7 @@ function Producto (props) {
 
                         {/* <div className="vertical-line"></div> */}
                         <i className='text-primary' className={styles.r}>Calificación: <Rating rating={productData.rating} className={styles.rating}/> </i>
+                        <h4 className={styles.stock}>{reviewProduct.length} opiniones</h4>
                         <div className={styles.cajaPrice}>
                             <h2 className={styles.price}>${productData.price}</h2> <span className={styles.ars}>ARS</span>
                         </div>

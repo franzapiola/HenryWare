@@ -50,7 +50,7 @@ const NormalNavBar = (props) => {
                     <Link to='/products' className={`${styles.navbuttonAdmin} ${styles.navbarLinkAdmin}`}>Catálogo</Link>
                    
                     
-                    {user.first_name ? null : <Link className={`${styles.navbuttonAdmin} ${styles.navbarLinkAdmin}`} to='/login'>Iniciar Sesion</Link>}
+                    {user.first_name ? null : <Link className={`${styles.navbuttonAdmin} ${styles.navbarLinkAdmin}`} to='/login'>Iniciar Sesión</Link>}
                     {user.first_name ?
                         <NavDropdown title={
                             <span className={styles.dropdownWhiteAdmin}>
