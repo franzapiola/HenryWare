@@ -16,7 +16,7 @@ import style from './Crud.module.css';
 import {connect} from 'react-redux'
 import { search, selectCategory, changePage, selectAll, selectID, getProducts } from '../../redux/actions/crud';
 
-
+import imageToBase64 from 'image-to-base64';
 const Crud =(props)=> {
     //Autenticación
     const {user, isFetching} = props
@@ -266,7 +266,7 @@ const Crud =(props)=> {
     return (
         <>
             <div className={style.mainWrapper}>
-
+                
                 <div className={style.inputWrapper}>
                     <Button variant='info' className={`mb-3 ${style.addButton}`}  onClick={()=>handleAddUpdate('', 'POST')}>+</Button>
                     <div className={`col-md-8 offset-2 pt-3 ${style.inputs}`}>
@@ -280,7 +280,16 @@ const Crud =(props)=> {
                                 changePage(1);
                             }}
                         />
+<button onClick={()=>{
+                    imageToBase64("https://i.ibb.co/MNBZwxg/Teclado-mec-nico-Alloy-FPS-Pro-PNG.png") // Path to the image
+                    .then(
+                        (response) => {
+                            console.log(response); // "cGF0aC90by9maWxlLmpwZw=="
+                        }
+                    )
 
+
+                }}>XXXX</button>
                         <TextField
                             className={style.input}
                             type='number'
