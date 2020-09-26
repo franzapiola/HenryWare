@@ -28,7 +28,7 @@ import { useHistory } from 'react-router-dom';
         setErrors(string);
         setTimeout(()=>{
             setErrors('');
-        }, 3000);
+        }, 5000);
     }
     //update field va a gregando al form los datos cargados en el formulario 
     const updateField = async e => {
@@ -100,7 +100,7 @@ import { useHistory } from 'react-router-dom';
         <div className={`pt-3 mt-5 d-flex align-items-center w-75 mx-auto ${styles.container2} position-relative`}>
             <div className="d-flex align-items-center mx-auto h-75 col-md-8 mt-5">
                 
-                <form onSubmit={handleSubmit}>
+                <form className={styles.formulario} onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="col-md-4 offset-2 mb-4">
                             <FormControl className='col-md-12'>
@@ -166,16 +166,16 @@ import { useHistory } from 'react-router-dom';
                                     onChange={(e)=>{setConfirmPass(e.target.value)}} />
                             </FormControl>
                         </div>
-                        <div className="col-md-4 offset-4 mb-4">
+                        <div className={`col-md-4 offset-4 mb-4 ${styles.buttonErrorDiv}`}>
                             <Button
                                 type='submit'
                                 variant="contained"
                                 className={`${styles.henryColor} col-md-12`}>
                                 Registrarme
                             </Button>
-                                <span className={styles.error}>{errors ? errors : null}</span>
                         </div>
                     </div>
+                            <span className={styles.error}>{errors ? errors : null}</span>
                 </form>
             </div>
             <ToastContainer />

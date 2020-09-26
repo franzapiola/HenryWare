@@ -29,9 +29,10 @@ import Profile from '../components/users/profile'
 import OrderUser from '../components/order/orderUser'
 import About from '../components/about/About'
 
+import PasswordForgot from '../components/users/PasswordForgot'
 
-import PasswordReset from '../components/users/PasswordReset';
-
+import PasswordChange from '../components/users/PasswordChange';
+import PasswordReset from '../components/users/PasswordReset'
 
 //Redux
 import { connect } from 'react-redux';
@@ -150,9 +151,11 @@ const App = (props) => {
         <Route exact path='/profile'><Profile/></Route>
         <Route exact path='/orderUser'><OrderUser/></Route>
         <Route exact path='/profile/password-reset'>
-          <PasswordReset/>
+          <PasswordChange/>
         </Route>
         <Route exact path='/about' component={About} />
+        <Route path='/passwordforgot' component={PasswordForgot}/>
+        <Route path='/passwordreset/:user_id' render={({match})=>{return <PasswordReset userID={match.params.user_id}/>}} />
         <Route component={NotFound} />
       </Switch>
         <Route path='/' component={Footer}/>

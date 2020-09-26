@@ -1,6 +1,7 @@
 import React,{ useState } from 'react';
 import { useHistory }  from 'react-router-dom'
 import styles from './register.module.scss'
+import {Link} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import Google from './google.jsx';
@@ -138,7 +139,7 @@ function Login(props){
 						<GitHub/>
 					  </div>
 				  </div>
-
+					<Link to='/passwordforgot'>Olvidé mi contraseña :(</Link>
 				</form>
 			</div>
 		</div>
