@@ -18,7 +18,20 @@ server.get('/', checkIsAdmin, function(req,res){
 server.post('/',(req, res) => {
   
     const { email, first_name, last_name, address, phone_number, role, password }= req.body;
+
+    //Checkeo password
+    if(password.length < 8) return res.status(400).send({error: 'La contraseña debe tener al menos 8 caracteres'});
+
+    //Checkeo email
+    if(email.length < 10) return res.status(400).send({error: 'La dirección de email no es válida'});
+
+    //Checkeo que el email sea un email válido con regex
+    const emailCheck = new RegExp(/^([a-zA-Z0-9-.]+)@([a-zA-Z0-9-.]+)\.([a-zA-Z]{2,3})$/);
+    if (!emailCheck.test(email)) return res.status(400).send({error: 'La dirección de email no es válida'});
     
+    //Checkeo número de teléfono
+    if(phone_number.length < 5 || phone_number.length > 25) return res.status(400).send({error: 'El número de teléfono debe tener entre 5 y 25 dígitos'})
+
     User.create({
         email, 
         first_name, 
@@ -32,7 +45,7 @@ server.post('/',(req, res) => {
         res.status(201).send({status: 201, message: usuario})        
     })
     .catch((error) => {
-        res.status(400).send({status: 400, message: error})
+        res.status(400).send({status: 400, message: error, errorMail: 'Esta dirección de mail ya se encuentra registrada'})
     })
 })
 
