@@ -80,9 +80,9 @@ function Producto (props) {
             
             <div className="card-header text-center">
                 {/*<h3>actualID: {localStorage.getItem("actualUserId")}</h3>*/}
-                <Button
+                {role === 'admin' && <Button
                     onClick={() => irAEditar(productData.product_id)}
-                >Editar</Button>
+                >Editar</Button>}
             </div>
 
             <div className="card-body">
