@@ -91,7 +91,6 @@ Image.belongsTo(Product, {
 
 
 //Producto-review 1:M
-
 Product.hasMany(Review,{
   foreignKey: 'product_id'
 })
@@ -101,7 +100,6 @@ Review.belongsTo(Product,{
 })
 
 //User-review 1:M
-
 User.hasMany(Review,{
   foreignKey: 'user_id'
 })
@@ -109,6 +107,19 @@ User.hasMany(Review,{
 Review.belongsTo(User,{
   foreignKey:'user_id'
 })
+
+//User-Product M:M
+//(WISHLIST)
+User.belongsToMany(Product, {
+  through: 'wishlist',
+  as: 'user',
+  foreignKey: 'user_id'
+});
+Product.belongsToMany(User, {
+  through: 'wishlist',
+  as: 'product_wishlist',
+  foreignKey: 'product_id'
+});
 
 
 module.exports = {

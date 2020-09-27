@@ -5,14 +5,18 @@ import Rating from './Rating'
 import { Button, Carousel } from 'react-bootstrap'
 import axios from "axios"
 import Reviews from '../reviews/reviews';
-import {loadUserData} from '../../redux/actions/auth'
+import { useHistory } from 'react-router-dom';
 
+import {loadUserData} from '../../redux/actions/auth'
 import { connect } from 'react-redux'
 import {fetchUserCart} from '../../redux/actions/cart'
+import {selectID} from '../../redux/actions/crud'
+
+import ButtonWishlist from '../products/ButtonWishlist';
 
 function Producto (props) {
-
-    const { userInfo, averageReview,fetchUserCart} = props;
+    const history = useHistory();
+    const { userInfo, averageReview, fetchUserCart, wishlistProductIDs, selectID} = props;
 
     const [ productData, setProductData ] = useState({
         images:[]
@@ -74,12 +78,14 @@ function Producto (props) {
           });
       };
 
+    const irAEditar = product_id => {
+        selectID(product_id);
+        history.push('/products/edit');
+    }
+
     return (
 
         <div className='mt-4 col-md-12 '>
-            <div className="card-header text-center">
-                {/*<h3>actualID: {localStorage.getItem("actualUserId")}</h3>*/}
-            </div>
 
             <div className="card-body">
                 <div className="row" className={styles.container}>
@@ -89,10 +95,10 @@ function Producto (props) {
                             return <Carousel.Item className={styles.carouselItem}><img className={styles.carouselImg} src={imagen.img_url}/></Carousel.Item>
                         })}
                     </Carousel>
-
+                    
                     <div className='product-data col-md-5 col-4' className={styles.caja}>
                         <h3><b>  {productData.name} </b></h3>
-
+                        
                         {/* <div className="vertical-line"></div> */}
                         <i className='text-primary' className={styles.r}>Calificación: <Rating rating={productData.rating} className={styles.rating}/> </i>
                         <h4 className={styles.stock}>{reviewProduct.length} opiniones</h4>
@@ -106,6 +112,17 @@ function Producto (props) {
                         {/*<Button className="col-md-5 col-12 mr-2" variant='comprar'  disabled={productData.stock<=0?'disabled':null}>Comprar</Button>*/}
                         <Button className={`col-md-5 col-12 ${styles.buttonCart}`} variant='info'  disabled={productData.stock<=0?'disabled':null} onClick={ 
                             () => enviarACarrito(user_id,productData.product_id,1,productData.price)} className={styles.button}>Añadir al Carrito</Button>
+                        {role == 'admin'?<Button
+                    style={{height:'fit-content'}}
+                    onClick={() => irAEditar(productData.product_id)}
+                >Editar</Button>:''}
+                    </div>
+
+                    <div style={{width:'fit-content',position:'relative',}}>
+                        <ButtonWishlist
+                            product_id={productData.product_id}
+                            wishlistProductIDs={wishlistProductIDs}
+                        />
                     </div>
                 </div>
             </div>
@@ -119,13 +136,14 @@ const mapStateToProps = state => {
   
     return {
         averageReview: state.review.averageReview,
-        userInfo : state.auth.user
+        userInfo : state.auth.user,
+        wishlistProductIDs: state.wishlist.productIDs,
     }
 }
   
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        
+        selectID: product_id => dispatch(selectID(product_id)),
         loadUserData: () =>dispatch(loadUserData()),
         fetchUserCart:(user_id) => dispatch(fetchUserCart(user_id))
     }

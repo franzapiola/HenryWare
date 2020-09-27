@@ -9,12 +9,13 @@ import { connect, useDispatch } from 'react-redux';
 import { search, selectCategory, selectAll,changePage } from '../../redux/actions/main'
 import { fetchUserCart } from '../../redux/actions/cart'
 import { loadUserData } from '../../redux/actions/auth';
+import { receiveWishlistIDs } from '../../redux/actions/wishlist';
 
 
 const NormalNavBar = (props) => {
 
     //Redux
-    const { searchInput, search, selectCategory, selectAll, articles, changePage, user, loadUserData } = props;
+    const { searchInput, search, selectCategory, selectAll, articles, changePage, user, loadUserData, receiveWishlistIDs } = props;
     const dispatch = useDispatch();
     
     const history = useHistory();
@@ -68,6 +69,7 @@ const NormalNavBar = (props) => {
                             
                                 <NavDropdown.Item><Link to="/profile"> Perfil </Link></NavDropdown.Item>
                                 <NavDropdown.Item><Link to="/orderUser"> Mis ordenes </Link></NavDropdown.Item>
+                                <NavDropdown.Item><Link to="/profile/wishlist"> Mi wishlist </Link></NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item> <Link onClick={()=>{
                                         //Logout
@@ -75,6 +77,7 @@ const NormalNavBar = (props) => {
                                         loadUserData({
                                             role: 'Guest'
                                         });
+                                        receiveWishlistIDs([]);
                                         history.push('/');
                                 }}>Cerrar Sesión</Link> </NavDropdown.Item>
                                 
@@ -122,7 +125,8 @@ const mapDispatchToProps = dispatch => {
         selectAll: () => dispatch(selectAll()),
         fetchUserCart: (id) => dispatch(fetchUserCart(id)),
         changePage: num => dispatch(changePage(num)),
-        loadUserData: userData => dispatch(loadUserData(userData))
+        loadUserData: userData => dispatch(loadUserData(userData)),
+        receiveWishlistIDs: arr => dispatch(receiveWishlistIDs(arr))
     }
 }
 

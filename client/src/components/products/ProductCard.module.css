@@ -43,6 +43,8 @@ a:hover{
     height: fit-content;
     text-align:center;
     height: 60%;
+    position: relative;
+
 }
 
 .productCard:hover{
@@ -115,4 +117,37 @@ a:hover{
     background-color:  rgb(255, 213, 24) !important;
     box-shadow: none !important;
     color:black
+}
+
+.buttonWish{
+    width: fit-content;
+    margin:auto;
+    border-radius: 50%;
+    margin-bottom: 5px;
+    padding: 10px 15px;
+    background-color: rgb(211, 74, 74);
+    border:none;
+    position: absolute ;
+    top:10px;
+    right:10px;
+    z-index: 999;
+}
+
+.buttonWish:hover{
+    background-color: brown;
+}
+.buttonWish:active{
+    background-color: brown !important;
+    border:none !important;
+    box-shadow: none !important;
+}
+.buttonWish:focus{
+    background-color: brown;
+    border:none;
+    box-shadow: none;
+}
+
+.buttonWishA{
+    position: relative;
+    top:0px
 }
