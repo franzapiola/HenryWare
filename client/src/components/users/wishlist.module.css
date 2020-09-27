@@ -72,11 +72,6 @@ h1::after{
     font-size: 16px;
 }
 
-.buttonSection{
-    display: flex;
-    flex-direction: column;
-}
-
 .priceNameWish{
     font-size: 20px;
 }
@@ -89,7 +84,7 @@ h1::after{
     font-weight: bold;
 }
 .buttonSection{
-    height: 100px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

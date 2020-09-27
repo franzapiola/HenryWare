@@ -9,9 +9,11 @@ import cart from './cart';
 import order from './order';
 import usersInfo from './users_info';
 import crud from './crud';
+import wishlist from './wishlist';
 
 export default combineReducers({
   auth,
+  wishlist,
   main,
   review,
   cart,

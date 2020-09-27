@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getWishlistIDs } from './wishlist';
 
 //acciones para el login/logout/¿registro?
 
@@ -38,10 +39,13 @@ export const checkSession = token => {
             }
             }
         )
-        .then(response =>
+        .then(response => {
             //isFetching = false;
             //Cargamos los datos del usuario al store de redux
-            dispatch(loadUserData(response.data.user))
+            dispatch(loadUserData(response.data.user));
+            //Traemos los IDs de cada producto de la wishlist del usuario que se logeó
+            dispatch(getWishlistIDs(response.data.user.user_id));
+        }
         )
         .catch(err => console.log('ERROR EN LLAMADO A /auth/me:', err));
     }

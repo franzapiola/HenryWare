@@ -124,4 +124,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, null)(Wishlist);
+export default connect(mapStateToProps, mapDispatchToProps)(Wishlist);

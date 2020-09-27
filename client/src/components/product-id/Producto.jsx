@@ -5,14 +5,18 @@ import Rating from './Rating'
 import { Button, Carousel } from 'react-bootstrap'
 import axios from "axios"
 import Reviews from '../reviews/reviews';
-import {loadUserData} from '../../redux/actions/auth'
+import { useHistory } from 'react-router-dom';
 
+import {loadUserData} from '../../redux/actions/auth'
 import { connect } from 'react-redux'
 import {fetchUserCart} from '../../redux/actions/cart'
+import {selectID} from '../../redux/actions/crud'
+
+import ButtonWishlist from '../products/ButtonWishlist';
 
 function Producto (props) {
-
-    const { userInfo, averageReview,fetchUserCart} = props;
+    const history = useHistory();
+    const { userInfo, averageReview, fetchUserCart, wishlistProductIDs, selectID} = props;
 
     const [ productData, setProductData ] = useState({
         images:[]
@@ -65,11 +69,20 @@ function Producto (props) {
         
     }
 
+    const irAEditar = product_id => {
+        selectID(product_id);
+        history.push('/products/edit');
+    }
+
     return (
 
         <div className='mt-4 col-md-12 '>
+            
             <div className="card-header text-center">
                 {/*<h3>actualID: {localStorage.getItem("actualUserId")}</h3>*/}
+                <Button
+                    onClick={() => irAEditar(productData.product_id)}
+                >Editar</Button>
             </div>
 
             <div className="card-body">
@@ -83,7 +96,10 @@ function Producto (props) {
 
                     <div className='product-data col-md-5 col-4' className={styles.caja}>
                         <h3><b>  {productData.name} </b></h3>
-
+                        <ButtonWishlist
+                            product_id={productData.product_id}
+                            wishlistProductIDs={wishlistProductIDs}
+                        />
                         {/* <div className="vertical-line"></div> */}
                         <i className='text-primary' className={styles.r}>Calificación: <Rating rating={productData.rating} className={styles.rating}/> </i>
                         <div className={styles.cajaPrice}>
@@ -109,13 +125,14 @@ const mapStateToProps = state => {
   
     return {
         averageReview: state.review.averageReview,
-        userInfo : state.auth.user
+        userInfo : state.auth.user,
+        wishlistProductIDs: state.wishlist.productIDs,
     }
 }
   
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        
+        selectID: product_id => dispatch(selectID(product_id)),
         loadUserData: () =>dispatch(loadUserData()),
         fetchUserCart:(user_id) => dispatch(fetchUserCart(user_id))
     }
