@@ -2,7 +2,7 @@ require ( 'dotenv' ).config();
 const server = require('express').Router()
 const { json } = require('body-parser');
 const bodyParser = require('body-parser')
-const { User,Order,LineaDeOrden,Product,Image } = require('../db.js')
+const { User, Order, LineaDeOrden, Product, Image, wishlist } = require('../db.js')
 const nodemailer = require ('nodemailer');
 const jwt = require('jsonwebtoken');
 //Middlewares de checkeo de usuario
@@ -467,11 +467,93 @@ server.post('/forgotpassword',(req,res)=>{
       
         })
       })
+});
+  
+//Agregar producto a la wishlist de un usuario
+server.post('/:user_id/wishlist', (req, res) => {
+    const { user_id } = req.params;
+    const { product_id } = req.body;
 
-
+    wishlist.create({
+        user_id,
+        product_id
     })
-  
-  
+    //Envío como respuesta la wishlist actualizada
+    .then(()=>Product.findAll({
+        include: [
+            {
+                model: User,
+                as: 'product_wishlist',
+                where: {
+                    user_id
+                },
+                attributes: ['user_id']
+            },
+            {
+                model: Image
+            }
+        ]
+        })
+    )
+    .then(result => res.send(result))
+    .catch(err => res.status(400).send(err));
+});
+
+//Eliminar producto de la wishlist de un usuario
+server.delete('/:user_id/wishlist', (req, res) => {
+    const { user_id } = req.params;
+    const { product_id } = req.body;
+
+    wishlist.destroy({
+        where: {
+            user_id,
+            product_id
+        }
+    })
+    //Lo elimino y acto seguido envío como respuesta la wishlist actualizada
+    .then(() => Product.findAll({
+        include: [
+            {
+                model: User,
+                as: 'product_wishlist',
+                where: {
+                    user_id
+                },
+                attributes: ['user_id']
+            },
+            {
+                model: Image
+            }
+        ]
+        })
+    )
+    .then(result => res.send(result))
+    .catch(err => res.status(400).send(err));
+
+})
+
+//Traer la wishlist de un usuario
+server.get('/:user_id/wishlist', (req, res) => {
+    const { user_id } = req.params;
+    //traemos todos los productos asociados al usuario que nos pasan por params
+    Product.findAll({
+        include: [
+            {
+                model: User,
+                as: 'product_wishlist',
+                where: {
+                    user_id
+                },
+                attributes: ['user_id']
+            },
+            {
+                model: Image
+            }
+        ]
+    })
+    .then(result => res.send(result))
+    .catch(err => res.status(400).send(err));
+})
     
 
 
