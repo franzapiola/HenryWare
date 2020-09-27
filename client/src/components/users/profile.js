@@ -5,18 +5,29 @@ import axios from 'axios'
 import {useHistory} from 'react-router-dom'
 import styles from './profile.module.css'
 import {Link} from 'react-router-dom'
+import FileBase64 from 'react-file-base64'
+
+
 const Profile = (props)=>{
 
 
     const history = useHistory()
+    // avatar por defecto 
+    const [avatar,setAvatar] = useState("https://i.ibb.co/x6cBfn9/ASD.png")
     
-    
-
-
     const [fullUser, setUser] = useState()
 
     const {user} = props
 
+    const getFile = (file) => {
+        
+        axios.put(`http://localhost:3001/users/${user.user_id}`,{
+            avatar : file.base64
+        })
+        .then(() => setAvatar(file.base64))
+        .catch(err => console.log(err))        
+        console.log(avatar)
+    }
 
     const getUser = ()=>{
 
@@ -28,7 +39,7 @@ const Profile = (props)=>{
 
     useEffect(()=>{
         if(user.user_id) getUser();
-    },[user])
+    },[user,avatar])
 
     console.log(fullUser)
     return(
@@ -42,8 +53,8 @@ const Profile = (props)=>{
                 <div className='row'>
                     <div className='col-6'>
 
-                        <img className={styles.imgProfile} src={fullUser&&fullUser.role=='admin'?"https://www.placecage.com/c/640/360":"https://www.placecage.com/640/360"}/>
-                      
+                        <img className={styles.imgProfile} src={fullUser && fullUser.avatar} alt="avatar"/>
+                        <FileBase64 multiple={false} onDone={getFile} />
 
                     </div>
 
