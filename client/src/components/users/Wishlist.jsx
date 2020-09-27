@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 import {  Button } from '@material-ui/core';
+import {FaRegTrashAlt} from 'react-icons/fa'
+
+import styles from './wishlist.module.css'
 
 //Redux
 import { fetchUserCart } from '../../redux/actions/cart'
@@ -55,32 +58,51 @@ const Wishlist = props => {
     }, [isFetching]);
 
     return (
-        <div>
-            <table>
-                <thead>
-                </thead>
+        <div className={styles.container}>
+            <table className={styles.tablaContenedora}>
+
                 <tbody>
+                    <div>
+                    {(isFetching== false && !products.length)?<h1 className={styles.titleWish}>No tienes productos en tu lista de deseados</h1>:<h1 className={styles.titleWish}>Tu lista de deseados</h1>}
+                    </div>
+                    {isFetching==false && !products.length?<div className={styles.contBack}>
+                        <Link className={styles.backCatalogo} to='/products'>Volver al catálogo</Link>
+                    </div>:null}
                     {products.length ? products.map( p => 
-                        <tr key={p.product_id}>
+                        <tr  key={p.product_id}>
+                            <div className={styles.rowWish}>
+
+                            <div className={styles.imgNameSection}>
+
                             <td>
-                                <img src={p.images[0].img_url} alt={p.name}/>
+                                <img className={styles.imageWish} src={p.images[0].img_url} alt={p.name}/>
                             </td>
-                            <td><Link to={`/products/${p.product_id}`}>{p.name}</Link> {p.price}</td>
-                            <td>
+
+                            <td className={styles.priceNameWish}><Link to={`/products/${p.product_id}`}>{p.name}</Link> <p className={styles.price}>${p.price}</p> <p className={styles.description}>{p.description.substr(0,150)}</p></td>
+
+                            </div>
+
+                            <td className={styles.buttonSection}>
+                                
                                 <Button
                                     onClick={() => enviarACarrito(p.product_id, 1, p.price)}
+                                    className={styles.buttonCart}
                                 >
                                     Agregar al carrito
                                 </Button>
+
                                 <Button
                                     onClick={() => {
                                         console.log('PRODUCTO:', p)
                                         eliminarDeWishlist(p.product_id)
                                     }}
+                                    className={styles.buttonDelete}
+
                                 >
-                                    X
+                                    <FaRegTrashAlt/>
                                 </Button>
                             </td>
+                            </div>
                         </tr>
                     ) : null}
                 </tbody>
