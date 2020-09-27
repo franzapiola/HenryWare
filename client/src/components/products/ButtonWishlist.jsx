@@ -3,7 +3,7 @@ import axios from 'axios';
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Button } from "react-bootstrap";
 import { connect } from 'react-redux';
-
+import styles from './ProductCard.module.css'
 import { getWishlistIDs } from '../../redux/actions/wishlist';
 
 
@@ -45,6 +45,7 @@ const ButtonWishlist = props => {
             {
                 user.role !== 'Guest' ?
                 <Button
+                    className={styles.buttonWish}
                     onClick={isFav ? removerDeWishlist : agregarAWishlist}
                 >
                 {

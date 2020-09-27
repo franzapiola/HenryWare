@@ -80,9 +80,7 @@ function Producto (props) {
             
             <div className="card-header text-center">
                 {/*<h3>actualID: {localStorage.getItem("actualUserId")}</h3>*/}
-                <Button
-                    onClick={() => irAEditar(productData.product_id)}
-                >Editar</Button>
+                
             </div>
 
             <div className="card-body">
@@ -93,13 +91,10 @@ function Producto (props) {
                             return <Carousel.Item className={styles.carouselItem}><img className={styles.carouselImg} src={imagen.img_url}/></Carousel.Item>
                         })}
                     </Carousel>
-
+                    
                     <div className='product-data col-md-5 col-4' className={styles.caja}>
                         <h3><b>  {productData.name} </b></h3>
-                        <ButtonWishlist
-                            product_id={productData.product_id}
-                            wishlistProductIDs={wishlistProductIDs}
-                        />
+                        
                         {/* <div className="vertical-line"></div> */}
                         <i className='text-primary' className={styles.r}>Calificación: <Rating rating={productData.rating} className={styles.rating}/> </i>
                         <div className={styles.cajaPrice}>
@@ -112,6 +107,17 @@ function Producto (props) {
                         {/*<Button className="col-md-5 col-12 mr-2" variant='comprar'  disabled={productData.stock<=0?'disabled':null}>Comprar</Button>*/}
                         <Button className={`col-md-5 col-12 ${styles.buttonCart}`} variant='info'  disabled={productData.stock<=0?'disabled':null} onClick={ 
                             () => enviarACarrito(user_id,productData.product_id,1,productData.price)} className={styles.button}>Añadir al Carrito</Button>
+                        {role == 'admin'?<Button
+                    style={{height:'fit-content'}}
+                    onClick={() => irAEditar(productData.product_id)}
+                >Editar</Button>:''}
+                    </div>
+
+                    <div style={{width:'fit-content',position:'relative',}}>
+                        <ButtonWishlist
+                            product_id={productData.product_id}
+                            wishlistProductIDs={wishlistProductIDs}
+                        />
                     </div>
                 </div>
             </div>

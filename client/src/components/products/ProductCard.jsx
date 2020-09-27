@@ -120,6 +120,9 @@ const ProductCard = (props) => {
 
     return (
         <div className={`${styles.linkProductCard} mr-4 mb-3  ${props.data.stock <= 0 ? `${styles.noDisponible}` : null} `}>
+            
+            
+
             <div className={`${styles.card} d-flex ${styles.productCard} mr-3 mx-auto ${styles.cardStyles}`} >
                 <Carousel className={`${styles.carouselCard} ${styles.cardImg}`} controls={props.data.images.length >= 2 && true} activeIndex={index} onSelect={handleSelect} >{props.data.images.map(function (image) {
                     return <Carousel.Item key={image.img_id}><img className={`d-block w-100 `} controls={false} src={image.img_url} /></Carousel.Item>
@@ -133,10 +136,13 @@ const ProductCard = (props) => {
                 </div>
                 <hr className="hr" />
                 {/* Si el producto está en la wishlist del usuario logeado, se muestra el ícono AiFillHeart, sino, AiOutlineHeart */}
+                
                 <ButtonWishlist
+                    className={styles.buttonWishA}
                     product_id={props.data.product_id}
                     wishlistProductIDs={wishlistProductIDs}
-                />
+            />
+
                 <Link to={`/products/${props.data.product_id}`}  >
                     <Button className={`mt-2 w-75 align-self-center nodisplay`} className={`${styles.btnComprar}`} >Ver detalles</Button>
                 </Link>
@@ -147,8 +153,9 @@ const ProductCard = (props) => {
                     <Button className={`mt-2 w-75 align-self-center nodisplay`} style={{ backgroundColor: 'gray' }} className={`${styles.btnComprar}`}>Agregar al carrito</Button>}
 
 
-
+            
             </div>
+            
         </div>
     )
 }
