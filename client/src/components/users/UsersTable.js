@@ -35,8 +35,12 @@ function UsersTable(props) {
     }
 
     const deleteUser = async (userId) =>{
-        await axios.delete(`http://localhost:3001/users/${userId}`)
+        await axios.delete(`http://localhost:3001/users/${userId}`,{
+            headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('actualToken')}`
+                }})
         .then((response) => console.log(response))
+        .then(() => dispatch(requestUsers()))
     }
 
     const getRole = async (userId) => {
