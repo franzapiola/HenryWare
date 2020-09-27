@@ -7,9 +7,10 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loadUserData } from '../../redux/actions/auth';
 import { fetchUserCart } from '../../redux/actions/cart';
-import styles from './register.module.scss'
+import styles from './register.module.scss';
 
-
+import style from './github.module.scss';
+import { FaGithub } from 'react-icons/fa'
 function Github(props) {
 
     const { loadUserData, fetchUserCart } = props;
@@ -55,16 +56,14 @@ function Github(props) {
     } 
     const onFailure = response => console.error(response);
     return (
-        <button className="btn btn-light"><img src='https://image.flaticon.com/icons/png/512/25/25231.png' style={{width: '20px'}}/>
-        <GitHubLogin className='btn'
+        
+        <GitHubLogin className={`btn d-flex justify-content-around align-items-center ${style.githubButton}`}
         clientId="658de51c3bbf0db736fc"
         redirectUri="http://localhost:3000"
         onSuccess={onSuccess}
         onFailure={onFailure}
-        buttonText='GitHub'
-        className={`${styles.GitHubLogin} btn`}
-
-        /></button>
+        >
+            <FaGithub/> Login with GitHub</GitHubLogin>
     )
 }
 
