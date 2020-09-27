@@ -11,7 +11,7 @@ function Reviews (props) {
 
     const dispatch = useDispatch();
     const { id, reviewsProduct } = props;
-
+    
     useEffect(() => {
             dispatch(allReview(id))  
     } ,[]) 
@@ -32,6 +32,7 @@ function Reviews (props) {
                             first_name={x.user.first_name}
                             last_name={x.user.last_name}
                             updatedAt={x.updatedAt}
+                            avatar={x.user.avatar}
                             />
                     ) }          
             </div>

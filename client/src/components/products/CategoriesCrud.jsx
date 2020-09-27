@@ -88,7 +88,7 @@ const CategoriesCrud = (props) => {
                         <Form.Text className="text-muted">
                             Un ID único le será asignado automáticamente a la nueva categoría.
                         </Form.Text>
-                        <Button type='submit' >Enviar</Button>
+                        <Button type='submit' >Agregar</Button>
                     </Form.Group>
                 </Form>
             </div>
