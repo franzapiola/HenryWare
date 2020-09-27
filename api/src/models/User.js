@@ -75,9 +75,12 @@ const User = (sequelize) => {
           },
         }
     },
-   /* external_id:{
+   
+    avatar : {
+      type: DataTypes.TEXT,
+      defaultValue : "https://i.ibb.co/x6cBfn9/ASD.png"
 
-    },*/
+    },
     password: {
         type: DataTypes.TEXT,
         allowNull:true,

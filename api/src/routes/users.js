@@ -82,6 +82,9 @@ server.put('/:user_id', function(req, res){
             case 'role':
                 newInfo.role = req.body.role;
                 break;
+            case 'avatar':
+                newInfo.avatar = req.body.avatar;
+                break;
         }
     });
 
