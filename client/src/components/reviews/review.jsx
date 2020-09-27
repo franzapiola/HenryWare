@@ -1,11 +1,11 @@
 import React from 'react';
 import s from './review.module.css';
 import Rating from '../product-id/Rating';
-import avatar from './avatar.png';
+
 
 export default function Review (props) {
 
-    const {updatedAt, rating, description, first_name, last_name } = props;
+    const {updatedAt, rating, description, first_name, last_name, avatar } = props;
     const fullName =  first_name + ' ' + last_name;
 
     return (
