@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loadUserData } from '../../redux/actions/auth';
 import { fetchUserCart } from '../../redux/actions/cart';
-
+import { FcGoogle } from 'react-icons/fc'
 function Google (props) {
     const { loadUserData, fetchUserCart } = props;
     const history = useHistory();
@@ -67,6 +67,9 @@ function Google (props) {
             onFailure={responseFailure}
             cookiePolicy={'single_host_origin'}
             className={styles.googleButton}
+            render={renderProps => (
+                <button className='btn d-flex justify-content-around align-items-center' onClick={renderProps.onClick} style={{width: '100%', backgroundColor: 'cornflowerblue', color:'white'}}><FcGoogle style={{height: '100%'}}/>Login with Google</button>
+              )}
             />
     )
 }

@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useRef, useState } from 'react';
 import { useHistory }  from 'react-router-dom'
 import styles from './register.module.scss'
 import {Link} from 'react-router-dom'
@@ -106,7 +106,6 @@ function Login(props){
 	}*/
 	const onSuccess = response => console.log(response);
 	const onFailure = response => console.error(response);
-		
 	return(
 		<div className={`pt-3 mt-2 d-flex flex-column justify-content-center align-items-center w-100 mx-auto ${styles.container}`}>
 			<div className={`card ${styles.cardLogin}`}  >
@@ -137,15 +136,13 @@ function Login(props){
 				</form>
 			</div>
 		<Link className={styles.botonPasswordF} to='/passwordforgot'>Olvidé mi contraseña</Link>
-		<div className={`fit-content d-flex flex-row  align-items-center ${styles.buttonsExternal}`}>
-		<div>
-			<Google style={{marginTop:'0px'}} className={styles.buttonExternal}/>
+		<div className={`fit-content d-flex flex-column  align-items-center ${styles.buttonsExternal}`}>
+		<div className='w-100 mb-2'>
+			<Google/>
 		</div>
-		<div>
-
-			<GitHub className={styles.buttonExternal}/>
+		<div className='w-100 mb-2'>
+			<GitHub/>
 			</div>
-
 		</div>
 		</div>
 		)
