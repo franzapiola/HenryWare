@@ -303,7 +303,7 @@ function Order({ orderData, userInfo }) {
 
                                       <div className={styles.namedescModal}>
                                         <p>{product.name}</p>
-                                        <p>{product.description}</p>
+                                        <p>{product.description.substr(0,80)}</p>
                                       </div>
 
                                       <div className={styles.pricequantModal}>
