@@ -186,10 +186,6 @@ server.post('/finished',(req,res)=>{
                   ${products.map((product)=>{
 
                       return`<div style="display:flex;font-size:14px;padding:10px;border:solid 1px black">
-          
-                      <div style="display:flex;flex-direction:row;margin-left:5px;">
-                        <img style="max-width:120px;max-height:120px;padding:0;margin:0" src="${product.images?product.images[0].img_url:""}"/>
-                       </div>
                        
                       <div style="margin:auto 10px">
                         <p style="margin:0;padding:0;font-weight:bold">${product.name}</p>

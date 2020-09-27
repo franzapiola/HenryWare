@@ -74,19 +74,19 @@ const App = (props) => {
   const getProducts = ()=>{
     switch(view){
       case 'All':
-        fetch(`http://localhost:3001/products?offset=${(currentPage - 1) * 12}&limit=12`)
+        fetch(`http://localhost:3001/products?offset=${(currentPage - 1) * 15}&limit=15`)
         .then(r=>r.json())
         .then(json=>setProducts(json))
         .catch(err => console.log(err));
         break;
       case 'Category':
-        fetch(`http://localhost:3001/products/categorias/${selectedCategory}?offset=${(currentPage - 1) * 12}&limit=12`)
+        fetch(`http://localhost:3001/products/categorias/${selectedCategory}?offset=${(currentPage - 1) * 15}&limit=15`)
         .then(r => r.json())
         .then(json => setProducts(json))
         .catch(err => console.log(err));
         break;
       case 'Search':
-        fetch(`http://localhost:3001/products/search?product=${searchInput}&offset=${(currentPage - 1) * 12}&limit=12`)
+        fetch(`http://localhost:3001/products/search?product=${searchInput}&offset=${(currentPage - 1) * 15}&limit=15`)
         .then(res=> res.json())
         .then(res=> setProducts(res))
         .catch(err => console.log(err));

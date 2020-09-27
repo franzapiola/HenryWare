@@ -52,7 +52,7 @@ const Home = (props) => {
     
             <div className={styles.topFive}>
 
-                <h3 className={styles.titulotop}>Nuestro Top de productos</h3>
+                <h3 className={styles.titulotop}>Nuestro TOP5 de productos</h3>
                 <div className={styles.topBox}>
 
                 {topFive.length >1 && topFive.map((product) => 
