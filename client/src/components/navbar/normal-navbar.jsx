@@ -69,6 +69,7 @@ const NormalNavBar = (props) => {
                             
                                 <NavDropdown.Item><Link to="/profile"> Perfil </Link></NavDropdown.Item>
                                 <NavDropdown.Item><Link to="/orderUser"> Mis ordenes </Link></NavDropdown.Item>
+                                <NavDropdown.Item><Link to="/profile/wishlist"> Mi wishlist </Link></NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item> <Link onClick={()=>{
                                         //Logout
