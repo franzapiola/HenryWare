@@ -133,7 +133,7 @@ import { useHistory } from 'react-router-dom';
                                 <TextField
                                     value={form.address}
                                     id="address"
-                                    label="Direccion"
+                                    label="Dirección"
                                     onChange={updateField} />
                             </FormControl>
                         </div>

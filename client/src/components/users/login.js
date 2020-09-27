@@ -113,7 +113,7 @@ function Login(props){
 			{/* <span>TOKEN actual : {localStorage.getItem("actualToken")} </span> */}
 			<form style={{textAlign:'center'}}  onSubmit={handleSubmit}>
 				 <div className="form-group">
-				    <label for="userInput">Correo Electronico</label>
+				    <label for="userInput">Correo Electrónico</label>
 					<input name="correo" value={form.email}type="text" className={`form-control ${styles.inputLogin}`} id="correo" 
 					onChange={(e)=>setForm({
 						...form,

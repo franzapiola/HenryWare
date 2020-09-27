@@ -172,8 +172,8 @@ const CategoriesCrud = (props) => {
                         <Modal.Title>Categoría "{selectedCat.name}"</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form.Label>Ingrese el nombre de la cateogría</Form.Label>
-                        <Form.Control id='name' name='name' value={form} type="text" placeholder="Ingrese Producto" onChange={(e) => setForm(e.target.value)} />
+                        <Form.Label>Ingrese el nombre de la categoría</Form.Label>
+                        <Form.Control id='name' name='name' value={form} type="text" placeholder="Ingrese nueva categoría" onChange={(e) => setForm(e.target.value)} />
                     </Modal.Body>
                     <Modal.Footer>
                     <Button variant="primary" type='submit'>

@@ -52,7 +52,7 @@ const NormalNavBar = (props) => {
                 <div className="col-md-10 align-items-center offset-2 d-flex justify-content-end">
                     <Link to='/products' className={`${styles.navbutton} ${styles.navbarLink}`}>Catálogo</Link>
                    
-                    {user.first_name ? null : <Link className={`${styles.navbutton} ${styles.navbarLink}`} to='/login'>Iniciar Sesion</Link>}
+                    {user.first_name ? null : <Link className={`${styles.navbutton} ${styles.navbarLink}`} to='/login'>Iniciar Sesión</Link>}
                     {user.first_name ?
                         <NavDropdown title={
                             <span className={styles.dropdownWhite}>
