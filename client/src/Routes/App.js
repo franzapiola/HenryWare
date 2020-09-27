@@ -23,16 +23,14 @@ import Login from '../components/users/login'
 import OrderInfo from '../components/order/orderInfo'
 import ControlPanel from '../components/admin/controlPanel'
 import UsersTable from '../components/users/UsersTable'
-
 import NotFound from  '../components/NotFound'
 import Profile from '../components/users/profile'
 import OrderUser from '../components/order/orderUser'
 import About from '../components/about/About'
-
 import PasswordForgot from '../components/users/PasswordForgot'
-
 import PasswordChange from '../components/users/PasswordChange';
-import PasswordReset from '../components/users/PasswordReset'
+import PasswordReset from '../components/users/PasswordReset';
+import Wishlist from '../components/users/Wishlist';
 
 //Redux
 import { connect } from 'react-redux';
@@ -150,6 +148,9 @@ const App = (props) => {
 
         <Route exact path='/profile'><Profile/></Route>
         <Route exact path='/orderUser'><OrderUser/></Route>
+        <Route exact path='/profile/wishlist'>
+          <Wishlist/>
+        </Route>
         <Route exact path='/profile/password-reset'>
           <PasswordChange/>
         </Route>
