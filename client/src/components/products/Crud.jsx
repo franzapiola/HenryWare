@@ -379,7 +379,7 @@ const Crud = (props) => {
                                     <td onClick={() => {
                                         setImgModalData(prod);
                                         setShowImgs(true);
-                                    }} style={{ alignItems: 'center' }}><img className={style.prodImg} src={prod.images[0].img_url} style={style.img} /></td>
+                                    }} style={{ alignItems: 'center' }}><img className={style.prodImg} src={prod.images[0] ? prod.images[0].img_url : prod.images.img_url} style={style.img} /></td>
                                     <td><ul style={{ listStyleType: 'none', padding: '0' }}>{prod.categories.map((cat) => { return <li key={cat.category_id}>{cat.name}</li> })}</ul></td>
                                     <td><Button variant='primary' onClick={() => handleAddUpdate(prod, 'PUT')}>
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

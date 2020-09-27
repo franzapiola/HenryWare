@@ -24,7 +24,9 @@ const OrderUser = (props)=>{
     const getOrders = () => {
 
         axios.get(`http://localhost:3001/users/${user_id}/orders`)
-        .then(response => setordersUser(response.data))
+        .then(response => {
+            setordersUser(response.data.filter(order => order.state != "Carrito"))
+        })
         .catch(err => console.log(err))
         
     }
@@ -76,7 +78,7 @@ const OrderUser = (props)=>{
                                 <td>{order.createdAt.slice(0,10)}</td>
                                 <td>{order.updatedAt.slice(0,10)}</td>
                                 <td><a href={`/orders/table/${order.order_id}`} className="btn btn-primary"> +</a></td>
-                                { order.state !== value ? <td>
+                                { order.state !== value && order.state != "Completa" ? <td>
                                     <button className={s.button} onClick={handleClickOpen}> X </button>
                                     <Dialog
                                         open={open}
