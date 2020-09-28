@@ -32,10 +32,13 @@ export default (state= initialState, action) => {
 			if(prod.product_id === action.payload.product_id) prod.quantity = action.payload.quantity
 			return prod
 		})
-		state.cartData.products = products;
 		return {
-			...state,			
+			...state,
 			isFetching: false,
+			cartData : {
+				...state.cartData,
+				products: products
+			}
 		}
 		case(REQUEST_CART_DATA):
 			return{
