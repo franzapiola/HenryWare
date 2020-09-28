@@ -30,7 +30,7 @@ function Catalogo(props) {
     }, [view, selectedCategory, searchInput, currentPage]);
 
     return (
-        <div className='container-fluid mt-2 pt-2 mb-2'>
+        <div className={`container-fluid mt-2 pt-2 mb-2 ${styles.contenedorPicante}`}>
             <div className='d-flex flex-row'>
                 <div className={`${styles.categorias} col-md-3`} >
                     {/* <Button>Todos los productos</Button> */}

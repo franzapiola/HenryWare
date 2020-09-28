@@ -8,10 +8,10 @@ export default function TopFive(props) {
     //const [ topFive, setTopFive ] = useState(props.topFive);
     console.log('props', props.topFive);
     return (
-        <AwesomeSlider>
+        <AwesomeSlider  bullets={false}>
                 {props.topFive && props.topFive.length >1 ? 
                     props.topFive.map( product =>                          
-                    <div><TopCard key={product.product_id} data={product}/></div>
+                    <div ><TopCard style={{height:'fit-content'}} key={product.product_id} data={product}/></div>
                 )
                  :null
                  }

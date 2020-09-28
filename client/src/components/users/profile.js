@@ -66,14 +66,14 @@ const Profile = (props)=>{
 
                     <h6 className={styles.cardText}>{fullUser?fullUser.role:null}</h6></div>:null}
 
-                    <h4 className={styles.cardLabel}>Dirección</h4>
-                    <h6 className={styles.cardText}>{fullUser?fullUser.address:null}</h6>
+                    {fullUser&&fullUser.address?<><h4 className={styles.cardLabel}>Teléfono</h4>
+                    <h6 className={styles.cardText}>{fullUser?fullUser.address:null}</h6></>:''}
 
                     <h4 className={styles.cardLabel}>Correo electrónico</h4>
                     <h6 className={styles.cardText}>{fullUser?fullUser.email:null}</h6>
 
-                    <h4 className={styles.cardLabel}>Teléfono</h4>
-                    <h6 className={styles.cardText}>{fullUser?fullUser.phone_number:null}</h6>
+                    {fullUser&&fullUser.phone_number?<><h4 className={styles.cardLabel}>Teléfono</h4>
+                    <h6 className={styles.cardText}>{fullUser?fullUser.phone_number:null}</h6></>:''}
 
                     <div>
                     <h4 className={styles.cardLabel}>Contraseña</h4>
