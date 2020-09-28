@@ -52,7 +52,7 @@ const Home = (props) => {
             <Banner/>
             <div className={styles.topFive}>
 
-                <h3 className={styles.titulotop}>Nuestro TOP5 de productos</h3>
+                <h3 className={styles.titulotop} style={{top: '80px', position: 'relative'}}>Nuestro TOP5 de productos</h3>
                 <div className={styles.topBox}></div>
             <div className={`col-md-7 ${styles.carouselTF}`}>
             {topFive && 
