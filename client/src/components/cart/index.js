@@ -96,11 +96,11 @@ function Cart({cartData, products, isFetching,userInfo,fetchUserCart,deleteProdu
             ):<h3 style={{margin:'auto'}}>No hay productos en tu carrito, hace click <Link to='/products'>acá</Link> para continuar tu compra</h3>}
 
             {products.length ?
-            <span>Precio total: {products.reduce((acc, p) => acc + (p.LineaDeOrden.price * p.LineaDeOrden.quantity), 0)}</span>
+            <span style={{textAlign:'end',fontWeight:'bold',fontSize:'20px',marginBottom:'10px',marginRight:'20px'}}>Precio total: ${products.reduce((acc, p) => acc + (p.LineaDeOrden.price * p.LineaDeOrden.quantity), 0)}</span>
              : null}
              
             <span  className={`d-flex justify-content-end`} >
-                <Button className="btn btn-warning font-weight-bold " onClick={() => checkout(cartData.order_id)} >SIGUIENTE</Button>            
+                <Button className="btn btn-warning font-weight-bold" style={{width:'15%'}} onClick={() => checkout(cartData.order_id)} >SIGUIENTE</Button>            
             </span>
             
         </div>

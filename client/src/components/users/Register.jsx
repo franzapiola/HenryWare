@@ -97,11 +97,12 @@ import { useHistory } from 'react-router-dom';
     }
     
     return (
-        <div className={`pt-3 mt-5 d-flex align-items-center w-75 mx-auto ${styles.container2} position-relative`}>
+        <div className={styles.bodyContainerRegister}>
+        <div className={`pt-3  d-flex align-items-center w-75 mx-auto ${styles.container2} position-relative`}>
             <div className="d-flex align-items-center mx-auto h-75 col-md-8 mt-5">
                 
                 <form className={styles.formulario} onSubmit={handleSubmit}>
-                    <div className="row">
+                    <div className="row mt-5">
                         <div className="col-md-4 offset-2 mb-4">
                             <FormControl className='col-md-12'>
                                 <TextField
@@ -179,6 +180,7 @@ import { useHistory } from 'react-router-dom';
                 </form>
             </div>
             <ToastContainer />
+        </div>
         </div>
     )
 }

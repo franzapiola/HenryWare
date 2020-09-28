@@ -11,6 +11,14 @@
     font-family: 'Poppins', sans-serif;
     
 }
+.LinkHenry{
+    color:rgb(255, 238, 0);
+    font-weight: bold;
+}
+.LinkHenry:hover{
+    color:rgb(255, 166, 0);
+    font-weight: bold;
+}
 
 .cardsAbout{
     padding:0px 100px;
@@ -29,7 +37,7 @@
     margin-bottom: 30px;
 }
 .descAbout{
-    width: 60%;
+    width: 70%;
     margin: auto;
     font-size: 23px;
     margin-bottom: 30px;
@@ -93,4 +101,19 @@
     font-size: 38px;
 
     margin-bottom: 25px;
+}
+
+.ImagenTecno{
+    width: 70px;
+    margin:0px 10px;
+}
+
+.node{
+    width: 100px;
+    margin:0px -10px;
+}
+
+.html{
+    width: 100px;
+    margin:0px -10px;
 }

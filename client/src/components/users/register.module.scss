@@ -5,8 +5,15 @@
     background-position: center center;
     padding-bottom: 100px;
 }
-
+.bodyContainerRegister{
+    height: 100vh;
+    width: 99vw;
+    background-position: center;
+    background-size: contain;
+    background-image: url('./Registro.jpg');
+}
 .container2{
+    margin-top:0px !important;
     width: 100%;
     height: 60vh;
 }
@@ -80,6 +87,7 @@
 
 .formulario{
     text-align: center;
+    margin-top:100px;
 }
 
 .botonPasswordF{

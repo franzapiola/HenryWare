@@ -13,6 +13,7 @@ function Order({ orderData, userInfo }) {
   const history = useHistory()
   const [promoCode, setpromoCode] = useState('')
   const [errorCode,setErrorCode] =useState(false)
+  
   const [hasDiscount, setHasDiscount] = useState(false)
 
   const { products } = orderData

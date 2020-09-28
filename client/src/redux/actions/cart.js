@@ -77,6 +77,7 @@ export const deleteProduct = (userId, product_id)=>{
 		})
 		.then( response => response.json())
 		.then( json => dispatch(receiveDelete(product_id)))		
+		.then( () => fetchUserCart(userId))
 	}
 }
 export const requestDelete = () => {

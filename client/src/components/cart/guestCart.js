@@ -32,7 +32,7 @@ function GuestCart(props) {
     <div className={`${styles.card} offset-1 col-md-10 col-12 mt-3 pt-4 pb-4`}>
             <h4 className='text-center pb-3'>Carrito de Invitado </h4>
             {products.length ? products.map( product =>                 
-               <div className='d-flex mb-4'>
+               <div className='d-flex justify-content-center mb-4'>
                     <div className="imagen col-md-2 text-center d-flex align-items-center justify-content-center">
                         <img src={product.images[0].img_url} style={{height: '60px'}}/>
                     </div>
@@ -53,9 +53,9 @@ function GuestCart(props) {
                 </div> 
             ):<h3 style={{margin:'auto'}}>No hay productos en tu carrito, hace click <Link to='/products'>acá</Link> para continuar tu compra</h3>}
 
-            {products.length ?
-            <span>Precio total: {products.reduce((acc, p) => acc + 0, 0)}</span>
-             : null}
+            {/* {products.length ?
+            // <span>Precio total: {products.reduce((acc, p) => acc + 0, 0)}</span>
+             : null} */}
              <br></br>
              <h5 className='text-center pb-3'>Para concretar la compra y/o modificar cantidades, <a href='/login'>inicia sesión</a></h5>
             

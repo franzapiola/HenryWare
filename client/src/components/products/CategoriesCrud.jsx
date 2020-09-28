@@ -3,6 +3,7 @@ import { Button, Modal, Form, Container } from 'react-bootstrap'
 import {connect} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 
+import styles from './categorisCrud.module.css'
 
 const CategoriesCrud = (props) => {
     const {user, isFetching} = props
@@ -84,18 +85,21 @@ const CategoriesCrud = (props) => {
                 <Form onSubmit = {(e)=>{handleSubmitAgregar(e);}}>
                     <Form.Group controlId="categoryName">
                         <Form.Label>Ingresá el nombre deseado:</Form.Label>
+                        <div className={styles.inputCat}>
                         <Form.Control type="text" value={formAgregar.name} placeholder="Nueva categoría..." onChange={(e)=>{setFormAgregar({name: e.target.value})}}/>
+                        <Button type='submit' >Agregar</Button>
+                        </div>
                         <Form.Text className="text-muted">
                             Un ID único le será asignado automáticamente a la nueva categoría.
                         </Form.Text>
-                        <Button type='submit' >Agregar</Button>
+                        
                     </Form.Group>
                 </Form>
             </div>
             <br/>
             <div>
                 <h4 style={{marginLeft: 'auto', marginRight: 'auto'}}>Lista</h4>
-                <table style={{backgroundColor: 'whitesmoke', width: '400px'}} className='table table-striped table-collapse'>
+                <table style={{backgroundColor: 'whitesmoke', width: '100%'}} className='table table-striped table-collapse'>
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -105,7 +109,7 @@ const CategoriesCrud = (props) => {
                             <th>Borrar</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className={styles.categoriesTable}>
                         {categories.map( cat => {
                             return (
                                 <tr key={cat.category_id}>
