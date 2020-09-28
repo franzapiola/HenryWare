@@ -8,7 +8,8 @@ import Banner from './banner';
 import TopProduct from './TopProduct';
 import TopCard from '../products/TopCard'
 import axios from "axios"
-
+import TopFive from './TopFive';
+import './home.css'
 
 const Home = (props) => {
 
@@ -49,8 +50,18 @@ const Home = (props) => {
         <>
             <Jumbotron/>
             <Banner/>
-    
             <div className={styles.topFive}>
+
+                <h3 className={styles.titulotop}>Nuestro TOP5 de productos</h3>
+                <div className={styles.topBox}></div>
+            <div className={`col-md-7 ${styles.carouselTF}`}>
+            {topFive && 
+            <TopFive
+            topFive = { topFive }/>}
+            </div>
+            </div>
+                
+            {/* <div className={styles.topFive}>
 
                 <h3 className={styles.titulotop}>Nuestro TOP5 de productos</h3>
                 <div className={styles.topBox}>
@@ -66,7 +77,7 @@ const Home = (props) => {
 
                 </div>
                 
-            </div>
+            </div> */}
 
             
                     
