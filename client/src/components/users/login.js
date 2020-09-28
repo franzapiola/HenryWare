@@ -137,10 +137,10 @@ function Login(props){
 			</div>
 		<Link className={styles.botonPasswordF} to='/passwordforgot'>Olvidé mi contraseña</Link>
 		<div className={`fit-content d-flex flex-column  align-items-center ${styles.buttonsExternal}`}>
-		<div className='w-100 mb-2'>
+		<div className='w-100 mb-2 d-flex justify-content-center'>
 			<Google/>
 		</div>
-		<div className='w-100 mb-2'>
+		<div className='w-100 mb-2 d-flex justify-content-center'>
 			<GitHub/>
 			</div>
 		</div>
