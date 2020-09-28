@@ -53,7 +53,7 @@ function OrderInfo(props){
 			    	
 
 			    }  </p>
-			    <span><a href="/orders/table/" className="btn btn-primary"> BACK</a></span>
+			    <span><a href="/orderUser" className="btn btn-primary"> BACK</a></span>
 			  </div>
 			</div>
 		</div>

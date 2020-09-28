@@ -68,7 +68,7 @@ function Google (props) {
             cookiePolicy={'single_host_origin'}
             className={styles.googleButton}
             render={renderProps => (
-                <button className='btn d-flex justify-content-around align-items-center' onClick={renderProps.onClick} style={{width: '100%', backgroundColor: 'cornflowerblue', color:'white'}}><FcGoogle style={{height: '100%'}}/>Login with Google</button>
+                <button className='btn d-flex justify-content-around align-items-center' onClick={renderProps.onClick} style={{width: '100%', maxWidth: '200px', backgroundColor: 'cornflowerblue', color:'white'}}><FcGoogle style={{height: '100%'}}/>Login with Google</button>
               )}
             />
     )
