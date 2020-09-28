@@ -19,9 +19,9 @@ function Order({ orderData, userInfo }) {
   const { products } = orderData
 
   const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
+    firstName: userInfo.first_name,
+    lastName: userInfo.last_name,
+    email: userInfo.email,
     address: '',
     depto: '',
     discount: false
@@ -76,7 +76,7 @@ function Order({ orderData, userInfo }) {
 
 
     axios.put(`http://localhost:3001/orders/${orderData.order_id}`, {
-      state: "Completa"
+      state: "Procesando"
     }).then(() => setshowPostVenta(true))
 
   }
@@ -98,6 +98,7 @@ function Order({ orderData, userInfo }) {
   const ApplyDiscount = (products) => {
     return (funcionSuma(products) * 0.8).toFixed(2)
   }
+
 
   useEffect(() => {
 
@@ -155,7 +156,7 @@ function Order({ orderData, userInfo }) {
         <div className="col-md-8 order-md-1">
 
           <h4 className="mb-3">Información de facturación</h4>
-          
+
           <form className="needs-validation" onSubmit={handleSubmit} >
             <div className="row">
               <div className="col-md-6 mb-3">
@@ -304,7 +305,6 @@ function Order({ orderData, userInfo }) {
 
                                       <div className={styles.namedescModal}>
                                         <p>{product.name}</p>
-                                        <p>{product.description.substr(0,80)}</p>
                                       </div>
 
                                       <div className={styles.pricequantModal}>
