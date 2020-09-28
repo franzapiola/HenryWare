@@ -154,7 +154,7 @@ function Order({ orderData, userInfo }) {
         <div className="col-md-8 order-md-1">
 
           <h4 className="mb-3">Información de facturación</h4>
-
+          
           <form className="needs-validation" onSubmit={handleSubmit} >
             <div className="row">
               <div className="col-md-6 mb-3">

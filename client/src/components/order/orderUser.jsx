@@ -15,8 +15,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 const OrderUser = (props)=>{
 
     
-    let { user_id } = props.auth.user;
-    
+    // let { user_id } = props.auth.user;
+
+    const {user,isFetching} = props
+    const {user_id} = user
+
     const dispatch = useDispatch()
     const [ordersUser, setordersUser] = useState([])
     const value = 'Cancelada';
@@ -47,7 +50,7 @@ const OrderUser = (props)=>{
 
     useEffect(() => {
         getOrders()
-    }, [])
+    }, [isFetching])
 
 
     return (
@@ -125,7 +128,8 @@ const OrderUser = (props)=>{
 
 const mapStateToProps = state => {
 	return {
-        auth: state.auth
+        user: state.auth.user,
+        isFetching: state.auth.isFetching
 	}
 }
 

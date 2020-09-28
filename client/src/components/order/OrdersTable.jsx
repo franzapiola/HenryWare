@@ -159,7 +159,7 @@ function OrdersTable(props) {
                             <tr key={order.order_id}>
                                 <td>{order.order_id}</td>
                                 <td className='font-weight-bold'>
-                                <Select
+                                {order.user?<Select
                                     defaultValue={{value:order.state, label:order.state}}
                                     isLoading={orders.isFetching}
                                     isDisabled={orders.isFetching}
@@ -168,11 +168,20 @@ function OrdersTable(props) {
                                     name="color"
                                     options={status}
                                     onChange={e=>{dispatch(changeStatus(e.value, order.order_id));mailChangeStatus(order)}}
-                                />
+                                />:<Select
+                                defaultValue={{value:order.state, label:order.state}}
+                                isLoading={orders.isFetching}
+                                isDisabled={true}
+                                isClearable={false}
+                                isSearchable
+                                name="color"
+                                options={status}
+                                onChange={e=>{dispatch(changeStatus(e.value, order.order_id));mailChangeStatus(order)}}
+                            />}
                                 </td>
-                                <td>{order.user.email}</td>
-                                <td>{order.user.first_name}</td>
-                                <td>{order.user.last_name}</td>
+                                <td>{order.user? order.user.email:null}</td>
+                                <td>{order.user? order.user.first_name:<p style={{color:'red',fontWeight:'bold'}}>Este usuario fue eliminado</p>}</td>
+                                <td>{order.user? order.user.last_name:null}</td>
                                 <td><a href={`/orders/table/${order.order_id}`} className="btn btn-primary"> +</a></td>
                             </tr>
                         ))}

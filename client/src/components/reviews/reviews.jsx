@@ -29,10 +29,10 @@ function Reviews (props) {
                             // product={x.product}
                             rating={x.rating} 
                             description={x.description}
-                            first_name={x.user.first_name}
-                            last_name={x.user.last_name}
+                            first_name={x.user?x.user.first_name:''}
+                            last_name={x.user?x.user.last_name:''}
                             updatedAt={x.updatedAt}
-                            avatar={x.user.avatar}
+                            avatar={x.user?x.user.avatar:"https://i.ibb.co/x6cBfn9/ASD.png"}
                             />
                     ) }          
             </div>
