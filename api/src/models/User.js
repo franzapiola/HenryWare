@@ -1,7 +1,9 @@
 const { DataTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
+
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
-module.exports = (sequelize) => {
+const User = (sequelize) => {
   // defino el modelo
   sequelize.define('user', {
     user_id:{
@@ -13,30 +15,112 @@ module.exports = (sequelize) => {
     email: {
       type: DataTypes.STRING,
       validate: {
-          isEmail: true
+          len: {
+            args: [4, 70],
+            msg: "No es un email valido"
+          },
+          isEmail: {
+            msg: "No es un email valido"
+          },
+          notNull: {
+            msg: 'Email obligatorio'
+          }
       },
       unique: true,
-      allowNull: false
+      allowNull: false,
+      
     },
     first_name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: {
+          args: [2, 30],
+          msg: "No es nombre valido"
+        },
+        notNull: {
+          msg: 'Nombre obligatorio'
+        }
+      }
     },
     last_name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true,      
     },
     address: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     phone_number: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true,
+        validate: {
+          len: {
+            args: [5, 25],
+            msg: "No es un numero valido"
+          },
+          isNumeric: true,
+          isInt: {
+            msg: "No es un numero"
+          }
+        }
     },
     role: {
         type: DataTypes.ENUM('user', 'admin'),
-        defaultValue: 'user'
+        defaultValue: 'user',
+        validate: {
+          len: {
+            args: [4, 5],
+            msg: "No es un role valido"
+          },
+        }
+    },
+   
+    avatar : {
+      type: DataTypes.TEXT,
+      defaultValue : "https://i.ibb.co/x6cBfn9/ASD.png"
+
+    },
+    password: {
+        type: DataTypes.TEXT,
+        allowNull:true,
+        set(value){
+          const hash = bcrypt.hashSync(value, 10);
+          this.setDataValue('password', hash);
+        }
     }
   });
 };
+
+User.checkPassword = function(password){
+  //Retorna una promesa
+  return bcrypt.compare(password, this.password);
+};
+
+module.exports = User;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

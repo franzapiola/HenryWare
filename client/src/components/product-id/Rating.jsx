@@ -1,7 +1,10 @@
 import React from 'react'
 import {AiFillStar,AiOutlineStar} from "react-icons/ai"
 
-export default function Rating(rating) {
+export default function Rating(props) {
+
+    const { rating } = props;
+    
 switch (rating) {
     case 1:
         return <span>
