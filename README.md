@@ -53,7 +53,7 @@ A continuación haremos un breve recorrido a través de los features más import
     <img src='https://i.imgur.com/UulnC3t.jpg' </img>
 </p>
 
-* __UI de administrador__: si un usuario administrador inicia sesión, tiene algunas posibilidades más. La más importante es el **CRUD de productos**. Esta UI muestra una **lista completa** de los productos publicados y le permite al usuario admin **modificar** los datos de alguna publicación (imágenes, descripción, precio, etc), así como **eliminarla** o **publicar un nuevo producto**. Es fácilmente **filtrable por ID, nombre o categoría** y está **paginado**.
+* __UI de administrador__: si un usuario administrador inicia sesión, tiene algunas posibilidades más. La más importante es el **CRUD de productos**. Esta UI muestra una **lista completa** de los productos publicados y le permite al usuario admin **modificar** los datos de alguna publicación (imágenes, descripción, precio, etc), así como **eliminarla** o **publicar un nuevo producto**. Es fácilmente **filtrable por ID, nombre o categoría** y está **paginado**. Un admin también puede acceder a un **listado de usuarios, un listado de órdenes y un listado de categorías**.
 <p align='center'>
     <img src='https://i.imgur.com/SN6Yyp9.jpg' </img>
 </p>
