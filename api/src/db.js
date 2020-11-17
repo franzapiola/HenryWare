@@ -6,7 +6,7 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/development`, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/henryWare`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
@@ -121,6 +121,20 @@ Product.belongsToMany(User, {
   foreignKey: 'product_id'
 });
 
+//Usuario admin por defecto
+User.create({
+  email:"admin@henryware.test", 
+  first_name: "Admin", 
+  last_name: "de prueba", 
+  address: "Avenida Rivadavia 4962", 
+  phone_number: "1586457281", 
+  role: "admin",
+  password: "123456789"
+})
+.then(()=>{
+  console.log('Usuario administrador\nemail: admin@henryware.test\npass: 123456789\n')
+})
+.catch(() => {});
 
 module.exports = {
   ...sequelize.models,  // para poder importar los modelos así: const { Product, User } = require('./db.js');
